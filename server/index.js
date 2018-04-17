@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const schema = require('./schema/schema');
-const findItem = require('./controllers/findItem');
-const addItem = require('./controllers/addItem');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,18 +25,6 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true
 }));
-
-app.post('/find', findItem);
-app.post('/watchlist/new', addItem);
-
-const query = `{ watchListItems { title } }`;
-
-app.get('/watchListItems', (req, res, next) => {
-  axios.post('http://localhost:3000/graphql', JSON.stringify(query, null))
-    .then(response => {
-      res.send(response);
-    });
-});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
