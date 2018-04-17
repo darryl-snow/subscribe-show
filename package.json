@@ -1,0 +1,22 @@
+{
+  "name": "subscribe-show",
+  "version": "1.0.0",
+  "description": "An app for subscribing to Movies & TV Shows",
+  "main": "index.js",
+  "author": "Darryl Snow",
+  "license": "Copyright 2018 Darryl Snow",
+  "dependencies": {
+    "asyncawait": "^1.0.6",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.14",
+    "nodemon": "^1.17.3"
+  },
+  "scripts": {
+    "server": "nodemon ./server/index.js"
+  }
+}
