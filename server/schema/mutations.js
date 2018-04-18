@@ -24,7 +24,7 @@ module.exports = new GraphQLObjectType({
         type: { type: GraphQLNonNull(GraphQLString) }
       },
       resolve(parentValue, { tmdbID, type }) {
-        return(WatchListItem.addItem(tmdbID, type));
+        return(new WatchListItem({tmdbID, type}).save());
       }
     },
     addEpisode: {

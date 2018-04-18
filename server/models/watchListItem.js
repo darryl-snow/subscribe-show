@@ -76,48 +76,56 @@ const WatchListItemSchema = new Schema({
 //   });
 // }
 
-const createItem = async function(id, type) {
+const addItemDetails = function(item, next) {
 
-  const watchListItem = new this();
+  if(item.type === "TV") {
 
-  if(type === "TV") {
-
-    axios.get(`http://api.tvmaze.com/shows/${id}`)
+    axios.get(`http://api.tvmaze.com/shows/${item.tmdbID}`)
       .then(show => {
-        watchListItem.tmdbID = show.id;
-        watchListItem.title = show.name;
-        if(show.image)
-          watchListItem.image = show.image.original;
-        watchListItem.description = show.summary;
-        watchListItem.language = show.language;
-        watchListItem.type = type;
-        return watchListItem;
+        helpers.parseTVShow(show.data, item);
+        addEpisodes(item, next);
       });
 
   } else {
 
-    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${keys.TMDB}`)
+    axios.get(`https://api.themoviedb.org/3/movie/${item.tmdbID}?api_key=${keys.TMDB}`)
       .then(movie => {
-        watchListItem.tmdbID = movie.id;
-        watchListItem.title = movie.title;
-        watchlistitem.image = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
-        watchListItem.description = movie.summary;
-        watchListItem.language = helpers.parseLanguage(movie.language);
-        watchListItem.type = type;
-        return watchListItem;
+        helpers.parseMovie(movie.data, item);
+        next();
       });
 
   }
 
-}
+};
 
-const getEpisodes = async function(id) {
+const addEpisodes = async (function(item, next) {
 
-}
+  axios.get(`http://api.tvmaze.com/shows/${item.tmdbID}/episodes`)
+    .then(response => {
+      const episodes = response.data;
 
-const addEpisodesToItem = async function(watchListItem, episodes) {
+      episodes.forEach(async (episode) => {
+        await (addEpisode(item, episode).save());
+      });
 
-}
+      next();
+
+    });
+
+});
+
+const addEpisode = function(item, episodeToAdd) {
+  const Episode = mongoose.model('episode');
+  let episode = new Episode(helpers.parseEpisode(episodeToAdd));
+  episode.watchListItem = item;
+  item.episodes.push(episode);
+  return episode;
+};
+
+WatchListItemSchema.pre('save', function(next) {
+  const watchListItem = this;
+  addItemDetails(watchListItem, next);
+});
 
 WatchListItemSchema.statics.search = function(title) {
   return new Promise((resolve, reject) => {
@@ -132,30 +140,6 @@ WatchListItemSchema.statics.search = function(title) {
           });
       });
   });
-}
-
-WatchListItemSchema.statics.addItem = function(id, type) {
-
-
-  const watchListItem = await (createItem(id, type));
-
-  if (type === "TV") {
-    const episodes = await (getEpisodes(id));
-    await (addEpisodesToItem(watchListItem, episodes));
-  }
-
-  return new Promise((resolve, reject) => {
-
-    resolve(watchListItem.save());
-
-  });
-
-  // get item from api
-  // if tv, then get episodes for item
-  // create new watchlistitem
-  // create episide / add each episode to item
-  // save item
-  // return item
 }
 
 WatchListItemSchema.statics.findEpisodes = function(id) {
