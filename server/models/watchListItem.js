@@ -123,8 +123,18 @@ const addEpisode = function(item, episodeToAdd) {
 };
 
 WatchListItemSchema.pre('save', function(next) {
-  const watchListItem = this;
-  addItemDetails(watchListItem, next);
+  const self = this;
+  mongoose.models['watchListItem'].findOne({ tmdbID: self.tmdbID }, (err, item) => {
+    if(err) {
+      next(err);
+    } else if(item) {
+      self.invalidate('item', 'tmdbID must be unique');
+      next(new Error('This has already been added to your watchlist!'));
+    } else {
+      addItemDetails(self, next);
+    }
+  });
+
 });
 
 WatchListItemSchema.statics.search = function(title) {
