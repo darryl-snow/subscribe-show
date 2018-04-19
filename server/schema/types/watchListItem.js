@@ -1,5 +1,6 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
+
 const WatchListItem = mongoose.model('watchListItem');
 const EpisodeType = require('./episode');
 
@@ -7,7 +8,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLBoolean
+  GraphQLBoolean,
 } = graphql;
 
 /**
@@ -30,7 +31,7 @@ module.exports = new GraphQLObjectType({
       type: new GraphQLList(EpisodeType),
       resolve(parentValue) {
         return WatchListItem.findEpisodes(parentValue.id);
-      }
-    }
-  })
+      },
+    },
+  }),
 });

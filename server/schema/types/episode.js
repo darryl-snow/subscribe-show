@@ -1,12 +1,13 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
+
 const Episode = mongoose.model('episode');
 
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLBoolean
+  GraphQLBoolean,
 } = graphql;
 
 /**
@@ -16,6 +17,7 @@ const {
 module.exports = new GraphQLObjectType({
   name: 'Episode',
   fields: () => ({
+    id: { type: GraphQLString },
     tmdbEpisodeID: { type: GraphQLString },
     seasonNumber: { type: GraphQLInt },
     episodeNumber: { type: GraphQLInt },
@@ -28,10 +30,8 @@ module.exports = new GraphQLObjectType({
       type: require('./watchListItem'),
       resolve(parentValue) {
         return Episode.findById(parentValue).populate('watchListItem')
-          .then(episode => {
-            return episode.watchListItem;
-          });
-      }
-    }
-  })
+          .then(episode => episode.watchListItem);
+      },
+    },
+  }),
 });

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 /**
  * The DB Schema for a TV Show Episode.
@@ -8,7 +9,7 @@ const Schema = mongoose.Schema;
 const EpisodeSchema = new Schema({
   watchListItem: {
     type: Schema.Types.ObjectId,
-    ref: 'watchListItem'
+    ref: 'watchListItem',
   },
   tmdbEpisodeID: { type: String },
   seasonNumber: { type: Number },
@@ -17,7 +18,7 @@ const EpisodeSchema = new Schema({
   name: { type: String },
   description: { type: String },
   image: { type: String },
-  watched: { type: Boolean, default: false }
+  watched: { type: Boolean, default: false },
 });
 
 /**
@@ -25,14 +26,13 @@ const EpisodeSchema = new Schema({
  * @param  {String} episodeID The ID (primary key) for the episode in the DB.
  * @return {Episode}          An instance of the Episode model for the given episode.
  */
-EpisodeSchema.statics.toggleWatched = function(episodeID) {
-  const Episode = mongoose.model('episode');
+EpisodeSchema.statics.toggleWatched = function (episodeID) {
   return this.findById(episodeID)
-    .then(episode => {
+    .then((episode) => {
       episode.watched = !episode.watched;
       return episode.save();
     });
-}
+};
 
 /**
  * Export the Model.

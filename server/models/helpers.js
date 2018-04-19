@@ -3,82 +3,81 @@
  * @param  {Episode} episode The instance of the Episode model to be updated.
  * @return {Object}          The new object to update the instance model.
  */
-parseEpisode = function(episode) {
-  return {
-    tmdbEpisodeID: episode.id,
-    seasonNumber: episode.season,
-    episodeNumber: episode.number,
-    airDate: episode.airdate,
-    name: episode.name,
-    description: episode.summary,
-    image: episode.image ? episode.image.original : null,
-    watched: false
-  }
-
-}
+const parseEpisode = episode => ({
+  tmdbEpisodeID: episode.id,
+  seasonNumber: episode.season,
+  episodeNumber: episode.number,
+  airDate: episode.airdate,
+  name: episode.name,
+  description: episode.summary,
+  image: episode.image ? episode.image.original : null,
+  watched: false,
+});
 
 /**
- * Take a 2 letter ISO language code and return the full name (in English) for the language. Defaults to "English".
+ * Take a 2 letter ISO language code and return the full name (in English) for
+ * the language. Defaults to "English".
  * @param  {String} code The 2 letter language code.
  * @return {String}      The full name of the language.
  */
-parseLanguage = function(code) {
-
-  switch(code) {
-    case "en":
-      return "English";
-    case "fr":
-      return "French";
-    case "de":
-      return "German";
-    case "it":
-      return "Italian";
-    case "es":
-      return "Spanish";
-    case "zh":
-      return "Chinese";
+const parseLanguage = (code) => {
+  switch (code) {
+    case 'en':
+      return 'English';
+    case 'fr':
+      return 'French';
+    case 'de':
+      return 'German';
+    case 'it':
+      return 'Italian';
+    case 'es':
+      return 'Spanish';
+    case 'zh':
+      return 'Chinese';
     default:
-      return "English";
+      return 'English';
   }
-
-}
+};
 
 /**
  * Convert and normalize the fields returned by the Movie API.
- * @param  {Object} movie        The movie object returned by the API.
- * @param  {WatchListItem} item  The instance of the WatchListItem model to be updated.
- * @return {Object}              The new object to update the instance model.
+ * @param  {Object} movie           The movie object returned by the API.
+ * @param  {WatchListItem} newItem  The instance of the WatchListItem model to
+ *                                  be updated.
+ * @return {Object}                 The new object to update the instance model.
  */
-parseMovie = function(movie, item) {
+const parseMovie = (movie, newItem) => {
+  const item = newItem;
   item.title = movie.title;
   item.image = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
   item.description = movie.overview;
   item.airDate = movie.release_date;
   item.language = parseLanguage(movie.original_language);
-}
+};
 
 /**
- * Take the search results from the 2 APIs (TV Shows and Movies) and normalize into 1 single collection.
+ * Take the search results from the 2 APIs (TV Shows and Movies) and normalize
+ * into 1 single collection.
  * @param  {Array} response The collection of objects returned by the API.
  * @return {Array}          The collection of normalized results.
  */
-parseSearchResults = function(response) {
-  let results = [];
+const parseSearchResults = (response) => {
+  const results = [];
 
   // For each item returned by the API
-  response.map(item => {
+  response.map((newItem) => {
+    let item = newItem;
 
     // If TV Show
     if (item.show) {
       item = item.show;
-      item.type = "TV";
+      item.type = 'TV';
 
-      if(item.image) {
+      if (item.image) {
         item.image = item.image.original;
       }
-
     } else { // If Movie
-      item.type = "Movie";
+      item.type = 'Movie';
       item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
     }
 
@@ -89,35 +88,37 @@ parseSearchResults = function(response) {
       description: item.summary || item.overview,
       language: item.language || parseLanguage(item.original_language),
       image: item.image,
-      type: item.type
+      type: item.type,
     });
 
+    return item;
   });
 
   return results;
-}
+};
 
 /**
  * Convert and normalize the fields returned by the TV Show API.
- * @param  {Object} show         The TV Show object returned by the API.
- * @param  {WatchListItem} item  The instance of the WatchListItem model to be updated.
- * @return {Object}              The new object to update the instance model.
+ * @param  {Object} show            The TV Show object returned by the API.
+ * @param  {WatchListItem} newItem  The instance of the WatchListItem model to be updated.
+ * @return {Object}                 The new object to update the instance model.
  */
-parseTVShow = function(show, item) {
+const parseTVShow = (show, newItem) => {
+  const item = newItem;
   item.title = show.name;
-  item.description = show.summary.replace(/(<([^>]+)>)/ig,'');
+  item.description = show.summary.replace(/(<([^>]+)>)/ig, '');
   item.image = show.image ? show.image.original : '';
   item.language = show.language;
-}
+};
 
 /**
  * Export the helper functions to be used within model methods.
  * @type {Object}
  */
 module.exports = {
-  parseEpisode: parseEpisode,
-  parseLanguage: parseLanguage,
-  parseMovie: parseMovie,
-  parseSearchResults: parseSearchResults,
-  parseTVShow: parseTVShow
-}
+  parseEpisode,
+  parseLanguage,
+  parseMovie,
+  parseSearchResults,
+  parseTVShow,
+};

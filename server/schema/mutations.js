@@ -1,17 +1,18 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
-const WatchListItem = mongoose.model('watchListItem');
-const Episode = mongoose.model('episode');
+
 const WatchListItemType = require('./types/watchListItem');
 const EpisodeType = require('./types/episode');
+
+const WatchListItem = mongoose.model('watchListItem');
+const Episode = mongoose.model('episode');
+
 
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLInt,
-  GraphQLID
+  GraphQLID,
 } = graphql;
 
 /**
@@ -25,29 +26,29 @@ module.exports = new GraphQLObjectType({
       type: WatchListItemType,
       args: {
         tmdbID: { type: new GraphQLNonNull(GraphQLString) },
-        type: { type: GraphQLNonNull(GraphQLString) }
+        type: { type: GraphQLNonNull(GraphQLString) },
       },
       resolve(parentValue, { tmdbID, type }) {
-        return(new WatchListItem({tmdbID, type}).save());
-      }
+        return (new WatchListItem({ tmdbID, type }).save());
+      },
     },
     toggleItemWatched: { // Toggle whether a watchlist item has been watched or not
       type: WatchListItemType,
       args: {
-        WatchListItemID: { type: new GraphQLNonNull(GraphQLID) }
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, { WatchListItemID }) {
-        return WatchListItem.toggleWatched(WatchListItemID);
-      }
+      resolve(parentValue, { id }) {
+        return WatchListItem.toggleWatched(id);
+      },
     },
     toggleEpisodeWatched: { // Toggle whether a TV Show episode has been watched or not
       type: EpisodeType,
       args: {
-        episodeID: { type: new GraphQLNonNull(GraphQLID) }
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, { episodeID }) {
-        return Episode.toggleWatched(episodeID);
-      }
-    }
-  }
+      resolve(parentValue, { id }) {
+        return Episode.toggleWatched(id);
+      },
+    },
+  },
 });
