@@ -1,3 +1,8 @@
+/**
+ * Convert and normalize the fields returned by the Episode API.
+ * @param  {Episode} episode The instance of the Episode model to be updated.
+ * @return {Object}          The new object to update the instance model.
+ */
 parseEpisode = function(episode) {
   return {
     tmdbEpisodeID: episode.id,
@@ -12,6 +17,11 @@ parseEpisode = function(episode) {
 
 }
 
+/**
+ * Take a 2 letter ISO language code and return the full name (in English) for the language. Defaults to "English".
+ * @param  {String} code The 2 letter language code.
+ * @return {String}      The full name of the language.
+ */
 parseLanguage = function(code) {
 
   switch(code) {
@@ -33,6 +43,12 @@ parseLanguage = function(code) {
 
 }
 
+/**
+ * Convert and normalize the fields returned by the Movie API.
+ * @param  {Object} movie        The movie object returned by the API.
+ * @param  {WatchListItem} item  The instance of the WatchListItem model to be updated.
+ * @return {Object}              The new object to update the instance model.
+ */
 parseMovie = function(movie, item) {
   item.title = movie.title;
   item.image = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
@@ -41,11 +57,18 @@ parseMovie = function(movie, item) {
   item.language = parseLanguage(movie.original_language);
 }
 
+/**
+ * Take the search results from the 2 APIs (TV Shows and Movies) and normalize into 1 single collection.
+ * @param  {Array} response The collection of objects returned by the API.
+ * @return {Array}          The collection of normalized results.
+ */
 parseSearchResults = function(response) {
   let results = [];
 
+  // For each item returned by the API
   response.map(item => {
 
+    // If TV Show
     if (item.show) {
       item = item.show;
       item.type = "TV";
@@ -54,11 +77,12 @@ parseSearchResults = function(response) {
         item.image = item.image.original;
       }
 
-    } else {
+    } else { // If Movie
       item.type = "Movie";
       item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
     }
 
+    // Append parsed object to the results array
     results.push({
       tmdbID: item.id,
       title: item.name || item.title,
@@ -73,6 +97,12 @@ parseSearchResults = function(response) {
   return results;
 }
 
+/**
+ * Convert and normalize the fields returned by the TV Show API.
+ * @param  {Object} show         The TV Show object returned by the API.
+ * @param  {WatchListItem} item  The instance of the WatchListItem model to be updated.
+ * @return {Object}              The new object to update the instance model.
+ */
 parseTVShow = function(show, item) {
   item.title = show.name;
   item.description = show.summary.replace(/(<([^>]+)>)/ig,'');
@@ -80,6 +110,10 @@ parseTVShow = function(show, item) {
   item.language = show.language;
 }
 
+/**
+ * Export the helper functions to be used within model methods.
+ * @type {Object}
+ */
 module.exports = {
   parseEpisode: parseEpisode,
   parseLanguage: parseLanguage,

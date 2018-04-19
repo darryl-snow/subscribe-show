@@ -6,9 +6,14 @@ const EpisodeType = require('./episode');
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLBoolean
 } = graphql;
 
+/**
+ * The GraphQL object to represent the WatchListItem model.
+ * @type {GraphQLObjectType}
+ */
 module.exports = new GraphQLObjectType({
   name: 'WatchListItem',
   fields: () => ({
@@ -19,6 +24,7 @@ module.exports = new GraphQLObjectType({
     description: { type: GraphQLString },
     airDate: { type: GraphQLString },
     language: { type: GraphQLString },
+    watched: { type: GraphQLBoolean },
     type: { type: GraphQLString },
     episodes: {
       type: new GraphQLList(EpisodeType),

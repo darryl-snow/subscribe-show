@@ -14,10 +14,14 @@ const {
   GraphQLID
 } = graphql;
 
+/**
+ * The mutations object, containing all mutations for the aplication.
+ * @type {GraphQLObjectType}
+ */
 module.exports = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addItem: {
+    addItem: { // Add a new item to the watchlist (TV Show or Movie)
       type: WatchListItemType,
       args: {
         tmdbID: { type: new GraphQLNonNull(GraphQLString) },
@@ -27,24 +31,16 @@ module.exports = new GraphQLObjectType({
         return(new WatchListItem({tmdbID, type}).save());
       }
     },
-    addEpisode: {
+    toggleItemWatched: { // Toggle whether a watchlist item has been watched or not
       type: WatchListItemType,
       args: {
-        watchListItemID: { type: new GraphQLNonNull(GraphQLID) },
-        tmdbEpisodeID: { type: new GraphQLNonNull(GraphQLString) },
-        seasonNumber: { type: GraphQLInt },
-        episodeNumber: { type: GraphQLInt },
-        airDate: { type: new GraphQLNonNull(GraphQLString) },
-        name: { type: GraphQLString },
-        description: { type: GraphQLString },
-        image: { type: GraphQLString },
-        watched: { type: GraphQLBoolean }
+        WatchListItemID: { type: new GraphQLNonNull(GraphQLID) }
       },
-      resolve(parentValue, args) {
-        return WatchListItem.addEpisode(args);
+      resolve(parentValue, { WatchListItemID }) {
+        return WatchListItem.toggleWatched(WatchListItemID);
       }
     },
-    toggleEpisodeWatched: {
+    toggleEpisodeWatched: { // Toggle whether a TV Show episode has been watched or not
       type: EpisodeType,
       args: {
         episodeID: { type: new GraphQLNonNull(GraphQLID) }

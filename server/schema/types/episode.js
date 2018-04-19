@@ -9,6 +9,10 @@ const {
   GraphQLBoolean
 } = graphql;
 
+/**
+ * The GraphQL object to represent the Episode model.
+ * @type {GraphQLObjectType}
+ */
 module.exports = new GraphQLObjectType({
   name: 'Episode',
   fields: () => ({

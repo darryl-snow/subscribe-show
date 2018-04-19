@@ -12,36 +12,40 @@ const {
   GraphQLList
 } = graphql;
 
+/**
+ * The query object, containing all queries for the aplication.
+ * @type {GraphQLObjectType}
+ */
 module.exports = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    watchListItems: {
+    watchListItems: { // Get entire watchlist
       type: new GraphQLList(WatchListItemType),
       resolve() {
         return WatchListItem.find({});
       }
     },
-    watchListItem: {
+    watchListItem: { // Get a single item (TV Show or Movie)
       type: WatchListItemType,
       args: { id: { type: GraphQLID } },
       resolve(parentValue, { id }) {
         return WatchListItem.findById(id);
       }
     },
-    episode: {
+    episode: { // Get a single TV episode
       type: EpisodeType,
       args: { id: { type: GraphQLID } },
       resolve(parentValue, { id }) {
         return Episode.findById(id);
       }
     },
-    unwatchedEpisodes: {
+    unwatchedEpisodes: { // Get all unwatched episodes for all TV Shows
       type: new GraphQLList(EpisodeType),
       resolve() {
         return Episode.find({ watched: false });
       }
     },
-    search: {
+    search: { // Search for a TV Show or Movie
       type: new GraphQLList(WatchListItemType),
       args: { title: { type: GraphQLString } },
       resolve(parentValue, { title }) {

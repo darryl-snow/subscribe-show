@@ -4,7 +4,7 @@
   "description": "An app for subscribing to Movies & TV Shows",
   "main": "index.js",
   "author": "Darryl Snow",
-  "license": "Copyright 2018 Darryl Snow",
+  "license": "UNLICENSED",
   "dependencies": {
     "asyncawait": "^1.0.6",
     "axios": "^0.18.0",
@@ -17,5 +17,8 @@
   },
   "scripts": {
     "server": "nodemon ./server/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   }
 }
