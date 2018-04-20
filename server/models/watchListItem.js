@@ -2,6 +2,7 @@ const ASYNC = require('asyncawait/async');
 const AWAIT = require('asyncawait/await');
 const axios = require('axios');
 const mongoose = require('mongoose');
+const winston = require('../winston-config');
 const helpers = require('./helpers');
 const keys = require('../../keys.json');
 
@@ -56,10 +57,14 @@ const addEpisodes = function(item, next) {
 
       // For each episode, create a new Episode record in the DB and append to the item
       episodes.forEach(ASYNC((episode) => {
-        AWAIT(addEpisode(item, episode).save());
+        AWAIT(addEpisode(item, episode).save().catch((err) => {
+          console.log(err);
+        }));
       }));
 
       next(); // All episodes have been saved, proceed with saving the watchlist item
+    }).catch((err) => {
+      winston.error(err);
     });
 };
 
@@ -78,6 +83,8 @@ const addItemDetails = function(item, next) {
       .then((show) => {
         helpers.parseTVShow(show.data, item);
         addEpisodes(item, next); // Add all episodes to the watchlist item
+      }).catch((err) => {
+        winston.error(err);
       });
   } else {
     // Get Movie item details
@@ -85,6 +92,8 @@ const addItemDetails = function(item, next) {
       .then((movie) => {
         helpers.parseMovie(movie.data, item);
         next(); // Continue to save the item
+      }).catch((err) => {
+        winston.error(err);
       });
   }
 };
@@ -108,7 +117,8 @@ WatchListItemSchema.pre('save', function (next) {
       } else {
         // Otherwise return an error because we are trying to add a fresh new
         // item that has the same ID as an existing one
-        next(new Error('This has already been added to your watchlist!'));
+        winston.error('This has already been added to your watchlist!');
+        next(new Error('This hads already been added to your watchlist!'));
       }
     } else { // Add details to the item, then continue to save
       addItemDetails(self, next);
@@ -138,6 +148,8 @@ WatchListItemSchema.statics.search = (title) => {
             results = results.concat(helpers.parseSearchResults(MovieResponse.data.results));
 
             return resolve(results);
+          }).catch((err) => {
+            winston.error(err);
           });
       });
   });
@@ -151,7 +163,10 @@ WatchListItemSchema.statics.search = (title) => {
 WatchListItemSchema.statics.getAllEpisodes = function (id) {
   return this.findById(id)
     .populate('episodes')
-    .then(watchListItem => watchListItem.episodes);
+    .then(watchListItem => watchListItem.episodes)
+    .catch((err) => {
+      winston.error(err);
+    });
 };
 
 /**
@@ -162,7 +177,10 @@ WatchListItemSchema.statics.getAllEpisodes = function (id) {
 WatchListItemSchema.statics.findEpisodes = function(id) {
   return this.findById(id)
     .populate('episodes')
-    .then(watchListItem => watchListItem.episodes);
+    .then(watchListItem => watchListItem.episodes)
+    .catch((err) => {
+      winston.error(err);
+    });
 };
 
 /**
@@ -175,6 +193,8 @@ WatchListItemSchema.statics.toggleWatched = function (watchListItemID) {
     .then((watchListItem) => {
       watchListItem.watched = !watchListItem.watched;
       return watchListItem.save();
+    }).catch((err) => {
+      winston.error(err);
     });
 };
 

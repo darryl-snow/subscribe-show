@@ -1,10 +1,12 @@
 const express = require('express');
 const expressGraphQL = require('express-graphql');
-const models = require('./models');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const axios = require('axios');
+const morgan = require('morgan');
+
+const models = require('./models');
 const schema = require('./schema/schema');
+const winston = require('./winston-config');
 
 /**
  * Create the web server.
@@ -23,16 +25,21 @@ if (!MONGO_URI) {
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_URI);
 mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
-    .on('error', error => console.log('Error connecting to MongoLab:', error));
+  .once('open', () => console.log('Connected to MongoLab instance.'))
+  .on('error', error => console.log('Error connecting to MongoLab:', error));
+
+/**
+ * Configure the server
+ */
+app.use(bodyParser.json());
+app.use(morgan('combined', { stream: winston.stream }));
 
 /**
  * Set up the route for GraphQL queries.
  */
-app.use(bodyParser.json());
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: true,
 }));
 
 /**

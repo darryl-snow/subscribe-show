@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const winston = require('../winston-config');
+
 const { Schema } = mongoose;
 
 /**
@@ -31,6 +33,8 @@ EpisodeSchema.statics.toggleWatched = function (episodeID) {
     .then((episode) => {
       episode.watched = !episode.watched;
       return episode.save();
+    }).catch((err) => {
+      winston.error(err);
     });
 };
 
