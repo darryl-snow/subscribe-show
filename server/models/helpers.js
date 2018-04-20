@@ -46,8 +46,7 @@ const parseLanguage = (code) => {
  *                                  be updated.
  * @return {Object}                 The new object to update the instance model.
  */
-const parseMovie = (movie, newItem) => {
-  const item = newItem;
+const parseMovie = (movie, item) => {
   item.title = movie.title;
   item.image = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
   item.description = movie.overview;
@@ -103,8 +102,7 @@ const parseSearchResults = (response) => {
  * @param  {WatchListItem} newItem  The instance of the WatchListItem model to be updated.
  * @return {Object}                 The new object to update the instance model.
  */
-const parseTVShow = (show, newItem) => {
-  const item = newItem;
+const parseTVShow = (show, item) => {
   item.title = show.name;
   item.description = show.summary.replace(/(<([^>]+)>)/ig, '');
   item.image = show.image ? show.image.original : '';

@@ -1,5 +1,5 @@
-const async = require('asyncawait/async');
-const wait = require('asyncawait/await');
+const ASYNC = require('asyncawait/async');
+const AWAIT = require('asyncawait/await');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const helpers = require('./helpers');
@@ -48,20 +48,20 @@ const addEpisode = function(item, episodeToAdd) {
  * @param  {Function} next        Callback function for when all episode data
  *                                have been retreieved and appended.
  */
-const addEpisodes = async(function(item, next) {
+const addEpisodes = function(item, next) {
   // Get all episodes for the TV Show
   axios.get(`http://api.tvmaze.com/shows/${item.tmdbID}/episodes`)
     .then((response) => {
       const episodes = response.data;
 
       // For each episode, create a new Episode record in the DB and append to the item
-      episodes.forEach((episode) => {
-        wait (addEpisode(item, episode).save());
-      });
+      episodes.forEach(ASYNC((episode) => {
+        AWAIT(addEpisode(item, episode).save());
+      }));
 
       next(); // All episodes have been saved, proceed with saving the watchlist item
     });
-});
+};
 
 /**
  * Lookup and save the details for a given item, based on the ID provided from
@@ -110,7 +110,6 @@ WatchListItemSchema.pre('save', function (next) {
         // item that has the same ID as an existing one
         next(new Error('This has already been added to your watchlist!'));
       }
-      next();
     } else { // Add details to the item, then continue to save
       addItemDetails(self, next);
     }
