@@ -49,7 +49,7 @@ const parseLanguage = (code) => {
 const parseMovie = (movie, item) => {
   item.title = movie.title;
   item.image = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
-  item.description = movie.overview;
+  item.description = movie.overview.replace(/(<([^>]+)>)/ig, '');
   item.airDate = movie.release_date;
   item.language = parseLanguage(movie.original_language);
 };
@@ -80,11 +80,17 @@ const parseSearchResults = (response) => {
       item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
     }
 
+    let description = '';
+    if (item.summary)
+      description = item.summary.replace(/(<([^>]+)>)/ig, '');
+    else
+      description = item.overview.replace(/(<([^>]+)>)/ig, '');
+
     // Append parsed object to the results array
     results.push({
       tmdbID: item.id,
       title: item.name || item.title,
-      description: item.summary || item.overview,
+      description,
       language: item.language || parseLanguage(item.original_language),
       image: item.image,
       type: item.type,
