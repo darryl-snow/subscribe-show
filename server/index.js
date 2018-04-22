@@ -3,10 +3,13 @@ const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
 
 const models = require('./models');
 const schema = require('./schema/schema');
 const winston = require('./winston-config');
+const webpackConfig = require('../webpack.config.js');
 
 /**
  * Create the web server.
@@ -41,6 +44,13 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
 }));
+
+/**
+ * Webpack runs as a middleware.  If any request comes in for the root route
+ * ('/') Webpack will respond with the output of the webpack process: an HTML
+ * file and a single bundle.js output of all of our client side Javascript.
+ */
+app.use(webpackMiddleware(webpack(webpackConfig)));
 
 /**
  * Open the web server.
