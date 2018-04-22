@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
+const history = require('connect-history-api-fallback');
 
 const models = require('./models');
 const schema = require('./schema/schema');
@@ -50,7 +51,11 @@ app.use('/graphql', expressGraphQL({
  * ('/') Webpack will respond with the output of the webpack process: an HTML
  * file and a single bundle.js output of all of our client side Javascript.
  */
-app.use(webpackMiddleware(webpack(webpackConfig)));
+app.use(history());
+app.use(webpackMiddleware(webpack(webpackConfig), {
+  historyApiFallback: true,
+  publicPath: '/',
+}));
 
 /**
  * Open the web server.

@@ -1,0 +1,64 @@
+:root {
+  --body-background: 250,250,250;
+  --header-background: 34,34,34;
+  --header-text-color: 233,233,233;
+  --spacing: 1.5em;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+body {
+  background: rgb(var(--body-background));
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.o-container {
+  display: flex;
+  padding: var(--spacing);
+}
+
+.c-header {
+  background: rgb(var(--header-background));
+  color: rgb(var(--header-text-color));
+}
+
+.c-search-form {
+  display: flex;
+  width: 100%;
+}
+
+.c-search-form-input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(var(--header-text-color), 0.5);
+  color: white;
+  flex: 1;
+  font-size: 2em;
+  transition: border-bottom 0.2s ease-in-out;
+}
+
+.c-search-form-input:focus {
+  border-bottom: 1px solid rgb(var(--header-text-color));
+  outline: none;
+}
+
+.c-search-form-button {
+  background: none;
+  border: none;
+  color: rgba(var(--header-text-color), 0.5);
+  cursor: pointer;
+  font-size: 2em;
+  transition: color 0.2s ease-in-out;
+}
+
+.c-search-form-button:focus {
+  color: white;
+  outline: none;
+}
+
+.c-search-form-input:focus + .c-search-form-button {
+  color: white;
+}
