@@ -31,7 +31,6 @@
     "yarn": "^1.6.0"
   },
   "scripts": {
-    "client:web": "nodemon ./client/web/index.js",
     "server": "nodemon ./server/index.js --ignore clients"
   },
   "devDependencies": {

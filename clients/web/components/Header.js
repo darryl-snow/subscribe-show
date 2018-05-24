@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FontAwesome from 'react-fontawesome';
 
 import history from '../history';
+import Icon from './Icon';
 
 /**
  * The header component.
@@ -40,7 +40,7 @@ export default class Header extends Component {
             onChange={event => this.setState({ query: event.target.value })}
           />
           <button className="c-search-form-button">
-            <FontAwesome name='search' />
+            <Icon name='search' />
           </button>
         </form>
       </header>

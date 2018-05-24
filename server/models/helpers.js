@@ -72,12 +72,14 @@ const parseSearchResults = (response) => {
       item = item.show;
       item.type = 'TV';
 
-      if (item.image) {
+      if (item.image)
         item.image = item.image.original;
-      }
+
     } else { // If Movie
       item.type = 'Movie';
-      item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+
+      if(item.image)
+        item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
     }
 
     let description = '';

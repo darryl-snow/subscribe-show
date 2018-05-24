@@ -29,8 +29,24 @@ h6 {
   margin-top: 0;
 }
 
+.u-padding {
+  padding: var(--spacing);
+}
+
+.u-padding--small {
+  padding: calc(0.5 * var(--spacing));
+}
+
+.u-margin-bottom {
+  margin-bottom: var(--spacing);
+}
+
 .u-margin-right {
-  margin-right: 0.5em;
+  margin-right: var(--spacing);
+}
+
+.u-margin-right--small {
+  margin-right: calc(0.5 * var(--spacing));
 }
 
 .u-unstyled-list {
@@ -114,6 +130,10 @@ h6 {
 .c-list-item-details {
   flex: 3;
   padding: var(--spacing);
+}
+
+.o-panel {
+  border: 1px solid #ddd;
 }
 
 .o-label {
