@@ -5,6 +5,7 @@ import history from '../history';
 import Loader from './Loader';
 import ListItem from './ListItem';
 import Icon from './Icon';
+import ToggleButton from './ToggleButton';
 
 /**
  * [SearchResults description]
@@ -44,9 +45,7 @@ class SearchResults extends Component {
   getLanguageButtons(languages) {
     return languages.map(language => {
       return (
-        <button key={language} className="o-button-group-item">
-          {language}
-        </button>
+        <ToggleButton key={language} value={language} />
       );
     });
   }
@@ -56,7 +55,7 @@ class SearchResults extends Component {
       return '';
     else {
       return(
-        <div className="o-button-group">
+        <div className="o-checkbox-group u-inline">
           {this.getLanguageButtons(languages)}
         </div>
       );
@@ -72,14 +71,15 @@ class SearchResults extends Component {
     return (
       <div className="o-container">
         <h1>Search Results for {query}</h1>
-        <div className="o-panel u-margin-bottom u-padding--small">
-          <button>
-            <Icon name="film" />
-          </button>
-          <button>
-            <Icon name="tv" />
-          </button>
-          {this.getLanguageFilters()}
+        <div className="c-filters u-margin-bottom">
+          <h2 className="u-no-margin">Displaying {this.state.results.length} results</h2>
+          <div className="u-flex">
+            <div className="o-checkbox-group u-inline u-margin-right--small">
+              <ToggleButton value="film" />
+              <ToggleButton value="tv" />
+            </div>
+            {this.getLanguageFilters()}
+          </div>
         </div>
         <ul className="u-unstyled-list">
           {this.getResultsList()}

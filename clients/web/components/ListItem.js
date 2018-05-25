@@ -19,10 +19,12 @@ export default class ListItem extends Component {
     const { list } = this.props;
     return (
       <div className="c-list-item">
-        <div className="c-list-item-image" style={{backgroundImage: `url(${image})`}} />
+        <div className="c-list-item-image" style={{backgroundImage: `url(${image})`}}>
+        { !image ? <Icon name='film'></Icon> : '' }
+        </div>
         <div className="c-list-item-details">
           <h2>
-            <Icon name={type} className="u-margin-right" />
+            <Icon name={type} className="u-margin-right--small" />
             {title}
           </h2>
           <span className="o-label">{language}</span>

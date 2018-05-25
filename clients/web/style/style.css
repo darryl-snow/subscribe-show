@@ -26,7 +26,21 @@ h4,
 h5,
 h6 {
   font-weight: 100;
+  margin-bottom: 1rem;
   margin-top: 0;
+}
+
+p {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.u-align-right {
+  text-align: right;
 }
 
 .u-padding {
@@ -37,8 +51,16 @@ h6 {
   padding: calc(0.5 * var(--spacing));
 }
 
+.u-no-margin {
+  margin: 0;
+}
+
 .u-margin-bottom {
   margin-bottom: var(--spacing);
+}
+
+.u-margin-left--small {
+  margin-right: calc(0.5 * var(--spacing));
 }
 
 .u-margin-right {
@@ -53,6 +75,10 @@ h6 {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.u-inline {
+  display: inline-block;
 }
 
 .o-container {
@@ -120,11 +146,16 @@ h6 {
 }
 
 .c-list-item-image {
-  background-color: #cccccc;
+  align-items: center;
+  background-color: #eeeeee;
   background-position: 50% 0;
   background-repeat: no-repeat;
   background-size: cover;
+  color: #cccccc;
+  display: flex;
   flex: 1;
+  font-size: 400%;
+  justify-content: center;
 }
 
 .c-list-item-details {
@@ -168,6 +199,69 @@ h6 {
   border: 2px solid rgb(var(--button-color));
   color: white;
   outline: none;
+}
+
+.c-filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.o-checkbox-group {
+  display: flex;
+}
+
+.o-checkbox-container {
+
+}
+
+.o-checkbox-group .o-checkbox-container:first-child label {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.o-checkbox-group .o-checkbox-container:last-child label {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.o-checkbox-container label {
+  background: white;
+  border: 2px solid #ddd;
+  color: #bbb;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 900;
+  padding: 5px;
+  text-transform: uppercase;
+  transition: 0.2s all ease-in-out;
+}
+
+.o-checkbox-container label:active,
+.o-checkbox-container label:focus,
+.o-checkbox-container label:hover {
+  color: #999;
+  border-color: #bbb;
+}
+
+.o-checkbox-container + .o-checkbox-container label {
+  margin-left: 2px;
+}
+
+.o-checkbox-container input {
+  display: none;
+}
+
+.o-checkbox-container input:checked ~ label {
+  background: #ddd;
+  color: #666;
+}
+
+.o-checkbox-container input:checked ~ label:active,
+.o-checkbox-container input:checked ~ label:focus,
+.o-checkbox-container input:checked ~ label:hover {
+  background: #bbb;
+  color: #444;
 }
 
 .c-loader {
