@@ -6,7 +6,7 @@ export default class ListItem extends Component {
     const { list } = this.props;
     if (list === "search") {
       return (
-        <button className="c-button">
+        <button className="o-button">
           <Icon name="plus" className="u-margin-right--small" />
           Add to watchlist
         </button>

@@ -19,7 +19,7 @@ class ToggleButton extends Component {
     return (
       <div className='o-checkbox-container'>
         <input id={value} value={value} type='checkbox' onChange={this.handleChange.bind(this)} checked={this.state.checked}  />
-        <label htmlFor={value}>
+        <label htmlFor={value} className='o-checkbox'>
           <Icon name={value} className='u-margin-right--small' />
           <span className='u-margin-right--small'>{value}</span>
         </label>

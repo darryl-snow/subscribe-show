@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-// import filter from 'lodash.filter';
-// import sortBy from 'lodash.filter';
 import query from '../queries/search';
 import history from '../history';
 import Loader from './Loader';
@@ -108,10 +106,10 @@ class SearchResults extends Component {
   getFilterButtons() {
     return (
       <div className="u-flex">
-        <div className="o-checkbox-group u-inline u-margin-right--small">
+        <div className="o-checkbox-group u-inline-block u-margin-right--small">
           {this.getTypeButtons()}
         </div>
-        <div className="o-checkbox-group u-inline u-margin-right--small">
+        <div className="o-checkbox-group u-inline-block u-margin-right--small">
           {this.getLanguageButtons()}
         </div>
       </div>
@@ -176,12 +174,12 @@ class SearchResults extends Component {
             <div className="o-checkbox-group u-inline u-margin-right--small">
               {this.getFilterButtons()}
             </div>
-            <select className="o-select u-margin-right--small" defaultValue={this.state.sortBy} onChange={this.changeSortBy.bind(this)}>
+            <select className="o-select o-label u-margin-right--small" defaultValue={this.state.sortBy} onChange={this.changeSortBy.bind(this)}>
               <option value="" disabled>Sort by&hellip;</option>
               <option value="title">Title</option>
               <option value="airDate">Release Date</option>
             </select>
-            <button className='o-label-button' onClick={this.changeSortOrder.bind(this)}>
+            <button className='o-label o-label--button' onClick={this.changeSortOrder.bind(this)}>
               <Icon name='sort' />
             </button>
           </div>
