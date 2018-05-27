@@ -37,6 +37,7 @@ p {
 
 .u-flex {
   display: flex;
+  align-items: center;
 }
 
 .u-align-right {
@@ -262,6 +263,14 @@ p {
 .o-checkbox-container input:checked ~ label:hover {
   background: #bbb;
   color: #444;
+  outline: none;
+}
+
+.o-subheading {
+  display: block;
+  font-size: 0.5em;
+  font-style: italic;
+  margin-left: 4em;
 }
 
 .c-loader {
@@ -298,4 +307,39 @@ p {
   100% {
     transform: rotate(1800deg);
   }
+}
+
+.o-select {
+  background: #ddd;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  height: 100%;
+  font-weight: 900;
+  padding: 0;
+  text-transform: uppercase;
+  transition: 0.2s all ease-in-out;
+}
+
+.o-label-button {
+  background: #ddd;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  color: #666;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 900;
+  padding: 5px;
+  text-transform: uppercase;
+  transition: 0.2s all ease-in-out;
+}
+
+.o-label-button:active,
+.o-label-button:focus,
+.o-label-button:hover {
+  background: #bbb;
+  border-color: #bbb;
+  color: #444;
+  outline: none;
 }

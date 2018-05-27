@@ -71,12 +71,14 @@ const parseSearchResults = (response) => {
     if (item.show) {
       item = item.show;
       item.type = 'TV';
+      item.airDate = item.premiered;
 
       if (item.image)
         item.image = item.image.original;
 
     } else { // If Movie
       item.type = 'Movie';
+      item.airDate = item.release_date;
 
       if(item.image)
         item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
@@ -96,6 +98,7 @@ const parseSearchResults = (response) => {
       language: item.language || parseLanguage(item.original_language),
       image: item.image,
       type: item.type,
+      airDate: item.airDate
     });
 
     return item;

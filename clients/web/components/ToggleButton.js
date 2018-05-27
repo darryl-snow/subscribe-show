@@ -12,13 +12,13 @@ class ToggleButton extends Component {
     this.setState({
       checked: e.target.checked
     });
+    this.props.handleChange(e.target.value, e.target.checked);
   }
   render() {
     const { value } = this.props;
-    console.log(value);
     return (
       <div className='o-checkbox-container'>
-        <input id={value} type='checkbox' onChange={this.handleChange.bind(this)} checked={this.state.checked}  />
+        <input id={value} value={value} type='checkbox' onChange={this.handleChange.bind(this)} checked={this.state.checked}  />
         <label htmlFor={value}>
           <Icon name={value} className='u-margin-right--small' />
           <span className='u-margin-right--small'>{value}</span>

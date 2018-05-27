@@ -15,7 +15,7 @@ export default class ListItem extends Component {
     return '';
   }
   render() {
-    const { title, description, language, image, type } = this.props.item;
+    const { title, description, language, image, type, airDate } = this.props.item;
     const { list } = this.props;
     return (
       <div className="c-list-item">
@@ -26,6 +26,7 @@ export default class ListItem extends Component {
           <h2>
             <Icon name={type} className="u-margin-right--small" />
             {title}
+            <span className="o-subheading">{airDate}</span>
           </h2>
           <span className="o-label">{language}</span>
           <p>{description}</p>

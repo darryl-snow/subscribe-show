@@ -9,6 +9,7 @@ export default gql`
       description
       image
       type
+      airDate
     }
   }
 `;
