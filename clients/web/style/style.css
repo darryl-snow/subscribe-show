@@ -33,10 +33,11 @@
   2. Utilities
     2.1 Alignment
     2.2 Flex
-    2.3 Inline Block
-    2.4 Margins
-    2.5 Padding
-    2.6 Lists
+    2.3 Full Height
+    2.4 Inline Block
+    2.5 Margins
+    2.6 Padding
+    2.7 Lists
   3. Objects
     3.1 Buttons
     3.2 Checkboxes
@@ -47,9 +48,9 @@
     3.7 Subheadings
   4. Components
     4.1 Header
-    4.2 List item
-    4.3 Search Form
-    4.4 Filters
+    4.2 List Header
+    4.3 List item
+    4.4 Search Form
 
  */
 
@@ -110,12 +111,17 @@ p {
   display: flex;
 }
 
-/* 2.3 Inline-Block */
+/* 2.3 Full height */
+.u-full-height {
+  height: 100%;
+}
+
+/* 2.4 Inline-Block */
 .u-inline-block {
   display: inline-block;
 }
 
-/* 2.4 Margins */
+/* 2.5 Margins */
 .u-margin-bottom {
   margin-bottom: var(--spacing);
 }
@@ -136,7 +142,7 @@ p {
   margin: 0;
 }
 
-/* 2.5 Padding */
+/* 2.6 Padding */
 
 .u-padding {
   padding: var(--spacing);
@@ -146,7 +152,7 @@ p {
   padding: calc(0.5 * var(--spacing));
 }
 
-/* 2.6 Lists */
+/* 2.7 Lists */
 
 .u-unstyled-list {
   list-style: none;
@@ -250,11 +256,12 @@ p {
 /* 3.4 Labels */
 
 .o-label {
+  align-items: center;
   background: rgb(var(--label-background-color));
   border: none;
   border-radius: var(--border-radius);
   color: rgb(var(--label-text-color));
-  display: inline-block;
+  display: inline-flex;
   font-size: 0.75em;
   font-weight: 900;
   padding: var(--button-padding);
@@ -315,6 +322,9 @@ p {
 /* 3.6 Selects */
 
 .o-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   cursor: pointer;
 }
 
@@ -333,7 +343,6 @@ p {
   display: block;
   font-size: 0.5em;
   font-style: italic;
-  margin-left: 4em;
 }
 
 /* 4. COMPONENTS */
@@ -345,7 +354,17 @@ p {
   color: rgb(var(--header-text-color));
 }
 
-/* 4.2 List item */
+/* 4.2 List Header */
+
+.c-list-header {
+  justify-content: space-between;
+}
+
+.c-list-header-controls {
+  align-items: center;
+}
+
+/* 4.3 List Item */
 
 .c-list-item {
   background: white;
@@ -380,7 +399,19 @@ p {
   padding: var(--spacing);
 }
 
-/* 4.3 Search form */
+.c-list-sort-order-button {
+  cursor: pointer;
+}
+
+.c-list-sort-order-button:active,
+.c-list-sort-order-button:focus,
+.c-list-sort-order-button:hover {
+  background: rgb(var(--label-border-color--active));
+  color: rgb(var(--body-text-color));
+  outline: none;
+}
+
+/* 4.4 Search form */
 
 .c-search-form {
   display: flex;
@@ -420,39 +451,3 @@ p {
 .c-search-form-input:focus + .c-search-form-button {
   color: white;
 }
-
-/* 4.4 Filters */
-
-.c-filters {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-
-
-
-
-
-/* .o-label-button {
-  background: #ddd;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  color: #666;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 0.75em;
-  font-weight: 900;
-  padding: 5px;
-  text-transform: uppercase;
-  transition: 0.2s all ease-in-out;
-}
-
-.o-label-button:active,
-.o-label-button:focus,
-.o-label-button:hover {
-  background: #bbb;
-  border-color: #bbb;
-  color: #444;
-  outline: none;
-} */
