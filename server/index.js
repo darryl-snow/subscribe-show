@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const history = require('connect-history-api-fallback');
+const cors = require('cors');
 
 const models = require('./models');
 const schema = require('./schema/schema');
@@ -35,6 +36,7 @@ mongoose.connection
 /**
  * Configure the server
  */
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: winston.stream }));
 
@@ -46,16 +48,16 @@ app.use('/graphql', expressGraphQL({
   graphiql: true,
 }));
 
-/**
- * Webpack runs as a middleware.  If any request comes in for the root route
- * ('/') Webpack will respond with the output of the webpack process: an HTML
- * file and a single bundle.js output of all of our client side Javascript.
- */
-app.use(history());
-app.use(webpackMiddleware(webpack(webpackConfig), {
-  historyApiFallback: true,
-  publicPath: '/',
-}));
+// /**
+//  * Webpack runs as a middleware.  If any request comes in for the root route
+//  * ('/') Webpack will respond with the output of the webpack process: an HTML
+//  * file and a single bundle.js output of all of our client side Javascript.
+//  */
+// app.use(history());
+// app.use(webpackMiddleware(webpack(webpackConfig), {
+//   historyApiFallback: true,
+//   publicPath: '/',
+// }));
 
 /**
  * Open the web server.

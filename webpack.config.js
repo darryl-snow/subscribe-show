@@ -1,13 +1,24 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: './clients/web/index.js',
-  output: {
-    path: '/',
-    filename: 'bundle.js'
+  context: path.resolve(__dirname, './clients/web'),
+  entry: {
+    app: './index.js'
   },
-  mode: 'development',
+  output: {
+    path: path.resolve(__dirname, './dist/web'),
+    filename: '[name].bundle.js',
+    publicPath: '/'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, './dist/web'),
+    historyApiFallback: true,
+    host: process.env.DEV_SERVER_HOST || 'localhost',
+    port: process.env.DEV_SERVER_PORT || 4000,
+    lazy: true
+  },
   module: {
     rules: [
       {
@@ -27,7 +38,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'clients/web/index.html'
-    })
+    template: path.resolve(__dirname, './clients/web/index.html'),
+    hash: false,
+    filename: './index.html',
+    inject: 'body',
+    minify: {
+      collapseWhitespace: true
+    }
+  })
   ]
 };
