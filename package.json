@@ -2,7 +2,7 @@
   "name": "subscribe-show",
   "version": "1.0.0",
   "description": "An app for subscribing to Movies & TV Shows",
-  "main": "index.js",
+  "main": "./clients/web/index.js",
   "author": "Darryl Snow",
   "license": "UNLICENSED",
   "dependencies": {
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build:client:web": "webpack --mode production",
-    "dev:client:web": "webpack-dev-server --open --mode development",
+    "dev:client:web": "webpack-dev-server --open --mode development --hot",
     "server": "nodemon ./server/index.js --ignore clients"
   },
   "devDependencies": {
@@ -45,9 +45,9 @@
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react": "^7.8.2",
     "html-webpack-plugin": "^3.2.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.17.3",

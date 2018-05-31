@@ -17,7 +17,7 @@ module.exports = {
     historyApiFallback: true,
     host: process.env.DEV_SERVER_HOST || 'localhost',
     port: process.env.DEV_SERVER_PORT || 4000,
-    lazy: true
+    hot: true
   },
   module: {
     rules: [
@@ -38,13 +38,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, './clients/web/index.html'),
-    hash: false,
-    filename: './index.html',
-    inject: 'body',
-    minify: {
-      collapseWhitespace: true
-    }
-  })
+      template: path.resolve(__dirname, './clients/web/index.html'),
+      hash: false,
+      filename: './index.html',
+      inject: 'body',
+      minify: {
+        collapseWhitespace: true
+      }
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
