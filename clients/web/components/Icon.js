@@ -1,13 +1,44 @@
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+// Dependencies
+import React from 'react'
+import PropTypes from 'prop-types'
+import FontAwesome from 'react-fontawesome'
 
+/**
+ * The Icon component, based on FontAwesome.
+ * @param {String} name      The name of the component must correspond to the
+ *                           FontAwesome library name.
+ * @param {String} className Any classes that should be applied to the icon.
+ */
 const Icon = ({ name, className }) => {
-  if (name == "Movie")
-    name = "film";
+  let iconName = name.toLowerCase()
+
+  // the API returns the type as movie, but we want to use the FontAwesome
+  // 'film' icon.
+  if (iconName === 'movie') {
+    iconName = 'film'
+  }
 
   return (
-    <FontAwesome name={name.toLowerCase()} className={className} />
-  );
+    <FontAwesome name={iconName} className={className} />
+  )
 }
 
-export default Icon;
+export default Icon
+
+/**
+ * Define the property types.
+ * @type {Object}
+ */
+Icon.propTypes = {
+  name: PropTypes.string,
+  className: PropTypes.string,
+}
+
+/**
+ * Set the default values for each property.
+ * @type {Object}
+ */
+Icon.defaultProps = {
+  name: '',
+  className: '',
+}

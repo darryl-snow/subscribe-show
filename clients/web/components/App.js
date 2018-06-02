@@ -1,21 +1,25 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+// Dependencies
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
-import Header from './Header';
-import Watchlist from './Watchlist';
-import SearchResults from './SearchResults';
+// App components
+import Header from './Header'
+import Watchlist from './Watchlist'
+import SearchResults from './SearchResults'
 
-export default () => {
-  return (
-    <main>
-      <Header />
-
-      <Switch>
-        <Route exact path="/" component={Watchlist} />
-        <Route path="/search" component={SearchResults} />
-        <Route path="/search/:query" component={SearchResults} />
-        <Route component={Watchlist} />
-      </Switch>
-    </main>
-  );
-};
+/**
+ * The main app component. The app contains a header and another component
+ * below that which depends on the route.
+ * @return {Object} The component to be rendered.
+ */
+export default () => (
+  <main>
+    <Header />
+    <Switch>
+      <Route exact path="/" component={Watchlist} />
+      <Route path="/search" component={SearchResults} />
+      <Route path="/search/:query" component={SearchResults} />
+      <Route component={Watchlist} />
+    </Switch>
+  </main>
+)
