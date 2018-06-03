@@ -2,6 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-client'
+import { onError } from 'apollo-link-error'
 import { ApolloProvider } from 'react-apollo'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -9,19 +10,37 @@ import { Router } from 'react-router-dom'
 
 import history from './history'
 import App from './components/App'
+import Error from './components/Error'
 import './style/style.css'
 
 /**
- * Connect to GraphQL server.
+ * General error handling.
+ * @type {Object}
+ */
+const generalError = onError(({ networkError }) => {
+  ReactDOM.render(
+    <Error error={networkError.message} />
+    , document.querySelector('#app'),
+  )
+})
+
+/**
+ * Set up link to GraphQL server.
+ * @type {HttpLink}
+ */
+const link = new HttpLink({
+  uri: 'http://localhost:3000/graphql',
+  opts: {
+    credentials: 'same-origin',
+  },
+})
+
+/**
+ * Set up Apollo (GraphQL interface).
  * @type {ApolloClient}
  */
 const client = new ApolloClient({
-  link: new HttpLink({
-    uri: 'http://localhost:3000/graphql',
-    opts: {
-      credentials: 'same-origin',
-    },
-  }),
+  link: generalError.concat(link),
   cache: new InMemoryCache(),
   dataIdFromObject: o => o.id,
 })

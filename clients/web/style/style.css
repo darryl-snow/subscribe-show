@@ -6,6 +6,7 @@
   --border-width: 2px;
   --button-color: 0,206,201;
   --button-padding: 0.25em 0.75em;
+  --error-color: 235,77,75;
   --header-background-color: 34,34,34;
   --header-text-color: 233,233,233;
   --label-background-color: 221,221,221;
@@ -47,10 +48,11 @@
     3.6 Selects
     3.7 Subheadings
   4. Components
-    4.1 Header
-    4.2 List Header
-    4.3 List item
-    4.4 Search Form
+    4.1 Error
+    4.2 Header
+    4.3 List Header
+    4.4 List item
+    4.5 Search Form
 
  */
 
@@ -347,14 +349,42 @@ p {
 
 /* 4. COMPONENTS */
 
-/* 4.1 Header */
+/* 4.1 Error */
+
+.c-error {
+  color: rgb(var(--error-color));
+  display: table-cell;
+  height: 100vh;
+  text-align: center;
+  vertical-align: middle;
+  width: 100vw;
+}
+
+.c-error-button {
+  border: var(--border-width) solid rgb(var(--error-color));
+  color: rgb(var(--error-color));
+}
+
+.c-error-button:active,
+.c-error-button:focus,
+.c-error-button:hover {
+  background: rgb(var(--error-color));
+  border: 2px solid rgb(var(--error-color));
+}
+
+.c-error-icon {
+  font-size: 500%;
+  margin-bottom: 0.5em;
+}
+
+/* 4.2 Header */
 
 .c-header {
   background: rgb(var(--header-background-color));
   color: rgb(var(--header-text-color));
 }
 
-/* 4.2 List Header */
+/* 4.3 List Header */
 
 .c-list-header {
   justify-content: space-between;
@@ -364,7 +394,7 @@ p {
   align-items: center;
 }
 
-/* 4.3 List Item */
+/* 4.4 List Item */
 
 .c-list-item {
   background: white;
@@ -411,7 +441,7 @@ p {
   outline: none;
 }
 
-/* 4.4 Search form */
+/* 4.5 Search form */
 
 .c-search-form {
   display: flex;
