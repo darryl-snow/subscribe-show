@@ -19,7 +19,7 @@ const Icon = ({ name, className }) => {
   }
 
   return (
-    <FontAwesome name={iconName} className={className} />
+    <FontAwesome name={iconName} className={`o-icon ${className}`} />
   )
 }
 

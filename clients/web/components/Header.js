@@ -1,5 +1,6 @@
 // Dependencies
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // App Components
 import history from '../history'
@@ -15,17 +16,16 @@ export default class Header extends Component {
    */
   constructor(props) {
     super(props)
-    this.state = { query: '' }
+    this.state = { query: this.props.query || '' }
   }
   /**
    * Submit the search form.
    * @param  {Object} event The event that fired the form submission
-   * @return {Boolean}      Dummy return value
    */
   onSubmit = (event) => {
     event.preventDefault()
-    history.push(`/search/${this.state.query}`, { query: this.state.query })
-    return true
+    // history.push(`/search/${this.state.query}`, { query: this.state.query })
+    this.props.history.push(`/search/${this.state.query}`, { query: this.state.query })
   }
   /**
    * Render the component.
@@ -49,4 +49,22 @@ export default class Header extends Component {
       </header>
     )
   }
+}
+
+/**
+ * Define the types for each property.
+ * @type {Object}
+ */
+Header.propTypes = {
+  history: PropTypes.object,
+  query: PropTypes.string,
+}
+
+/**
+ * Define the default values for each property.
+ * @type {Object}
+ */
+Header.defaultProps = {
+  history,
+  query: '',
 }
