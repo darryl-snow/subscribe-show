@@ -73,10 +73,10 @@ export default class ListFilters extends Component {
   render() {
     return (
       <div className="c-list-filters u-flex u-margin-right--small">
-        <div className="o-checkbox-group c-list-filters-group u-margin-right--small">
+        <div className="c-toggle-button-group u-margin-right--small">
           {this.renderTypeFilters()}
         </div>
-        <div className="o-checkbox-group c-list-filters-group">
+        <div className="c-toggle-button-group">
           {this.renderLanguageFilters()}
         </div>
       </div>
@@ -89,6 +89,7 @@ export default class ListFilters extends Component {
  * @type {Object}
  */
 ListFilters.propTypes = {
+  results: PropTypes.array,
   updateList: PropTypes.func,
 }
 
@@ -97,5 +98,6 @@ ListFilters.propTypes = {
  * @type {Object}
  */
 ListFilters.defaultProps = {
+  results: [{}],
   updateList: () => {},
 }

@@ -7,11 +7,11 @@ import PropTypes from 'prop-types'
 // App Components
 import Icon from './Icon'
 
-const reload = () => {
+const reloadFunction = () => {
   window.location.reload(true)
 }
 
-const Error = ({ error }) => (
+const Error = ({ error, reload }) => (
   <div className="o-container c-error u-flex">
     <Icon name="exclamation-circle" className="c-error-icon" />
     <h1>Whoops! Something went wrong!
@@ -31,6 +31,7 @@ export default Error
  */
 Error.propTypes = {
   error: PropTypes.string,
+  reload: PropTypes.func,
 }
 
 /**
@@ -39,4 +40,5 @@ Error.propTypes = {
  */
 Error.defaultProps = {
   error: '',
+  reload: reloadFunction,
 }

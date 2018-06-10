@@ -11,7 +11,7 @@ class ToggleButton extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      checked: true,
+      checked: true, // ON by default
     }
   }
   /**
@@ -36,7 +36,7 @@ class ToggleButton extends Component {
   render() {
     const { value } = this.props
     return (
-      <div className="o-checkbox-container">
+      <div className="c-toggle-button">
         <input
           id={value}
           value={value}
@@ -44,7 +44,7 @@ class ToggleButton extends Component {
           onChange={this.handleChange}
           checked={this.state.checked}
         />
-        <label htmlFor={value} className="o-checkbox">
+        <label htmlFor={value} className="c-toggle-button-label">
           <Icon name={value} className="u-margin-right--small" />
           <span className="u-margin-right--small">{value}</span>
         </label>

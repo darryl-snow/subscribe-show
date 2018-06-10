@@ -4,8 +4,9 @@ import Icon from './Icon'
 
 describe('Icon Component', () => {
   it('should render', () => {
-    expect(mount(<Icon />).find('.o-icon').exists()).toBe(true)
-    expect(mount(<Icon />).find('.fa').exists()).toBe(true)
+    const wrapper = mount(<Icon />)
+    expect(wrapper.find('.o-icon').exists()).toBe(true)
+    expect(wrapper.find('.fa').exists()).toBe(true)
   })
   it('should render the correct icon', () => {
     const testName = 'test'

@@ -53,6 +53,7 @@
     4.3 List Header
     4.4 List item
     4.5 Search Form
+    4.6 ToggleButton
 
  */
 
@@ -187,64 +188,6 @@ p {
   background: rgb(var(--button-color));
   border: 2px solid rgb(var(--button-color));
   color: white;
-  outline: none;
-}
-
-/* 3.2 Checkboxes */
-
-.o-checkbox-group {
-  align-items: center;
-  display: flex;
-}
-
-.o-checkbox-group .o-checkbox-container:first-child .o-checkbox {
-  border-top-left-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
-}
-
-.o-checkbox-group .o-checkbox-container:last-child .o-checkbox {
-  border-top-right-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-}
-
-.o-checkbox {
-  background: white;
-  border: 2px solid rgb(var(--label-background-color));
-  color: rgb(var(--label-border-color--active));
-  cursor: pointer;
-  display: inline-block;
-  font-size: 0.75em;
-  font-weight: 900;
-  padding: var(--button-padding);
-  text-transform: uppercase;
-  transition: var(--transition);
-}
-
-.o-checkbox:active,
-.o-checkbox:focus,
-.o-checkbox:hover {
-  color: rgb(var(--label-background-color--active));
-  border-color: rgb(var(--label-border-color--active));
-}
-
-.o-checkbox-container + .o-checkbox-container .o-checkbox {
-  margin-left: 2px;
-}
-
-.o-checkbox-container input {
-  display: none;
-}
-
-.o-checkbox-container input:checked ~ .o-checkbox{
-  background: rgb(var(--label-background-color));
-  color: rgb(var(--label-text-color));
-}
-
-.o-checkbox-container input:checked ~ .o-checkbox:active,
-.o-checkbox-container input:checked ~ .o-checkbox:focus,
-.o-checkbox-container input:checked ~ .o-checkbox:hover {
-  background: rgb(var(--label-border-color--active));
-  color: rgb(var(--body-text-color));
   outline: none;
 }
 
@@ -480,4 +423,62 @@ p {
 
 .c-search-form-input:focus + .c-search-form-button {
   color: white;
+}
+
+/* 4.6 ToggleButton */
+
+.c-toggle-button-group {
+  align-items: center;
+  display: flex;
+}
+
+.c-toggle-button-group .c-toggle-button:first-child .c-toggle-button-label {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.c-toggle-button-group .c-toggle-button:last-child .c-toggle-button-label {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.c-toggle-button-label {
+  background: white;
+  border: 2px solid rgb(var(--label-background-color));
+  color: rgb(var(--label-border-color--active));
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 900;
+  padding: var(--button-padding);
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.c-toggle-button-label:active,
+.c-toggle-button-label:focus,
+.c-toggle-button-label:hover {
+  color: rgb(var(--label-background-color--active));
+  border-color: rgb(var(--label-border-color--active));
+}
+
+.c-toggle-button + .c-toggle-button .c-toggle-button-label {
+  margin-left: 2px;
+}
+
+.c-toggle-button input {
+  display: none;
+}
+
+.c-toggle-button input:checked ~ .c-toggle-button-label{
+  background: rgb(var(--label-background-color));
+  color: rgb(var(--label-text-color));
+}
+
+.c-toggle-button input:checked ~ .c-toggle-button-label:active,
+.c-toggle-button input:checked ~ .c-toggle-button-label:focus,
+.c-toggle-button input:checked ~ .c-toggle-button-label:hover {
+  background: rgb(var(--label-border-color--active));
+  color: rgb(var(--body-text-color));
+  outline: none;
 }
