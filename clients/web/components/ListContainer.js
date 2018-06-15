@@ -53,8 +53,8 @@ class ListContainer extends Component {
   filterList() {
     this.setState({
       displayListItems: this.state.receivedListItems.filter(listItem =>
-        this.state.filters.includes(listItem.type) &&
-          this.state.filters.includes(listItem.language)),
+        this.state.filters.includes(listItem.type.toLowerCase()) &&
+          this.state.filters.includes(listItem.language.toLowerCase())),
     })
   }
   /**
@@ -92,6 +92,8 @@ class ListContainer extends Component {
     } = this.state
 
     const { className } = this.props
+    const { length } = displayListItems
+    const content = length === 1 ? `Displaying ${length} result` : `Displaying ${length} results`
 
     // If the API request is in progress, render a loading spinner.
     if (this.props.data.loading) { return <Loader /> }
@@ -102,7 +104,7 @@ class ListContainer extends Component {
         {this.renderTitle()}
         <ListHeader
           className={`${className}-header`}
-          content={`Displaying ${displayListItems.length} results`}
+          content={content}
           defaultSort={sortBy}
           results={receivedListItems}
           sortOrder={sortOrder}
