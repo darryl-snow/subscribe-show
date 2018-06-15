@@ -27,7 +27,7 @@ export default class List extends Component {
    */
   render() {
     return (
-      <div className="c-list">
+      <div className={`${this.props.className} c-list`}>
         <ul className="u-unstyled-list">
           {this.renderListItems()}
         </ul>
@@ -41,6 +41,7 @@ export default class List extends Component {
  * @type {Object}
  */
 List.propTypes = {
+  className: PropTypes.string,
   listItems: PropTypes.array,
 }
 
@@ -49,5 +50,6 @@ List.propTypes = {
  * @type {Object}
  */
 List.defaultProps = {
+  className: '',
   listItems: [],
 }

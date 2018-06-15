@@ -16,7 +16,16 @@ export default class Header extends Component {
    */
   constructor(props) {
     super(props)
-    this.state = { query: this.props.query || '' }
+
+    let query = props.query || ''
+
+    // Get the search query either from the URL or from the props.
+    if (!query) {
+      query = props.history.location.state ?
+        props.history.location.state.query : ''
+    }
+
+    this.state = { query }
   }
   /**
    * Submit the search form.

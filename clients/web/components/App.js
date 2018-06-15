@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 
 // App components
 import Header from './Header'
+import ListContainer from './ListContainer'
 import Watchlist from './Watchlist'
 import SearchResults from './SearchResults'
 
@@ -17,7 +18,7 @@ export default () => (
     <Header />
     <Switch>
       <Route exact path="/" component={Watchlist} />
-      <Route path="/search" component={SearchResults} />
+      <Route path="/search" component={SearchResults(ListContainer)} />
       <Route path="/search/:query" component={SearchResults} />
       <Route component={Watchlist} />
     </Switch>

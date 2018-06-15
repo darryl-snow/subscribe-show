@@ -1,0 +1,140 @@
+// Dependencies
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+// App Components
+import List from './List/List'
+import ListHeader from './List/ListHeader'
+import Loader from './Loader'
+
+/**
+ * The ListContainer component. Receives a set of list items and renders a
+ * fully controlled list with filters and sort options.
+ * @extends Component
+ */
+class ListContainer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      filters: [],
+      displayListItems: [],
+      receivedListItems: props.data[props.query],
+      sortBy: props.sortBy,
+      sortOrder: props.sortOrder,
+    }
+  }
+  /**
+   * Update the state when the props are updated.
+   * @param  {Object}   nextProps The new props.
+   */
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps
+    this.setState({
+      displayListItems: data[nextProps.query],
+      receivedListItems: data[nextProps.query],
+    }, this.sortList)
+  }
+  /**
+   * Update the set of list items based on the sort field.
+   */
+  sortList() {
+    const dynamicSort = property => (a, b) => {
+      const c = (a[property] > b[property]) ? 1 : 0
+      const d = (a[property] < b[property]) ? -1 : c
+      return d * this.state.sortOrder
+    }
+    const tmp = this.state.displayListItems.slice()
+    this.setState({ displayListItems: tmp.sort(dynamicSort(this.state.sortBy)) })
+  }
+  /**
+   * Update the set of list items based on the filters.
+   */
+  filterList() {
+    this.setState({
+      displayListItems: this.state.receivedListItems.filter(listItem =>
+        this.state.filters.includes(listItem.type) &&
+          this.state.filters.includes(listItem.language)),
+    })
+  }
+  /**
+   * Callback functions for sub-components. This function is called when the
+   * list should be sorted or filtered. It takes arguments from those
+   * subcomponents and determines how the list should be updated.
+   * @param  {Object}   args The arguments passed from the subcomponent
+   */
+  updateList = (args) => {
+    if (args.filters) {
+      this.setState({ filters: args.filters }, this.filterList)
+    }
+    if (args.sortBy) {
+      this.setState({ sortBy: args.sortBy }, this.sortList)
+    }
+    if (args.sortOrder) {
+      this.setState({ sortOrder: args.sortOrder }, this.sortList)
+    }
+  }
+  render() {
+    const {
+      displayListItems,
+      receivedListItems,
+      sortBy,
+      sortOrder,
+    } = this.state
+
+    const { className, title } = this.props
+
+    // If the API request is in progress, render a loading spinner.
+    if (this.props.data.loading) { return <Loader /> }
+
+    // Otherwise render the list.
+    return (
+      <div className={`${className} o-container`}>
+        <h1>{title}</h1>
+        <ListHeader
+          className={`${className}-header`}
+          content={`Displaying ${displayListItems.length} results`}
+          defaultSort={sortBy}
+          results={receivedListItems}
+          sortOrder={sortOrder}
+          updateList={this.updateList}
+        />
+        <List
+          className={`${className}-list`}
+          listItems={displayListItems}
+        />
+      </div>
+    )
+  }
+}
+
+export default ListContainer
+
+/**
+ * Define the property types.
+ * @type {Object}
+ */
+ListContainer.propTypes = {
+  className: PropTypes.string,
+  data: PropTypes.object,
+  query: PropTypes.string,
+  sortBy: PropTypes.string,
+  sortOrder: PropTypes.number,
+  title: PropTypes.string,
+}
+
+/**
+ * Define default values for each property.
+ * @type {Object}
+ */
+ListContainer.defaultProps = {
+  className: '',
+  data: {
+    loading: true,
+    search: [],
+  },
+  query: '',
+  sortBy: 'airDate',
+  sortOrder: 1,
+  title: '',
+}

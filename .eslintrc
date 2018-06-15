@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "react"
+    "react",
+    "jest"
   ],
   "ecmaFeatures": {
     "jsx": true,
@@ -9,7 +10,8 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
       "import/extensions": 0,
@@ -45,6 +47,11 @@
       "react/require-extension": 1,
       "react/self-closing-comp": 1,
       "react/sort-comp": 1,
-      "react/wrap-multilines": 1
+      "react/wrap-multilines": 1,
+      "jest/no-disabled-tests": "warn",
+      "jest/no-focused-tests": "error",
+      "jest/no-identical-title": "error",
+      "jest/prefer-to-have-length": "warn",
+      "jest/valid-expect": "error"
   }
 }

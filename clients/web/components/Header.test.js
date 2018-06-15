@@ -2,7 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Header from './Header'
 
-const historyMock = { push: jest.fn() }
+const historyMock = {
+  push: jest.fn(),
+  location: {
+    state: {
+      query: '',
+    },
+  },
+}
 
 describe('Header Component', () => {
   it('should render', () => {
