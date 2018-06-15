@@ -9,7 +9,7 @@ const parseEpisode = episode => ({
   episodeNumber: episode.number,
   airDate: episode.airdate,
   name: episode.name,
-  description: episode.summary,
+  description: episode.summary.replace(/(<([^>]+)>)/ig, ''),
   image: episode.image ? episode.image.original : null,
   watched: false,
 });

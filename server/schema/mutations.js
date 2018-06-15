@@ -32,6 +32,15 @@ module.exports = new GraphQLObjectType({
         return (new WatchListItem({ tmdbID, type }).save());
       },
     },
+    removeItem: {
+      type: WatchListItemType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, { id }) {
+        return WatchListItem.remove({ _id: id });
+      },
+    },
     toggleItemWatched: { // Toggle whether a watchlist item has been watched or not
       type: WatchListItemType,
       args: {
