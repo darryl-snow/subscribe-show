@@ -74,6 +74,15 @@ class ListContainer extends Component {
       this.setState({ sortOrder: args.sortOrder }, this.sortList)
     }
   }
+  renderTitle = () => {
+    const { title } = this.props
+    if (!title) {
+      return ''
+    }
+    return (
+      <h1>{title}</h1>
+    )
+  }
   render() {
     const {
       displayListItems,
@@ -82,7 +91,7 @@ class ListContainer extends Component {
       sortOrder,
     } = this.state
 
-    const { className, title } = this.props
+    const { className } = this.props
 
     // If the API request is in progress, render a loading spinner.
     if (this.props.data.loading) { return <Loader /> }
@@ -90,7 +99,7 @@ class ListContainer extends Component {
     // Otherwise render the list.
     return (
       <div className={`${className} o-container`}>
-        <h1>{title}</h1>
+        {this.renderTitle()}
         <ListHeader
           className={`${className}-header`}
           content={`Displaying ${displayListItems.length} results`}

@@ -41,6 +41,7 @@ export default ListHeader
  * @type {Object}
  */
 ListHeader.propTypes = {
+  className: PropTypes.string,
   content: PropTypes.string,
   defaultSort: PropTypes.string,
   results: PropTypes.array,
@@ -53,6 +54,7 @@ ListHeader.propTypes = {
  * @type {Object}
  */
 ListHeader.defaultProps = {
+  className: '',
   content: '',
   defaultSort: '',
   results: [],

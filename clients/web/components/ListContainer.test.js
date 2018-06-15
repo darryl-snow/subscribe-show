@@ -48,6 +48,13 @@ describe('ListContainer Component', () => {
     expect(wrapper.find(`.${testClass}-header`).exists()).toBe(true)
     expect(wrapper.find(`.${testClass}-list`).exists()).toBe(true)
   })
+  it('should only render a title if one has been provided', () => {
+    let wrapper = mount(<ListContainer />)
+    expect(wrapper.find('h1').exists()).toBe(false)
+    const testTitle = 'test'
+    wrapper = mount(<ListContainer title={testTitle} />)
+    expect(wrapper.find('h1').exists()).toBe(true)
+  })
   it('should pass on the list items provided, unfiltered', () => {
     const wrapper = mount(<ListContainer />)
     const listItems = propsMock.data[propsMock.query]
