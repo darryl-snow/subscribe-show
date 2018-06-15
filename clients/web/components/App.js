@@ -17,7 +17,7 @@ export default () => (
   <main>
     <Header />
     <Switch>
-      <Route exact path="/" component={Watchlist} />
+      <Route exact path="/" component={Watchlist(ListContainer)} />
       <Route path="/search" component={SearchResults(ListContainer)} />
       <Route path="/search/:query" component={SearchResults} />
       <Route component={Watchlist} />

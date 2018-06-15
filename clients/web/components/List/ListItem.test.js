@@ -9,6 +9,26 @@ describe('ListItem Component', () => {
     expect(wrapper.find('.c-list-item-image').exists()).toBe(true)
     expect(wrapper.find('.c-list-item-details').exists()).toBe(true)
   })
+  it('should only render the Add to Watchlist button for search result items', () => {
+    let wrapper = shallow(<ListItem />)
+    expect(wrapper.find('.o-button').exists()).toBe(false)
+
+    const mockProps = {
+      tmdbID: 'tmdbID',
+    }
+    wrapper = mount(<ListItem item={mockProps} />)
+    expect(wrapper.find('.o-button').exists()).toBe(true)
+  })
+  it('should only render a language label if the item has a language', () => {
+    let wrapper = shallow(<ListItem />)
+    expect(wrapper.find('.o-label').exists()).toBe(false)
+
+    const mockProps = {
+      language: 'language',
+    }
+    wrapper = mount(<ListItem item={mockProps} />)
+    expect(wrapper.find('.o-label').exists()).toBe(true)
+  })
   it('should render the correct details', () => {
     const mockValue = 'test'
     const mockProps = {

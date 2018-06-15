@@ -13,19 +13,22 @@ import ToggleButton from '../ToggleButton'
  * @return {[type]}       [description]
  */
 const getState = (props) => {
-  const languages = []
-  const types = []
+  const { results } = props
 
-  //  Get all the languages and types from the set of items (results).
-  props.results.map((result) => {
-    if (languages.indexOf(result.language) === -1) {
-      languages.push(result.language)
+  // Get all languages from the results set.
+  const languages = Array.from(new Set(results.map((result) => {
+    if (result.language) {
+      return result.language.toLowerCase()
     }
-    if (types.indexOf(result.type) === -1) {
-      types.push(result.type)
+    return null
+  }))).filter(result => result !== null && result !== 'unknown')
+
+  const types = Array.from(new Set(results.map((result) => {
+    if (result.type) {
+      return result.type.toLowerCase()
     }
-    return true
-  })
+    return null
+  }))).filter(result => result !== null)
 
   // Return the state object
   return ({

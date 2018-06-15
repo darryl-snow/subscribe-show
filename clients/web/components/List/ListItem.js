@@ -11,6 +11,7 @@ import Icon from '../Icon'
  */
 const ListItem = ({ item }) => {
   const {
+    tmdbID,
     title,
     description,
     language,
@@ -18,6 +19,25 @@ const ListItem = ({ item }) => {
     type,
     airDate,
   } = item
+
+  const renderAddToWatchListButton = () => {
+    if (!tmdbID) {
+      return ''
+    }
+    return (
+      <button className="o-button">
+        <Icon name="plus" className="u-margin-right--small" />
+        Add to watchlist
+      </button>
+    )
+  }
+
+  const renderLanguageLabel = () => {
+    if (!language) {
+      return ''
+    }
+    return <span className="o-label">{language}</span>
+  }
 
   return (
     <div className="c-list-item">
@@ -30,12 +50,9 @@ const ListItem = ({ item }) => {
           {title}
           <span className="o-subheading">{airDate}</span>
         </h2>
-        <span className="o-label">{language}</span>
+        {renderLanguageLabel()}
         <p>{description}</p>
-        <button className="o-button">
-          <Icon name="plus" className="u-margin-right--small" />
-          Add to watchlist
-        </button>
+        {renderAddToWatchListButton()}
       </div>
     </div>
   )

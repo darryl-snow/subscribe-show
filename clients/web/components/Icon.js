@@ -10,6 +10,10 @@ import FontAwesome from 'react-fontawesome'
  * @param {String} className Any classes that should be applied to the icon.
  */
 const Icon = ({ name, className }) => {
+  if (!name) {
+    return ''
+  }
+
   let iconName = name.toLowerCase()
 
   // the API returns the type as movie, but we want to use the FontAwesome

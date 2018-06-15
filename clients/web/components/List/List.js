@@ -16,7 +16,7 @@ export default class List extends Component {
   renderListItems() {
     return this.props.listItems.map(item =>
       (
-        <li key={item.tmdbID}>
+        <li key={item.tmdbID || item.id}>
           <ListItem item={item} />
         </li>
       ))
