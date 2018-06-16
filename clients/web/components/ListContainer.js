@@ -19,6 +19,7 @@ class ListContainer extends Component {
     this.state = {
       filters: [],
       displayListItems: [],
+      loading: props.data.loading,
       receivedListItems: props.data[props.query],
       sortBy: props.sortBy,
       sortOrder: props.sortOrder,
@@ -29,10 +30,11 @@ class ListContainer extends Component {
    * @param  {Object}   nextProps The new props.
    */
   componentWillReceiveProps(nextProps) {
-    const { data } = nextProps
+    const { data, query } = nextProps
     this.setState({
-      displayListItems: data[nextProps.query],
-      receivedListItems: data[nextProps.query],
+      displayListItems: data[query],
+      receivedListItems: data[query],
+      loading: data.loading,
     }, this.sortList)
   }
   /**
@@ -55,6 +57,15 @@ class ListContainer extends Component {
       displayListItems: this.state.receivedListItems.filter(listItem =>
         this.state.filters.includes(listItem.type.toLowerCase()) &&
           this.state.filters.includes(listItem.language.toLowerCase())),
+    })
+  }
+  /**
+   * Toggle the loading state. This is a hack to enable list item sub-components
+   * to be able to change the loading state. TODO: use react context.
+   */
+  toggleLoading = () => {
+    this.setState({
+      loading: !this.state.loading,
     })
   }
   /**
@@ -86,6 +97,7 @@ class ListContainer extends Component {
   render() {
     const {
       displayListItems,
+      loading,
       receivedListItems,
       sortBy,
       sortOrder,
@@ -96,7 +108,7 @@ class ListContainer extends Component {
     const content = length === 1 ? `Displaying ${length} result` : `Displaying ${length} results`
 
     // If the API request is in progress, render a loading spinner.
-    if (this.props.data.loading) { return <Loader /> }
+    if (loading) { return <Loader /> }
 
     // Otherwise render the list.
     return (
@@ -113,6 +125,7 @@ class ListContainer extends Component {
         <List
           className={`${className}-list`}
           listItems={displayListItems}
+          toggleLoading={this.toggleLoading}
         />
       </div>
     )

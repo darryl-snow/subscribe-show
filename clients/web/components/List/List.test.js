@@ -12,11 +12,11 @@ const listItemsMock = [{
 
 describe('List Component', () => {
   it('should render', () => {
-    const wrapper = shallow(<List />)
-    expect(wrapper.find('.c-list').exists()).toBe(true)
+    const component = shallow(<List />)
+    expect(component.find('.c-list').exists()).toBe(true)
   })
   it('should render the list items', () => {
-    const wrapper = mount(<List listItems={listItemsMock} />)
-    expect(wrapper.find('li').length).toEqual(listItemsMock.length)
+    const component = shallow(<List listItems={listItemsMock} />)
+    expect(component.find('li').length).toEqual(listItemsMock.length)
   })
 })

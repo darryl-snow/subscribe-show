@@ -4,9 +4,9 @@ import ToggleButton from './ToggleButton'
 
 describe('ToggleButton Component', () => {
   it('should render', () => {
-    const wrapper = shallow(<ToggleButton />)
-    expect(wrapper.find('.c-toggle-button').exists()).toBe(true)
-    expect(wrapper.find('.c-toggle-button-label').exists()).toBe(true)
+    const component = shallow(<ToggleButton />)
+    expect(component.find('.c-toggle-button').exists()).toBe(true)
+    expect(component.find('.c-toggle-button-label').exists()).toBe(true)
   })
   it('should have a checkbox with the correct value', () => {
     const testValue = 'test'
@@ -22,14 +22,19 @@ describe('ToggleButton Component', () => {
   })
   it('should update when the button is clicked', () => {
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    const wrapper = shallow(<ToggleButton />)
-    const initialState = wrapper.state('checked')
-    wrapper.find('.c-toggle-button-label').simulate('click', mockedEvent)
+    const component = shallow(<ToggleButton />)
+    const initialState = component.state('checked')
+    component.find('.c-toggle-button input').simulate('change', mockedEvent)
     setTimeout(() => {
-      expect(wrapper.state('checked')).toEqual(!initialState)
+      expect(component.state('checked')).toEqual(!initialState)
     }, 250)
   })
   it('should call the passed handler when the button is clicked', () => {
-    true
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    const handleChangeMock = jest.fn()
+    const component = shallow(<ToggleButton handleChange={handleChangeMock} />)
+    expect(handleChangeMock.mock.calls).toHaveLength(0)
+    component.find('.c-toggle-button input').simulate('change', mockedEvent)
+    expect(handleChangeMock.mock.calls).toHaveLength(1)
   })
 })

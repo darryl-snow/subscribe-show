@@ -1,15 +1,19 @@
 // Dependencies
 import React from 'react'
+import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import mutation from '../../mutations/addToWatchlist'
+import query from '../../queries/getWatchlistItems'
 
 // App components
+import history from '../../history'
 import Icon from '../Icon'
 
 /**
  * The ListItem component, a stateless component that renders all the details
  * provided for a given list item.
  */
-const ListItem = ({ item }) => {
+export const ListItem = (props) => {
   const {
     tmdbID,
     title,
@@ -18,14 +22,31 @@ const ListItem = ({ item }) => {
     image,
     type,
     airDate,
-  } = item
+  } = props.item
+
+  const addItem = (event) => {
+    event.preventDefault()
+    props.toggleLoading()
+
+    props.mutate({
+      variables: {
+        tmdbID,
+        type,
+      },
+      refetchQueries: [{
+        query,
+      }],
+    }).then(() => {
+      props.history.push('/')
+    })
+  }
 
   const renderAddToWatchListButton = () => {
     if (!tmdbID) {
       return ''
     }
     return (
-      <button className="o-button">
+      <button className="o-button" onClick={addItem}>
         <Icon name="plus" className="u-margin-right--small" />
         Add to watchlist
       </button>
@@ -58,14 +79,17 @@ const ListItem = ({ item }) => {
   )
 }
 
-export default ListItem
+export default graphql(mutation)(ListItem)
 
 /**
  * Define the types for each property.
  * @type {Object}
  */
 ListItem.propTypes = {
+  history: PropTypes.object,
   item: PropTypes.object,
+  mutate: PropTypes.func,
+  toggleLoading: PropTypes.func,
 }
 
 /**
@@ -73,5 +97,8 @@ ListItem.propTypes = {
  * @type {Object}
  */
 ListItem.defaultProps = {
+  history,
   item: {},
+  mutate: () => {},
+  toggleLoading: () => {},
 }

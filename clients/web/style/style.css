@@ -357,7 +357,7 @@ p {
 .c-list-item-image {
   align-items: center;
   background-color: rgb(var(--list-item-image-background));
-  background-position: 50% 0;
+  background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
   color: rgb(var(--list-item-image-color));

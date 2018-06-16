@@ -14,10 +14,11 @@ export default class List extends Component {
    * @return {Object} The rendered collection of list items.
    */
   renderListItems() {
-    return this.props.listItems.map(item =>
+    const { listItems, toggleLoading } = this.props
+    return listItems.map(item =>
       (
         <li key={item.tmdbID || item.id}>
-          <ListItem item={item} />
+          <ListItem item={item} toggleLoading={toggleLoading} />
         </li>
       ))
   }
@@ -43,6 +44,7 @@ export default class List extends Component {
 List.propTypes = {
   className: PropTypes.string,
   listItems: PropTypes.array,
+  toggleLoading: PropTypes.func,
 }
 
 /**
@@ -52,4 +54,5 @@ List.propTypes = {
 List.defaultProps = {
   className: '',
   listItems: [],
+  toggleLoading: () => {},
 }

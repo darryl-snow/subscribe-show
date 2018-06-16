@@ -16,8 +16,8 @@
 
 describe('SearchResults Component', () => {
   // it('should render a component with the correct properties', () => {
-  //   const wrapper = mount(<RenderedList location={locationMock} />)
-  //   console.log(wrapper.debug())
+  //   const component = mount(<RenderedList location={locationMock} />)
+  //   console.log(component.debug())
   // })
   it('should pass', () => {
     expect(true).toBe(true)

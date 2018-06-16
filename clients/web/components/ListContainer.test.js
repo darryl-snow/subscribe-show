@@ -42,32 +42,28 @@ const arraysEqual = (arr1, arr2) => {
 describe('ListContainer Component', () => {
   it('should render the component', () => {
     const testClass = 'test'
-    const wrapper = mount(<ListContainer className={testClass} />)
-    wrapper.setProps(propsMock)
-    expect(wrapper.find(`.${testClass}`).exists()).toBe(true)
-    expect(wrapper.find(`.${testClass}-header`).exists()).toBe(true)
-    expect(wrapper.find(`.${testClass}-list`).exists()).toBe(true)
+    const component = shallow(<ListContainer className={testClass} />)
+    component.setProps(propsMock)
+    expect(component.find(`.${testClass}`).exists()).toBe(true)
+    expect(component.find(`.${testClass}-header`).exists()).toBe(true)
+    expect(component.find(`.${testClass}-list`).exists()).toBe(true)
   })
   it('should only render a title if one has been provided', () => {
-    let wrapper = mount(<ListContainer />)
-    expect(wrapper.find('h1').exists()).toBe(false)
+    let component = shallow(<ListContainer />)
+    component.setState({ loading: false })
+    expect(component.find('h1').exists()).toBe(false)
     const testTitle = 'test'
-    wrapper = mount(<ListContainer title={testTitle} />)
-    expect(wrapper.find('h1').exists()).toBe(true)
-  })
-  it('should pass on the list items provided, unfiltered', () => {
-    const wrapper = mount(<ListContainer />)
-    const listItems = propsMock.data[propsMock.query]
-    wrapper.setProps(propsMock)
-    expect(wrapper.find('.c-list-item')).toHaveLength(listItems.length)
+    component = shallow(<ListContainer title={testTitle} />)
+    component.setState({ loading: false })
+    expect(component.find('h1').exists()).toBe(true)
   })
   it('should sort by airDate, ascending by default', () => {
-    const wrapper = shallow(<ListContainer />)
+    const component = shallow(<ListContainer />)
     const listMock = propsMock.data[propsMock.query]
-    wrapper.setState({ displayListItems: listMock })
-    wrapper.instance().sortList()
+    component.setState({ displayListItems: listMock })
+    component.instance().sortList()
     const providedListItems = listMock.map(item => item.airDate)
-    const renderedListItems = wrapper.state().displayListItems.map(item => item.airDate)
+    const renderedListItems = component.state().displayListItems.map(item => item.airDate)
     expect(arraysEqual(providedListItems.sort(), renderedListItems)).toBe(true)
   })
   it('should update the list controls', () => {
@@ -75,71 +71,71 @@ describe('ListContainer Component', () => {
     const sortOrderTest = -1
     const filterListMock = jest.fn()
     const sortListMock = jest.fn()
-    const wrapper = shallow(<ListContainer />)
+    const component = shallow(<ListContainer />)
 
-    wrapper.instance().filterList = filterListMock
-    wrapper.instance().sortList = sortListMock
-    wrapper.update()
+    component.instance().filterList = filterListMock
+    component.instance().sortList = sortListMock
+    component.update()
 
-    expect(wrapper.state().filters).toHaveLength(0)
+    expect(component.state().filters).toHaveLength(0)
     expect(filterListMock.mock.calls).toHaveLength(0)
     expect(sortListMock.mock.calls).toHaveLength(0)
 
-    wrapper.instance().updateList({
+    component.instance().updateList({
       filters: ['1'],
     })
-    expect(wrapper.state().filters).toHaveLength(1)
+    expect(component.state().filters).toHaveLength(1)
     expect(filterListMock.mock.calls).toHaveLength(1)
 
-    wrapper.instance().updateList({
+    component.instance().updateList({
       sortBy: sortByTest,
     })
-    expect(wrapper.state().sortBy).toBe(sortByTest)
+    expect(component.state().sortBy).toBe(sortByTest)
     expect(sortListMock.mock.calls).toHaveLength(1)
 
-    wrapper.instance().updateList({
+    component.instance().updateList({
       sortOrder: sortOrderTest,
     })
-    expect(wrapper.state().sortOrder).toBe(sortOrderTest)
+    expect(component.state().sortOrder).toBe(sortOrderTest)
     expect(sortListMock.mock.calls).toHaveLength(2)
   })
   it('should sort the list according to the provided field', () => {
-    const wrapper = shallow(<ListContainer />)
+    const component = shallow(<ListContainer />)
     const listMock = propsMock.data[propsMock.query]
     const sortByTest = 'type'
-    wrapper.setState({
+    component.setState({
       displayListItems: listMock,
       sortBy: sortByTest,
     })
-    wrapper.instance().sortList()
+    component.instance().sortList()
     const providedListItems = listMock.map(item => item[sortByTest])
-    const renderedListItems = wrapper.state().displayListItems.map(item => item[sortByTest])
+    const renderedListItems = component.state().displayListItems.map(item => item[sortByTest])
     expect(arraysEqual(providedListItems.sort(), renderedListItems)).toBe(true)
   })
   it('should sort the list in the specified order', () => {
-    const wrapper = shallow(<ListContainer />)
+    const component = shallow(<ListContainer />)
     const listMock = propsMock.data[propsMock.query]
     const sortOrderTest = -1
-    wrapper.setState({
+    component.setState({
       displayListItems: listMock,
       sortOrder: sortOrderTest,
     })
-    wrapper.instance().sortList()
+    component.instance().sortList()
     const providedListItems = listMock.map(item => item.airDate)
-    const renderedListItems = wrapper.state().displayListItems.map(item => item.airDate)
+    const renderedListItems = component.state().displayListItems.map(item => item.airDate)
     expect(arraysEqual(providedListItems.sort().reverse(), renderedListItems)).toBe(true)
   })
   it('should filter the list according to the provided filters', () => {
-    const wrapper = shallow(<ListContainer />)
+    const component = shallow(<ListContainer />)
     const listMock = propsMock.data[propsMock.query]
     const filterTest = [5]
-    wrapper.setState({
+    component.setState({
       receivedListItems: listMock,
       filters: filterTest,
     })
-    wrapper.instance().filterList()
+    component.instance().filterList()
     const filteredList =
       listMock.filter(item => filterTest.includes(item.language) && filterTest.includes(item.type))
-    expect(wrapper.state().displayListItems).toHaveLength(filteredList.length)
+    expect(component.state().displayListItems).toHaveLength(filteredList.length)
   })
 })

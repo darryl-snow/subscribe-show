@@ -29,37 +29,37 @@ const arrayContentsAreTheSame = (array1, array2) => {
 
 describe('ListFilters Component', () => {
   it('should render', () => {
-    const wrapper = shallow(<ListFilters results={resultsMock} />)
-    expect(wrapper.find('.c-list-filters').exists()).toBe(true)
+    const component = shallow(<ListFilters results={resultsMock} />)
+    expect(component.find('.c-list-filters').exists()).toBe(true)
   })
   it('maintain active filters in state', () => {
-    const wrapper = mount(<ListFilters results={resultsMock} />)
+    const component = mount(<ListFilters results={resultsMock} />)
     const filters = []
     resultsMock.forEach((result) => {
       filters.push(result.language)
       filters.push(result.type)
     })
-    expect(arrayContentsAreTheSame(wrapper.state().filters, filters)).toBe(true)
-    wrapper.instance().changeFilter(resultsMock[0].language, false)
-    expect(arrayContentsAreTheSame(wrapper.state().filters, filters)).toBe(false)
+    expect(arrayContentsAreTheSame(component.state().filters, filters)).toBe(true)
+    component.instance().changeFilter(resultsMock[0].language, false)
+    expect(arrayContentsAreTheSame(component.state().filters, filters)).toBe(false)
     filters.splice(filters.indexOf(resultsMock[0].language), 1)
-    expect(arrayContentsAreTheSame(wrapper.state().filters, filters)).toBe(true)
+    expect(arrayContentsAreTheSame(component.state().filters, filters)).toBe(true)
   })
   it('render type filters', () => {
-    const wrapper = mount(<ListFilters results={resultsMock} />)
+    const component = mount(<ListFilters results={resultsMock} />)
     resultsMock.forEach((result) => {
-      expect(wrapper.find(`.c-toggle-button input[value="${result.type}"]`).exists()).toBe(true)
+      expect(component.find(`.c-toggle-button input[value="${result.type}"]`).exists()).toBe(true)
     })
   })
   it('render language filters', () => {
-    const wrapper = mount(<ListFilters results={resultsMock} />)
+    const component = mount(<ListFilters results={resultsMock} />)
     resultsMock.forEach((result) => {
-      expect(wrapper.find(`.c-toggle-button input[value="${result.language}"]`).exists()).toBe(true)
+      expect(component.find(`.c-toggle-button input[value="${result.language}"]`).exists()).toBe(true)
     })
   })
   it('should update the list when a filter is toggled', () => {
-    const wrapper = mount(<ListFilters results={resultsMock} updateList={updateListMock} />)
-    wrapper.instance().changeFilter('test', false)
+    const component = mount(<ListFilters results={resultsMock} updateList={updateListMock} />)
+    component.instance().changeFilter('test', false)
     expect(updateListMock.mock.calls.length).toBe(1)
   })
 })
