@@ -9,6 +9,7 @@ describe('ListItem Component', () => {
     expect(component.find('.c-list-item-image').exists()).toBe(true)
     expect(component.find('.c-list-item-details').exists()).toBe(true)
   })
+
   it('should only render the Add to Watchlist button for search result items', () => {
     let component = shallow(<ListItem />)
     expect(component.find('.o-button').exists()).toBe(false)
@@ -19,6 +20,7 @@ describe('ListItem Component', () => {
     component = mount(<ListItem item={mockProps} />)
     expect(component.find('.o-button').exists()).toBe(true)
   })
+
   it('should add the item to the watchlist when the button is clicked', () => {
     const historyMock = {
       push: jest.fn(),
@@ -28,21 +30,79 @@ describe('ListItem Component', () => {
         },
       },
     }
-    const mutationMock = jest.fn().mockResolvedValue()
+    const addItemMock = jest.fn().mockResolvedValue()
     const mockProps = {
+      addItem: addItemMock,
       history: historyMock,
       item: {
         tmdbID: 'tmdbID',
       },
-      mutate: mutationMock,
     }
     const component = shallow(<ListItem {...mockProps} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
     component.find('.o-button').simulate('click', mockedEvent)
-    expect(mutationMock.mock.calls).toHaveLength(1)
+    expect(addItemMock.mock.calls).toHaveLength(1)
   })
+
   it('should trigger the loading animation while adding an item to the watchlist', () => {
+    const historyMock = {
+      push: jest.fn(),
+      location: {
+        state: {
+          query: '',
+        },
+      },
+    }
+    const addItemMock = jest.fn().mockResolvedValue()
+    const toggleLoadingMock = jest.fn()
+    const mockProps = {
+      addItem: addItemMock,
+      history: historyMock,
+      item: {
+        tmdbID: 'tmdbID',
+      },
+      toggleLoading: toggleLoadingMock,
+    }
+    const component = shallow(<ListItem {...mockProps} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.o-button').simulate('click', mockedEvent)
+    expect(toggleLoadingMock.mock.calls).toHaveLength(1)
   })
+
+  it('should only render the toggle watched button for watchlist items', () => {
+    let itemMock = {
+      id: 1,
+      type: 'Movie',
+    }
+    let component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
+    itemMock = {
+      type: 'Movie',
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(false)
+  })
+
+  it('should render the toggle watched button based on the state', () => {
+    const itemMock = {
+      id: 1,
+      type: 'Movie',
+    }
+    const component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(false)
+    component.setState({
+      watched: true,
+    })
+    component.update()
+    expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(true)
+  })
+
+  it('should only render the toggle watched button for movies', () => {
+  })
+
+  it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
+  })
+
   it('should only render a language label if the item has a language', () => {
     let component = shallow(<ListItem />)
     expect(component.find('.o-label').exists()).toBe(false)
@@ -53,6 +113,7 @@ describe('ListItem Component', () => {
     component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-label').exists()).toBe(true)
   })
+
   it('should render the correct details', () => {
     const mockValue = 'test'
     const mockProps = {

@@ -15,7 +15,7 @@
   --label-text-color: 102,102,102;
   --list-item-image-background: 238,238,238;
   --list-item-image-color: 204,204,204;
-  --spacing: 1.5em;
+  --spacing: 1.5rem;
   --transition: 0.2s all ease-in-out;
 }
 
@@ -54,7 +54,7 @@
     4.4 List item
     4.5 Search Form
     4.6 ToggleButton
-
+    4.7 Toggle Watched Button
  */
 
 /**
@@ -370,6 +370,7 @@ p {
 .c-list-item-details {
   flex: 3;
   padding: var(--spacing);
+  position: relative;
 }
 
 .c-list-sort-order-button {
@@ -480,5 +481,30 @@ p {
 .c-toggle-button input:checked ~ .c-toggle-button-label:hover {
   background: rgb(var(--label-border-color--active));
   color: rgb(var(--body-text-color));
+  outline: none;
+}
+
+/* 4.7 Toggle Watched Button */
+
+.c-toggle-watched-button {
+  border: none;
+  color: rgb(var(--button-color));
+  cursor: pointer;
+  font-size: 3rem;
+  opacity: 0.5;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.25rem;
+  transition: var(--transition);
+}
+
+.c-toggle-watched-button--watched {
+  color: rgb(var(--label-border-color--active));
+}
+
+.c-toggle-watched-button:active,
+.c-toggle-watched-button:focus,
+.c-toggle-watched-button:hover {
+  opacity: 1;
   outline: none;
 }

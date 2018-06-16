@@ -1,8 +1,9 @@
 // Dependencies
-import React from 'react'
-import { graphql } from 'react-apollo'
+import React, { Component } from 'react'
+import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
-import mutation from '../../mutations/addToWatchlist'
+import AddItemMutation from '../../mutations/addToWatchlist'
+import ToggleWatchedMutation from '../../mutations/toggleWatched'
 import query from '../../queries/getWatchlistItems'
 
 // App components
@@ -13,83 +14,143 @@ import Icon from '../Icon'
  * The ListItem component, a stateless component that renders all the details
  * provided for a given list item.
  */
-export const ListItem = (props) => {
-  const {
-    tmdbID,
-    title,
-    description,
-    language,
-    image,
-    type,
-    airDate,
-  } = props.item
+export class ListItem extends Component {
+  constructor(props) {
+    super(props)
 
-  const addItem = (event) => {
+    this.state = {
+      watched: props.item.watched,
+    }
+  }
+
+  addItem = (event) => {
     event.preventDefault()
-    props.toggleLoading()
+    this.props.toggleLoading()
 
-    props.mutate({
+    this.props.addItem({
       variables: {
-        tmdbID,
-        type,
+        tmdbID: this.props.item.tmdbID,
+        type: this.props.item.type,
       },
       refetchQueries: [{
         query,
       }],
     }).then(() => {
-      props.history.push('/')
+      this.props.history.push('/')
     })
   }
 
-  const renderAddToWatchListButton = () => {
-    if (!tmdbID) {
+  toggleWatched = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      watched: !this.state.watched,
+    })
+
+    this.props.toggleWatched({
+      variables: {
+        id: this.props.item.id,
+      },
+      refetchQueries: [{
+        query,
+      }],
+    })
+  }
+
+  renderAddToWatchListButton = () => {
+    if (!this.props.item.tmdbID) {
       return ''
     }
     return (
-      <button className="o-button" onClick={addItem}>
+      <button className="o-button" onClick={this.addItem}>
         <Icon name="plus" className="u-margin-right--small" />
         Add to watchlist
       </button>
     )
   }
 
-  const renderLanguageLabel = () => {
+  renderToggleWatchedButton = () => {
+    if (!this.props.item.id || this.props.item.type !== 'Movie') {
+      return ''
+    }
+    if (this.state.watched) {
+      return (
+        <button
+          className="c-toggle-watched-button c-toggle-watched-button--watched"
+          onClick={this.toggleWatched}
+          title="Mark as unwatched"
+        >
+          <Icon name="eye" />
+        </button>
+      )
+    }
+    return (
+      <button
+        className="c-toggle-watched-button"
+        onClick={this.toggleWatched}
+        title="Mark as watched"
+      >
+        <Icon name="eye-slash" />
+      </button>
+    )
+  }
+
+  renderLanguageLabel = () => {
+    const { language } = this.props.item
     if (!language) {
       return ''
     }
     return <span className="o-label">{language}</span>
   }
 
-  return (
-    <div className="c-list-item">
-      <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
-        { !image ? <Icon name="film" /> : '' }
+  render() {
+    const {
+      airDate,
+      description,
+      image,
+      title,
+      type,
+    } = this.props.item
+    return (
+      <div className="c-list-item">
+        <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
+          { !image ? <Icon name="film" /> : '' }
+        </div>
+        <div className="c-list-item-details">
+          <h2>
+            <Icon name={type} className="u-margin-right--small" />
+            {title}
+            <span className="o-subheading">{airDate}</span>
+          </h2>
+          {this.renderLanguageLabel()}
+          <p>{description}</p>
+          {this.renderAddToWatchListButton()}
+          {this.renderToggleWatchedButton()}
+        </div>
       </div>
-      <div className="c-list-item-details">
-        <h2>
-          <Icon name={type} className="u-margin-right--small" />
-          {title}
-          <span className="o-subheading">{airDate}</span>
-        </h2>
-        {renderLanguageLabel()}
-        <p>{description}</p>
-        {renderAddToWatchListButton()}
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
-export default graphql(mutation)(ListItem)
+export default compose(
+  graphql(ToggleWatchedMutation, {
+    name: 'toggleWatched',
+  }),
+  graphql(AddItemMutation, {
+    name: 'addItem',
+  }),
+)(ListItem)
 
 /**
  * Define the types for each property.
  * @type {Object}
  */
 ListItem.propTypes = {
+  addItem: PropTypes.func,
   history: PropTypes.object,
   item: PropTypes.object,
-  mutate: PropTypes.func,
   toggleLoading: PropTypes.func,
+  toggleWatched: PropTypes.func,
 }
 
 /**
@@ -97,8 +158,9 @@ ListItem.propTypes = {
  * @type {Object}
  */
 ListItem.defaultProps = {
+  addItem: () => {},
   history,
   item: {},
-  mutate: () => {},
   toggleLoading: () => {},
+  toggleWatched: () => {},
 }
