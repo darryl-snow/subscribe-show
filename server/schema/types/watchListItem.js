@@ -27,6 +27,7 @@ module.exports = new GraphQLObjectType({
     language: { type: GraphQLString },
     watched: { type: GraphQLBoolean },
     type: { type: GraphQLString },
+    isInWatchList: { type: GraphQLBoolean },
     episodes: {
       type: new GraphQLList(EpisodeType),
       resolve(parentValue) {

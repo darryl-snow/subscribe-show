@@ -21,6 +21,7 @@ const WatchListItemSchema = new Schema({
   language: { type: String },
   type: { type: String },
   watched: { type: Boolean },
+  isInWatchList: { type: Boolean },
   episodes: [{
     type: Schema.Types.ObjectId,
     ref: 'episode',
@@ -98,6 +99,15 @@ const addItemDetails = function(item, next) {
   }
 };
 
+const isResultInWatchList = function(tmdbID, watchlist) {
+  for(let i = 0; i < watchlist.length; i += 1) {
+    if (watchlist[i].tmdbID === tmdbID.toString()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Pre-save hook for the watchlist item - called before the item is saved or
  * updated in the DB. During this pre-save hook, we fetch all information about
@@ -131,7 +141,7 @@ WatchListItemSchema.pre('save', function (next) {
  * @param  {String} title The search query
  * @return {Promise}      The search results.
  */
-WatchListItemSchema.statics.search = (title) => {
+WatchListItemSchema.statics.search = function (title) {
   return new Promise((resolve) => {
     let results = [];
 
@@ -147,7 +157,18 @@ WatchListItemSchema.statics.search = (title) => {
             // Append parsed response collection to the results set
             results = results.concat(helpers.parseSearchResults(MovieResponse.data.results));
 
-            return resolve(results);
+            // now cross reference the results against the watchlist
+            this.find().then((watchListItems) => {
+
+              for (let i = 0; i < results.length; i += 1) {
+                if (isResultInWatchList(results[i].tmdbID, watchListItems)) {
+                  results[i].isInWatchList = true;
+                } else {
+                  results[i].isInWatchList = false;
+                }
+              }
+              return resolve(results);
+            });
           }).catch((err) => {
             winston.error(err);
           });
@@ -176,7 +197,6 @@ WatchListItemSchema.statics.checkIfWatched = function (id) {
           allEpisodesWatched = false;
         }
       }
-
       // If there's a different between the item's current watched state and
       // whether all episodes have been watched, then update the item, otherwise
       // just return the item as is.
