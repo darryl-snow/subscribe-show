@@ -87,6 +87,7 @@ describe('ListItem Component', () => {
     const itemMock = {
       id: 1,
       type: 'Movie',
+      watched: false,
     }
     const component = shallow(<ListItem item={itemMock} />)
     expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(false)
@@ -98,9 +99,30 @@ describe('ListItem Component', () => {
   })
 
   it('should only render the toggle watched button for movies', () => {
+    let itemMock = {
+      id: 1,
+      type: 'Movie',
+    }
+    let component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('button.c-toggle-watched-button').exists()).toBe(true)
+    itemMock = {
+      id: 1,
+      type: 'TV',
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('button.c-toggle-watched-button').exists()).toBe(false)
   })
 
   it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
+    const toggleWatchedMock = jest.fn()
+    const itemMock = {
+      id: 1,
+      type: 'Movie',
+    }
+    const component = shallow(<ListItem item={itemMock} toggleWatched={toggleWatchedMock} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.c-toggle-watched-button').simulate('click', mockedEvent)
+    expect(toggleWatchedMock.mock.calls).toHaveLength(1)
   })
 
   it('should only render a language label if the item has a language', () => {

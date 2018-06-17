@@ -30,7 +30,7 @@ module.exports = new GraphQLObjectType({
     episodes: {
       type: new GraphQLList(EpisodeType),
       resolve(parentValue) {
-        return WatchListItem.findEpisodes(parentValue.id);
+        return WatchListItem.getAllEpisodes(parentValue.id);
       },
     },
   }),

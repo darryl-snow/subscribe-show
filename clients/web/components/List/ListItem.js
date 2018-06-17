@@ -70,28 +70,35 @@ export class ListItem extends Component {
   }
 
   renderToggleWatchedButton = () => {
-    if (!this.props.item.id || this.props.item.type !== 'Movie') {
+    const { type } = this.props.item
+    const { watched } = this.state
+
+    // If no ID then it's not on the watchlist,
+    // so can't toggle it as watched or not.
+    if (!this.props.item.id) {
       return ''
     }
-    if (this.state.watched) {
+
+    // Can only toggle movies as watched or not.
+    if (type === 'Movie') {
       return (
         <button
-          className="c-toggle-watched-button c-toggle-watched-button--watched"
+          className={watched ? 'c-toggle-watched-button c-toggle-watched-button--watched' : 'c-toggle-watched-button'}
           onClick={this.toggleWatched}
-          title="Mark as unwatched"
+          title={watched ? 'Mark as unwatched' : 'Mark as watched'}
         >
-          <Icon name="eye" />
+          <Icon name={watched ? 'eye' : 'eye-slash'} />
         </button>
       )
     }
+
+    // For TV Shows each episode needs to be toggled.
     return (
-      <button
-        className="c-toggle-watched-button"
-        onClick={this.toggleWatched}
-        title="Mark as watched"
+      <span
+        className={watched ? 'c-toggle-watched-button c-toggle-watched-button--disabled c-toggle-watched-button--watched' : 'c-toggle-watched-button c-toggle-watched-button--disabled'}
       >
-        <Icon name="eye-slash" />
-      </button>
+        <Icon name={watched ? 'eye' : 'eye-slash'} />
+      </span>
     )
   }
 

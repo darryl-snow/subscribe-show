@@ -498,13 +498,17 @@ p {
   transition: var(--transition);
 }
 
+.c-toggle-watched-button--disabled {
+  cursor: not-allowed;
+}
+
 .c-toggle-watched-button--watched {
   color: rgb(var(--label-border-color--active));
 }
 
-.c-toggle-watched-button:active,
-.c-toggle-watched-button:focus,
-.c-toggle-watched-button:hover {
+.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):active,
+.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):focus,
+.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):hover {
   opacity: 1;
   outline: none;
 }

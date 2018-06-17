@@ -32,7 +32,13 @@ EpisodeSchema.statics.toggleWatched = function (episodeID) {
   return this.findById(episodeID)
     .then((episode) => {
       episode.watched = !episode.watched;
-      return episode.save();
+      return episode.save().then(() => {
+        // Check if the watchListItem needs to be updated to mark watched: true
+        // in case all episodes are now watched.
+        const WatchListItem = mongoose.model('watchListItem');
+        WatchListItem.checkIfWatched(episode.watchListItem);
+        return episode;
+      });
     }).catch((err) => {
       winston.error(err);
     });

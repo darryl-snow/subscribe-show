@@ -156,25 +156,48 @@ WatchListItemSchema.statics.search = (title) => {
 };
 
 /**
- * Retrieve all saved episodes for a given watchlist item.
- * @param  {String} id The primary key for a given watchlist item
- * @return {Array}     The episodes for the given item.
+ * Check if all episodes of a given TV watchlist item are watched; if so, the
+ * watchlist item should also be marked as watched.
+ * @param  {ID} id The ID for the watchlist item.
  */
-WatchListItemSchema.statics.getAllEpisodes = function (id) {
+WatchListItemSchema.statics.checkIfWatched = function (id) {
   return this.findById(id)
     .populate('episodes')
-    .then(watchListItem => watchListItem.episodes)
+    .then((watchListItem) => {
+      // Get all episodes for the watchlist item.
+      const episodes = watchListItem.episodes;
+      const watched = watchListItem.watched;
+
+      // Assume all have been watched. If any have not been watched, then
+      // the item should not be marked as watched.
+      let allEpisodesWatched = true;
+      for (let i = 0; i < episodes.length; i += 1) {
+        if (!episodes[i].watched) {
+          allEpisodesWatched = false;
+        }
+      }
+
+      // If there's a different between the item's current watched state and
+      // whether all episodes have been watched, then update the item, otherwise
+      // just return the item as is.
+      if(allEpisodesWatched !== watched) {
+        watchListItem.watched = allEpisodesWatched;
+        return watchListItem.save();
+      } else {
+        return watchListItem;
+      }
+    })
     .catch((err) => {
       winston.error(err);
     });
-};
+}
 
 /**
  * Retrieve all saved episodes for a given watchlist item.
  * @param  {String} id The primary key for a given watchlist item
  * @return {Array}     The episodes for the given item.
  */
-WatchListItemSchema.statics.findEpisodes = function(id) {
+WatchListItemSchema.statics.getAllEpisodes = function (id) {
   return this.findById(id)
     .populate('episodes')
     .then(watchListItem => watchListItem.episodes)
