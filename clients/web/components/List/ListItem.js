@@ -61,6 +61,18 @@ export class ListItem extends Component {
     if (!this.props.item.tmdbID) {
       return ''
     }
+
+    const { isInWatchList } = this.props.item
+
+    if (isInWatchList) {
+      return (
+        <button className="o-button o-button--disabled">
+          <Icon name="check" className="u-margin-right--small" />
+          Already added
+        </button>
+      )
+    }
+
     return (
       <button className="o-button" onClick={this.addItem}>
         <Icon name="plus" className="u-margin-right--small" />

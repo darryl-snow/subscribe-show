@@ -21,6 +21,20 @@ describe('ListItem Component', () => {
     expect(component.find('.o-button').exists()).toBe(true)
   })
 
+  it('should render a disabled button if the item is already in the watchlist', () => {
+    const addItemMock = jest.fn().mockResolvedValue()
+    const mockProps = {
+      tmdbID: 'tmdbID',
+      isInWatchList: true,
+      addItem: addItemMock,
+    }
+    const component = mount(<ListItem item={mockProps} />)
+    expect(component.find('.o-button--disabled').exists()).toBe(true)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.o-button').simulate('click', mockedEvent)
+    expect(addItemMock.mock.calls).toHaveLength(0)
+  })
+
   it('should add the item to the watchlist when the button is clicked', () => {
     const historyMock = {
       push: jest.fn(),

@@ -182,9 +182,20 @@ p {
   transition: var(--transition);
 }
 
-.o-button:active,
-.o-button:focus,
-.o-button:hover {
+.o-button--disabled {
+  color: rgb(var(--label-border-color--active));
+  cursor: not-allowed;
+  border-color: rgb(var(--label-border-color--active));
+}
+
+.o-button--disabled:active,
+.o-button--disabled:focus {
+  outline: none;
+}
+
+.o-button:not(.o-button--disabled):active,
+.o-button:not(.o-button--disabled):focus,
+.o-button:not(.o-button--disabled):hover {
   background: rgb(var(--button-color));
   border: 2px solid rgb(var(--button-color));
   color: white;
