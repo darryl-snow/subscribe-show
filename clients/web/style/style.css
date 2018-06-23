@@ -371,7 +371,6 @@ p {
 
 .c-list-item {
   background: white;
-  border-radius: var(--border-radius);
   box-shadow: 0 1px 1px rgba(0,0,0,0.3);
   display: flex;
   margin-bottom: var(--spacing);
@@ -381,6 +380,25 @@ p {
 @media(min-width: 600px) {
   .c-list-item {
     flex-direction: row;
+  }
+}
+
+.c-list-item-episode-number {
+  align-items: center;
+  background-color: rgb(var(--list-item-image-background));
+  border-bottom: 1px solid rgb(var(--label-background-color));
+  color: rgb(var(--label-text-color));
+  display: flex;
+  flex: 1;
+  font-size: 4em;
+  font-weight: 700;
+  justify-content: center;
+  text-align: center;
+}
+
+@media(min-width: 600px) {
+  .c-list-item-episode-number {
+    border: none;
   }
 }
 

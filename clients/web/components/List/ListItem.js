@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import AddItemMutation from '../../mutations/addToWatchlist'
-import ToggleWatchedMutation from '../../mutations/toggleWatched'
+import ToggleWatchedMutation from '../../mutations/toggleItemWatched'
 import query from '../../queries/getWatchlistItems'
 
 // App components
