@@ -238,6 +238,24 @@ p {
   outline: none;
 }
 
+/* 3.5 Links */
+
+.o-link {
+  color: rgb(var(--button-color));
+  text-decoration: none;
+}
+
+.o-link-icon {
+  margin-left: calc(0.5 * var(--spacing));
+  transition: var(--transition);
+}
+
+.o-link:active .o-link-icon,
+.o-link:focus .o-link-icon,
+.o-link:hover .o-link-icon {
+  margin-left: var(--spacing);
+}
+
 /* 3.5 Loaders */
 
 .o-loader {

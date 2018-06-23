@@ -169,4 +169,24 @@ describe('ListItem Component', () => {
     expect(component.find('.o-label').text()).toEqual(`${mockValue}-language`)
     expect(component.find('p').text()).toEqual(`${mockValue}-description`)
   })
+
+  it('should render a link for TV show watch list items only', () => {
+    let mockProps = {
+      tmdbID: '17861',
+      type: 'TV',
+    }
+    let component = shallow(<ListItem item={mockProps} />)
+    expect(component.find('.o-link').exists()).toBe(true)
+    mockProps = {
+      tmdbID: '17861',
+      type: 'Movie',
+    }
+    component = shallow(<ListItem item={mockProps} />)
+    expect(component.find('.o-link').exists()).toBe(false)
+    mockProps = {
+      type: 'TV',
+    }
+    component = shallow(<ListItem item={mockProps} />)
+    expect(component.find('.o-link').exists()).toBe(false)
+  })
 })

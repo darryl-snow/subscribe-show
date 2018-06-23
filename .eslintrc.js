@@ -10,6 +10,10 @@ module.exports = {
       "mjs": "never",
       "jsx": "never"
     }],
+    "jsx-a11y/anchor-is-valid": ["error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }],
     "react/jsx-uses-react": 2,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": 0,

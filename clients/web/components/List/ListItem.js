@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AddItemMutation from '../../mutations/addToWatchlist'
 import ToggleWatchedMutation from '../../mutations/toggleWatched'
@@ -81,6 +82,36 @@ export class ListItem extends Component {
     )
   }
 
+  renderTitle = () => {
+    const {
+      airDate,
+      title,
+      tmdbID,
+      type,
+    } = this.props.item
+
+    if (type === 'Movie' || !tmdbID) {
+      return (
+        <h2>
+          <Icon name={type} className="u-margin-right--small" />
+          {title}
+          <span className="o-subheading">{airDate}</span>
+        </h2>
+      )
+    }
+
+    return (
+      <a className="o-link" href={`/watch/${tmdbID}`}>
+        <h2>
+          <Icon name={type} className="u-margin-right--small" />
+          {title}
+          <Icon name="angle-right" className="o-link-icon" />
+          <span className="o-subheading">{airDate}</span>
+        </h2>
+      </a>
+    )
+  }
+
   renderToggleWatchedButton = () => {
     const { type } = this.props.item
     const { watched } = this.state
@@ -136,11 +167,7 @@ export class ListItem extends Component {
           { !image ? <Icon name="film" /> : '' }
         </div>
         <div className="c-list-item-details">
-          <h2>
-            <Icon name={type} className="u-margin-right--small" />
-            {title}
-            <span className="o-subheading">{airDate}</span>
-          </h2>
+          {this.renderTitle()}
           {this.renderLanguageLabel()}
           <p>{description}</p>
           {this.renderAddToWatchListButton()}
