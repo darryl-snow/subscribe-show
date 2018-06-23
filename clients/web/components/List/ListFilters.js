@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App components
-import ToggleButton from '../ToggleButton'
+import ToggleButton from '../ToggleButton/ToggleButton'
 
 /**
  * This component parses props in order to update the state object. The filter

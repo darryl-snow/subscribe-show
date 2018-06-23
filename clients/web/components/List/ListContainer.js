@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App Components
-import List from './List/List'
-import ListHeader from './List/ListHeader'
-import Loader from './Loader'
+import List from './List'
+import ListHeader from './ListHeader'
+import Loader from '../Loader/Loader'
 
 /**
  * The ListContainer component. Receives a set of list items and renders a

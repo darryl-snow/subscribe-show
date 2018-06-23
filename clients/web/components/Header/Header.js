@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App Components
-import history from '../history'
-import Icon from './Icon'
+import history from '../../history'
+import Icon from '../Icon/Icon'
 
 /**
  * The header component.

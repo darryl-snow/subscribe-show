@@ -5,7 +5,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // App Components
-import Icon from './Icon'
+import Icon from '../Icon/Icon'
 
 const reloadFunction = () => {
   window.location.reload(true)

@@ -1,7 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Icon from './Icon'
+import Icon from '../Icon/Icon'
 
 /**
  * The ToggleButton component is a button that can support 2 states: on and off.

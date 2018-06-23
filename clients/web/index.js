@@ -10,7 +10,7 @@ import { Router } from 'react-router-dom'
 
 import history from './history'
 import App from './components/App'
-import Error from './components/Error'
+import Error from './components/Error/Error'
 import './style/style.css'
 
 /**

@@ -9,7 +9,7 @@ import query from '../../queries/getWatchlistItems'
 
 // App components
 import history from '../../history'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 /**
  * The ListItem component, a stateless component that renders all the details
