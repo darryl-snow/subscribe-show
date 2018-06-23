@@ -3,6 +3,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 // App components
+import EpisodeList from './WatchlistItem/EpisodeList'
 import Header from './Header/Header'
 import ListContainer from './List/ListContainer'
 import SearchResults from './SearchResults'
@@ -19,9 +20,8 @@ export default () => (
     <Header />
     <Switch>
       <Route exact path="/" component={Watchlist(ListContainer)} />
-      <Route path="/search" component={SearchResults(ListContainer)} />
-      <Route path="/search/:query" component={SearchResults} />
-      <Route path="/watch/:id" component={WatchlistItem} />
+      <Route path="/search/:query" component={SearchResults(ListContainer)} />
+      <Route path="/watch/:id" component={WatchlistItem(EpisodeList)} />
       <Route component={Watchlist} />
     </Switch>
   </main>

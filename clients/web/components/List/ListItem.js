@@ -82,8 +82,17 @@ export class ListItem extends Component {
     )
   }
 
+  renderLanguageLabel = () => {
+    const { language } = this.props.item
+    if (!language) {
+      return ''
+    }
+    return <span className="o-label">{language}</span>
+  }
+
   renderTitle = () => {
     const {
+      id,
       airDate,
       title,
       tmdbID,
@@ -101,7 +110,7 @@ export class ListItem extends Component {
     }
 
     return (
-      <a className="o-link" href={`/watch/${tmdbID}`}>
+      <a className="o-link" href={`/watch/${id}`}>
         <h2>
           <Icon name={type} className="u-margin-right--small" />
           {title}
@@ -143,14 +152,6 @@ export class ListItem extends Component {
         <Icon name={watched ? 'eye' : 'eye-slash'} />
       </span>
     )
-  }
-
-  renderLanguageLabel = () => {
-    const { language } = this.props.item
-    if (!language) {
-      return ''
-    }
-    return <span className="o-label">{language}</span>
   }
 
   render() {
