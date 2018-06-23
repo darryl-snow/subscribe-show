@@ -42,7 +42,7 @@ export default class Header extends Component {
    */
   render() {
     return (
-      <header className="o-container c-header">
+      <div className="o-container c-header">
         <form className="c-search-form" onSubmit={this.onSubmit}>
           <input
             className="c-search-form-input"
@@ -55,7 +55,7 @@ export default class Header extends Component {
             <Icon name="search" />
           </button>
         </form>
-      </header>
+      </div>
     )
   }
 }
