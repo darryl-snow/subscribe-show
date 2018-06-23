@@ -44,9 +44,10 @@
     3.2 Checkboxes
     3.3 Containers
     3.4 Labels
-    3.5 Loaders
-    3.6 Selects
-    3.7 Subheadings
+    3.5 Links
+    3.6 Loaders
+    3.7 Selects
+    3.8 Subheadings
   4. Components
     4.1 Error
     4.2 Header
@@ -256,7 +257,7 @@ p {
   margin-left: var(--spacing);
 }
 
-/* 3.5 Loaders */
+/* 3.6 Loaders */
 
 .o-loader {
   display: inline-block;
@@ -293,7 +294,7 @@ p {
   }
 }
 
-/* 3.6 Selects */
+/* 3.7 Selects */
 
 .o-select {
   -webkit-appearance: none;
@@ -311,7 +312,7 @@ p {
   outline: none;
 }
 
-/* 3.7 Subheadings */
+/* 3.8 Subheadings */
 
 .o-subheading {
   display: block;
@@ -540,4 +541,26 @@ p {
 .c-toggle-watched-button:not(.c-toggle-watched-button--disabled):hover {
   opacity: 1;
   outline: none;
+}
+
+/* 4.8 Watchlist Item */
+
+.c-watchlistitem-header {
+  background-color: rgb(var(--body-text-color));
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  boxShadow: inset 0 0 15px black;
+}
+
+.c-watchlistitem-header-content {
+  color: white;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: var(--spacing);
+}
+
+.c-watchlistitem-header-meta {
+  text-align: right;
 }
