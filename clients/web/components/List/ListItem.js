@@ -1,7 +1,6 @@
 // Dependencies
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AddItemMutation from '../../mutations/addToWatchlist'
 import ToggleWatchedMutation from '../../mutations/toggleWatched'
@@ -24,6 +23,10 @@ export class ListItem extends Component {
     }
   }
 
+  /**
+   * Add an item to the watchlist by calling the addItem mutation.
+   * @param {Object} event The click event on the add item button.
+   */
   addItem = (event) => {
     event.preventDefault()
     this.props.toggleLoading()
@@ -34,13 +37,19 @@ export class ListItem extends Component {
         type: this.props.item.type,
       },
       refetchQueries: [{
-        query,
+        query, // Update the main watchlist items query afterwards.
       }],
     }).then(() => {
-      this.props.history.push('/')
+      this.props.history.push('/') // After adding, redirect to the home page.
     })
   }
 
+  /**
+   * Toggle an item as having been watched or not by calling the toggleWatched
+   * mutation.
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   toggleWatched = (event) => {
     event.preventDefault()
 
@@ -53,12 +62,21 @@ export class ListItem extends Component {
         id: this.props.item.id,
       },
       refetchQueries: [{
-        query,
+        query, // Update the main watchlist items query afterwards.
       }],
     })
   }
 
+  /**
+   * The item can only be added to the watchlist if it is not there already.
+   * This function renders a button that is enabled or disabled depending on
+   * the state of the item. These buttons should only appear in the search
+   * results list.
+   * @return {Object} The rendered button.
+   */
   renderAddToWatchListButton = () => {
+    // If the item has a tmdbID property then it's not a search result but a
+    // watchlist item.
     if (!this.props.item.tmdbID) {
       return ''
     }
@@ -82,6 +100,10 @@ export class ListItem extends Component {
     )
   }
 
+  /**
+   * Render a label to indicate the item's language.
+   * @return {Object} The rendered label.
+   */
   renderLanguageLabel = () => {
     const { language } = this.props.item
     if (!language) {
@@ -90,6 +112,12 @@ export class ListItem extends Component {
     return <span className="o-label">{language}</span>
   }
 
+  /**
+   * If the item is a search result (and has a tmdbID property) or a movie, then
+   * the item title should be displayed. If it's a TV item from the watchlist
+   * then the title should be wrapped in a link to the watchlist Item screen.
+   * @return {[type]} [description]
+   */
   renderTitle = () => {
     const {
       id,
@@ -121,6 +149,10 @@ export class ListItem extends Component {
     )
   }
 
+  /**
+   * Render a button for toggling whether an item has been watched or not.
+   * @return {Object} The rendered button.
+   */
   renderToggleWatchedButton = () => {
     const { type } = this.props.item
     const { watched } = this.state
@@ -135,7 +167,9 @@ export class ListItem extends Component {
     if (type === 'Movie') {
       return (
         <button
-          className={watched ? 'c-toggle-watched-button c-toggle-watched-button--watched' : 'c-toggle-watched-button'}
+          className={watched ?
+            'c-toggle-watched-button c-toggle-watched-button--watched' :
+            'c-toggle-watched-button'}
           onClick={this.toggleWatched}
           title={watched ? 'Mark as unwatched' : 'Mark as watched'}
         >
@@ -147,20 +181,23 @@ export class ListItem extends Component {
     // For TV Shows each episode needs to be toggled.
     return (
       <span
-        className={watched ? 'c-toggle-watched-button c-toggle-watched-button--disabled c-toggle-watched-button--watched' : 'c-toggle-watched-button c-toggle-watched-button--disabled'}
+        className={watched ?
+          'c-toggle-watched-button c-toggle-watched-button--disabled c-toggle-watched-button--watched' :
+          'c-toggle-watched-button c-toggle-watched-button--disabled'}
       >
         <Icon name={watched ? 'eye' : 'eye-slash'} />
       </span>
     )
   }
 
+  /**
+   * Render the component.
+   * @return {Object} The rendered component.
+   */
   render() {
     const {
-      airDate,
       description,
       image,
-      title,
-      type,
     } = this.props.item
     return (
       <div className="c-list-item">
@@ -179,6 +216,8 @@ export class ListItem extends Component {
   }
 }
 
+// Compose both the toggleWatched and the addItem mutations onto the
+// component props.
 export default compose(
   graphql(ToggleWatchedMutation, {
     name: 'toggleWatched',

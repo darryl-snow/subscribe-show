@@ -72,7 +72,7 @@ class ListContainer extends Component {
    * Callback functions for sub-components. This function is called when the
    * list should be sorted or filtered. It takes arguments from those
    * subcomponents and determines how the list should be updated.
-   * @param  {Object}   args The arguments passed from the subcomponent
+   * @param  {Object}   args The arguments passed from the subcomponent.
    */
   updateList = (args) => {
     if (args.filters) {
@@ -85,6 +85,10 @@ class ListContainer extends Component {
       this.setState({ sortOrder: args.sortOrder }, this.sortList)
     }
   }
+  /**
+   * Render a title only if one has been provided.
+   * @return {Object} The rendered title.
+   */
   renderTitle = () => {
     const { title } = this.props
     if (!title) {
