@@ -17,6 +17,7 @@ describe('ListItem Component', () => {
     const mockProps = {
       tmdbID: 'tmdbID',
       isInWatchList: false,
+      title: 'test',
     }
     component = mount(<ListItem item={mockProps} />)
     expect(component.find('.o-button').exists()).toBe(true)
@@ -25,9 +26,12 @@ describe('ListItem Component', () => {
   it('should render a disabled button if the item is already in the watchlist', () => {
     const addItemMock = jest.fn().mockResolvedValue()
     const mockProps = {
-      tmdbID: 'tmdbID',
       isInWatchList: true,
       addItem: addItemMock,
+      item: {
+        tmdbID: 'tmdbID',
+        title: 'test',
+      },
     }
     const component = mount(<ListItem item={mockProps} />)
     expect(component.find('.o-button--disabled').exists()).toBe(true)
@@ -52,6 +56,7 @@ describe('ListItem Component', () => {
       item: {
         tmdbID: 'tmdbID',
         isInWatchList: false,
+        title: 'test',
       },
     }
     const component = shallow(<ListItem {...mockProps} />)
@@ -76,6 +81,7 @@ describe('ListItem Component', () => {
       item: {
         tmdbID: 'tmdbID',
         isInWatchList: true,
+        title: 'test',
       },
     }
     const component = shallow(<ListItem {...mockProps} />)
@@ -101,6 +107,7 @@ describe('ListItem Component', () => {
       item: {
         tmdbID: 'tmdbID',
         isInWatchList: false,
+        title: 'test',
       },
       toggleLoading: toggleLoadingMock,
     }
@@ -114,11 +121,13 @@ describe('ListItem Component', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
+      title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
     itemMock = {
       type: 'Movie',
+      title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(false)
@@ -129,6 +138,7 @@ describe('ListItem Component', () => {
       id: 1,
       type: 'Movie',
       watched: false,
+      title: 'test',
     }
     const component = shallow(<ListItem item={itemMock} />)
     expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(false)
@@ -143,12 +153,14 @@ describe('ListItem Component', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
+      title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
     expect(component.find('button.c-toggle-watched-button').exists()).toBe(true)
     itemMock = {
       id: 1,
       type: 'TV',
+      title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
     expect(component.find('button.c-toggle-watched-button').exists()).toBe(false)
@@ -159,6 +171,7 @@ describe('ListItem Component', () => {
     const itemMock = {
       id: 1,
       type: 'Movie',
+      title: 'test',
     }
     const component = shallow(<ListItem item={itemMock} toggleWatched={toggleWatchedMock} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
@@ -172,6 +185,7 @@ describe('ListItem Component', () => {
 
     const mockProps = {
       language: 'language',
+      title: 'test',
     }
     component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-label').exists()).toBe(true)
@@ -201,17 +215,20 @@ describe('ListItem Component', () => {
     let mockProps = {
       tmdbID: '17861',
       type: 'TV',
+      title: 'test',
     }
     let component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-link').exists()).toBe(true)
     mockProps = {
       tmdbID: '17861',
       type: 'Movie',
+      title: 'test',
     }
     component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-link').exists()).toBe(false)
     mockProps = {
       type: 'TV',
+      title: 'test',
     }
     component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-link').exists()).toBe(false)

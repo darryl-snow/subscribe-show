@@ -2,7 +2,7 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
-import query from '../queries/getWatchlistItem'
+import query from '../queries/getWatchlistItemByTitle'
 
 import Loader from './Loader/Loader'
 import WatchlistItemHeader from './WatchlistItem/WatchlistItemHeader'
@@ -20,8 +20,8 @@ export default (PassedComponent) => {
     }
     return (
       <div className="c-watchlistitem">
-        <WatchlistItemHeader {...props.data.watchListItem} />
-        <PassedComponent episodes={props.data.watchListItem.episodes} />
+        <WatchlistItemHeader {...props.data.watchListItemByTitle} />
+        <PassedComponent episodes={props.data.watchListItemByTitle.episodes} />
       </div>
     )
   }
@@ -49,8 +49,8 @@ export default (PassedComponent) => {
   // Append results of the graphQL query to the component properties.
   return graphql(query, {
     options: (props) => {
-      const { id } = props.match.params
-      return { variables: { id } }
+      const { title } = props.match.params
+      return { variables: { title } }
     },
   })(WatchListItem)
 }

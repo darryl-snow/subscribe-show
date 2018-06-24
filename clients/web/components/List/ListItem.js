@@ -10,6 +10,8 @@ import query from '../../queries/getWatchlistItems'
 import history from '../../history'
 import Icon from '../Icon/Icon'
 
+const slugify = title => title.toLowerCase().replace(/\s/g, '-')
+
 /**
  * The ListItem component, a stateless component that renders all the details
  * provided for a given list item.
@@ -68,6 +70,16 @@ export class ListItem extends Component {
   }
 
   /**
+   * Use the history object to navigate to the watchlist item.
+   * @param  {Event} event The click event that triggered the function call.
+   */
+  navigateToWatchListItem = (event) => {
+    event.preventDefault()
+    const title = slugify(this.props.item.title)
+    this.props.history.push(`/watch/${title}`)
+  }
+
+  /**
    * The item can only be added to the watchlist if it is not there already.
    * This function renders a button that is enabled or disabled depending on
    * the state of the item. These buttons should only appear in the search
@@ -121,7 +133,6 @@ export class ListItem extends Component {
    */
   renderTitle = () => {
     const {
-      id,
       airDate,
       title,
       tmdbID,
@@ -139,7 +150,7 @@ export class ListItem extends Component {
     }
 
     return (
-      <a className="o-link" href={`/watch/${id}`}>
+      <a className="o-link" href={`/watch/${slugify(title)}`} onClick={this.navigateToWatchListItem}>
         <h2>
           <Icon name={type} className="u-margin-right--small" />
           {title}
