@@ -75,13 +75,14 @@ export class ListItem extends Component {
    * @return {Object} The rendered button.
    */
   renderAddToWatchListButton = () => {
-    // If the item has a tmdbID property then it's not a search result but a
-    // watchlist item.
-    if (!this.props.item.tmdbID) {
+    const { isInWatchList } = this.props.item
+
+    // Only search results have the isInWatchList property. If the item does
+    // not have that property then we can assume that it's already in the
+    // watchlist and so we don't need to render the button.
+    if (typeof (isInWatchList) === 'undefined') {
       return ''
     }
-
-    const { isInWatchList } = this.props.item
 
     if (isInWatchList) {
       return (

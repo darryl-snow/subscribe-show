@@ -16,6 +16,7 @@ describe('ListItem Component', () => {
 
     const mockProps = {
       tmdbID: 'tmdbID',
+      isInWatchList: false,
     }
     component = mount(<ListItem item={mockProps} />)
     expect(component.find('.o-button').exists()).toBe(true)
@@ -50,12 +51,37 @@ describe('ListItem Component', () => {
       history: historyMock,
       item: {
         tmdbID: 'tmdbID',
+        isInWatchList: false,
       },
     }
     const component = shallow(<ListItem {...mockProps} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
     component.find('.o-button').simulate('click', mockedEvent)
     expect(addItemMock.mock.calls).toHaveLength(1)
+  })
+
+  it('should disable the add to watchlist button if the item is a search result and is already in the list', () => {
+    const historyMock = {
+      push: jest.fn(),
+      location: {
+        state: {
+          query: '',
+        },
+      },
+    }
+    const addItemMock = jest.fn().mockResolvedValue()
+    const mockProps = {
+      addItem: addItemMock,
+      history: historyMock,
+      item: {
+        tmdbID: 'tmdbID',
+        isInWatchList: true,
+      },
+    }
+    const component = shallow(<ListItem {...mockProps} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.o-button').simulate('click', mockedEvent)
+    expect(addItemMock.mock.calls).toHaveLength(0)
   })
 
   it('should trigger the loading animation while adding an item to the watchlist', () => {
@@ -74,6 +100,7 @@ describe('ListItem Component', () => {
       history: historyMock,
       item: {
         tmdbID: 'tmdbID',
+        isInWatchList: false,
       },
       toggleLoading: toggleLoadingMock,
     }
