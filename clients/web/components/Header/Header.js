@@ -43,6 +43,12 @@ export default class Header extends Component {
   render() {
     return (
       <div className="o-container c-header">
+        <a className="c-header-link u-margin-right--small" href="/" title="My unwatched items">
+          <Icon name="home" />
+        </a>
+        <a className="c-header-link u-margin-right--small" href="/" title="My watchlist">
+          <Icon name="list-ul" />
+        </a>
         <form className="c-search-form" onSubmit={this.onSubmit}>
           <input
             className="c-search-form-input"

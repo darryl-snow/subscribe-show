@@ -355,6 +355,20 @@ p {
 .c-header {
   background: rgb(var(--header-background-color));
   color: rgb(var(--header-text-color));
+  display: flex;
+}
+
+.c-header-link {
+  color: rgba(var(--header-text-color), 0.5);
+  font-size: 2em;
+  transition: var(--transition);
+}
+
+.c-header-link:active,
+.c-header-link:focus,
+.c-header-link:hover {
+  color: white;
+  outline: none;
 }
 
 /* 4.3 List Header */
@@ -465,7 +479,9 @@ p {
   transition: var(--transition);
 }
 
-.c-search-form-button:focus {
+.c-search-form-button:active,
+.c-search-form-button:focus,
+.c-search-form-button:hover {
   color: white;
   outline: none;
 }

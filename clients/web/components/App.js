@@ -21,6 +21,7 @@ export default () => (
     <Switch>
       <Route exact path="/" component={Watchlist(ListContainer)} />
       <Route path="/search/:query" component={SearchResults(ListContainer)} />
+      <Route path="/watch/" component={Watchlist(ListContainer)} />
       <Route path="/watch/:title" component={WatchlistItem(EpisodeList)} />
       <Route component={Watchlist} />
     </Switch>
