@@ -212,6 +212,15 @@ WatchListItemSchema.statics.checkIfWatched = function (id) {
     });
 }
 
+WatchListItemSchema.statics.findByTitle = function (slug) {
+  const title = slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  return this.findOne({ title: { $regex : new RegExp(title, 'i') } })
+    .then(item => item)
+    .catch((err) => {
+      winston.error(err);
+    });
+}
+
 /**
  * Retrieve all saved episodes for a given watchlist item.
  * @param  {String} id The primary key for a given watchlist item

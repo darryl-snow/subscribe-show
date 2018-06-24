@@ -33,6 +33,13 @@ module.exports = new GraphQLObjectType({
         return WatchListItem.findById(id)
       },
     },
+    watchListItemByTitle: { // Get a single item (TV Show or Movie) by its title
+      type: WatchListItemType,
+      args: { title: { type: GraphQLString } },
+      resolve(parentValue, { title }) {
+        return WatchListItem.findByTitle(title)
+      },
+    },
     episode: { // Get a single TV episode
       type: EpisodeType,
       args: { id: { type: GraphQLID } },
