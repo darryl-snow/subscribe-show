@@ -1,5 +1,6 @@
 // Dependencies
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // App Components
@@ -43,12 +44,22 @@ export default class Header extends Component {
   render() {
     return (
       <div className="c-header u-align--center">
-        <a className="c-header-link" href="/" title="My unwatched items">
+        <NavLink
+          activeClassName="c-header-link--is-active"
+          className="c-header-link"
+          title="My unwatched items"
+          to="/"
+        >
           <Icon name="home" />
-        </a>
-        <a className="c-header-link" href="/" title="My watchlist">
+        </NavLink>
+        <NavLink
+          activeClassName="c-header-link--is-active"
+          className="c-header-link"
+          title="My watchlist"
+          to="/watch"
+        >
           <Icon name="list-ul" />
-        </a>
+        </NavLink>
         <form className="c-search-form" onSubmit={this.onSubmit}>
           <input
             className="c-search-form-input"

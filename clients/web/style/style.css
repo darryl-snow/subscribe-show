@@ -379,6 +379,7 @@ p {
   transition: var(--transition);
 }
 
+.c-header-link--is-active,
 .c-header-link:active,
 .c-header-link:focus,
 .c-header-link:hover {
