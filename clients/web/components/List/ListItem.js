@@ -175,30 +175,31 @@ export class ListItem extends Component {
       return ''
     }
 
-    // Can only toggle movies as watched or not.
+    // Can only toggle movies as watched or not. The button is never disabled.
     if (type === 'Movie') {
       return (
         <button
-          className={watched ?
-            'c-toggle-watched-button c-toggle-watched-button--watched' :
-            'c-toggle-watched-button'}
+          className="o-button"
           onClick={this.toggleWatched}
           title={watched ? 'Mark as unwatched' : 'Mark as watched'}
         >
-          <Icon name={watched ? 'eye' : 'eye-slash'} />
+          <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
+          {watched ? 'Watched' : 'Not watched'}
         </button>
       )
     }
 
-    // For TV Shows each episode needs to be toggled.
+    // For TV Shows each episode needs to be toggled, so the button should be
+    // disabled.
     return (
-      <span
-        className={watched ?
-          'c-toggle-watched-button c-toggle-watched-button--disabled c-toggle-watched-button--watched' :
-          'c-toggle-watched-button c-toggle-watched-button--disabled'}
+      <button
+        className="o-button o-button--disabled"
+        disabled
+        title="Tap the title of the TV Show to mark episodes as watched/unwatched"
       >
-        <Icon name={watched ? 'eye' : 'eye-slash'} />
-      </span>
+        <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
+        {watched ? 'Watched' : 'Not watched'}
+      </button>
     )
   }
 

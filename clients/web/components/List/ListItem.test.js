@@ -124,13 +124,13 @@ describe('ListItem Component', () => {
       title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
+    expect(component.find('.o-button').exists()).toBe(true)
     itemMock = {
       type: 'Movie',
       title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.c-toggle-watched-button').exists()).toBe(false)
+    expect(component.find('.o-button').exists()).toBe(false)
   })
 
   it('should render the toggle watched button based on the state', () => {
@@ -140,30 +140,37 @@ describe('ListItem Component', () => {
       watched: false,
       title: 'test',
     }
-    const component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(false)
+    const component = mount(<ListItem item={itemMock} />)
+    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.fa-eye').exists()).toBe(true)
+    expect(component.find('.fa-check').exists()).toBe(false)
     component.setState({
+      id: 1,
+      type: 'Movie',
       watched: true,
+      title: 'test',
     })
     component.update()
-    expect(component.find('.c-toggle-watched-button--watched').exists()).toBe(true)
+    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.fa-eye').exists()).toBe(false)
+    expect(component.find('.fa-check').exists()).toBe(true)
   })
 
-  it('should only render the toggle watched button for movies', () => {
+  it('should always disable the toggle watched button for TV Shows', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
       title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('button.c-toggle-watched-button').exists()).toBe(true)
+    expect(component.find('.o-button--disabled').exists()).toBe(false)
     itemMock = {
       id: 1,
       type: 'TV',
       title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('button.c-toggle-watched-button').exists()).toBe(false)
+    expect(component.find('.o-button--disabled').exists()).toBe(true)
   })
 
   it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
@@ -175,7 +182,7 @@ describe('ListItem Component', () => {
     }
     const component = shallow(<ListItem item={itemMock} toggleWatched={toggleWatchedMock} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.c-toggle-watched-button').simulate('click', mockedEvent)
+    component.find('.o-button').simulate('click', mockedEvent)
     expect(toggleWatchedMock.mock.calls).toHaveLength(1)
   })
 
