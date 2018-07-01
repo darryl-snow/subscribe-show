@@ -44,9 +44,9 @@ class ToggleButton extends Component {
           onChange={this.handleChange}
           checked={this.state.checked}
         />
-        <label htmlFor={value} className="c-toggle-button-label">
+        <label htmlFor={value} className="c-toggle-button-label u-align--center">
           <Icon name={value} className="u-margin-right--small" />
-          <span className="u-margin-right--small">{value}</span>
+          <span>{value}</span>
         </label>
       </div>
     )

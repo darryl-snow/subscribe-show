@@ -16,7 +16,7 @@ import WatchlistItem from './WatchlistItem'
  * @return {Object} The component to be rendered.
  */
 export default () => (
-  <main>
+  <div className="c-app">
     <Header />
     <Switch>
       <Route exact path="/" component={Watchlist(ListContainer)} />
@@ -25,5 +25,5 @@ export default () => (
       <Route path="/watch/:title" component={WatchlistItem(EpisodeList)} />
       <Route component={Watchlist} />
     </Switch>
-  </main>
+  </div>
 )

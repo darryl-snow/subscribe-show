@@ -38,9 +38,9 @@ export default class ListSorter extends Component {
   }
   render() {
     return (
-      <div className="c-list-sorter u-flex">
+      <div className="c-list-sorter">
         <select
-          className="o-select o-label c-list-sort-order-select u-margin-right--small"
+          className="o-select o-label c-list-sort-order-select"
           defaultValue={this.state.sortBy}
           onChange={this.changeSortBy}
         >

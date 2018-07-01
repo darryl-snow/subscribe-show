@@ -20,9 +20,9 @@ const ListHeader = (props) => {
   } = props
 
   return (
-    <header className={`${props.className} c-list-header u-flex`}>
+    <header className={`${props.className} c-list-header`}>
       <h2>{content}</h2>
-      <div className="c-list-header-controls u-flex">
+      <div className="c-list-header-controls">
         <ListFilters results={results} updateList={updateList} />
         <ListSorter
           defaultSort={defaultSort}

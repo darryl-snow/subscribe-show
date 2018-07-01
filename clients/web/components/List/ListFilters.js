@@ -75,8 +75,8 @@ export default class ListFilters extends Component {
   }
   render() {
     return (
-      <div className="c-list-filters u-flex u-margin-right--small">
-        <div className="c-toggle-button-group u-margin-right--small">
+      <div className="c-list-filters">
+        <div className="c-toggle-button-group">
           {this.renderTypeFilters()}
         </div>
         <div className="c-toggle-button-group">

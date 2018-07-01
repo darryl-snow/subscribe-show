@@ -4,6 +4,7 @@
   --body-text-color: 68,68,68;
   --border-radius: 0.3em;
   --border-width: 2px;
+  --breakpoint: 600px;
   --button-color: 0,206,201;
   --button-padding: 0.25em 0.75em;
   --error-color: 235,77,75;
@@ -51,11 +52,14 @@
   4. Components
     4.1 Error
     4.2 Header
-    4.3 List Header
-    4.4 List item
-    4.5 Search Form
-    4.6 ToggleButton
-    4.7 Toggle Watched Button
+    4.3 List Filters
+    4.4 List Header
+    4.5 List Item
+    4.6 List Sorter
+    4.7 Search Form
+    4.8 ToggleButton
+    4.9 Toggle Watched Button
+    4.10 Watchlist Item
  */
 
 /**
@@ -86,7 +90,7 @@ h4,
 h5,
 h6 {
   font-weight: 100;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing);
   margin-top: 0;
 }
 
@@ -102,12 +106,12 @@ p {
  */
 
 /* 2.1 Alignment */
-.u-align-center {
-  align-items: center;
+.u-align--center {
+  text-align: center;
 }
 
-.u-align-right {
-  align-items: flex-end;
+.u-align--right {
+  text-align: right;
 }
 
 /* 2.2 Flex */
@@ -355,7 +359,18 @@ p {
 .c-header {
   background: rgb(var(--header-background-color));
   color: rgb(var(--header-text-color));
-  display: flex;
+  display: grid;
+  grid-gap: calc(var(--spacing)/2);
+  grid-template-columns: min-content min-content auto;
+  padding: calc(var(--spacing)/2);
+  width: 100%;
+}
+
+@media(min-width: 600px) {
+  .c-header {
+    grid-gap: var(--spacing);
+    padding: var(--spacing);
+  }
 }
 
 .c-header-link {
@@ -371,17 +386,44 @@ p {
   outline: none;
 }
 
-/* 4.3 List Header */
+/* 4.3 List Filters */
+
+.c-list-filters {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-rows: 1fr 1fr;
+}
+
+@media(min-width: 600px) {
+  .c-list-filters {
+    grid-gap: calc(var(--spacing) / 2);
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 4.4 List Header */
 
 .c-list-header {
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+@media(min-width: 600px) {
+  .c-list-header {
+    grid-template-rows: auto;
+    grid-template-columns: auto max-content;
+  }
 }
 
 .c-list-header-controls {
-  align-items: center;
+  display: grid;
+  grid-template-rows: auto auto;
+  margin-bottom: var(--spacing);
+  grid-gap: calc(var(--spacing) / 2);
 }
 
-/* 4.4 List Item */
+/* 4.5 List Item */
 
 .c-list-item {
   background: white;
@@ -447,11 +489,29 @@ p {
   outline: none;
 }
 
-/* 4.5 Search form */
+/* 4.6 List Sorter */
+
+.c-list-sorter {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: auto min-content;
+}
+
+.c-list-sort-order-button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.c-list-sort-order-select {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* 4.7 Search form */
 
 .c-search-form {
-  display: flex;
-  width: 100%;
+  display: grid;
+  grid-template-columns: auto min-content;
 }
 
 .c-search-form-input {
@@ -459,10 +519,10 @@ p {
   border: none;
   border-bottom: 1px solid rgba(var(--header-text-color), 0.5);
   color: white;
-  flex: 1;
   font-size: 2em;
   font-weight: 300;
   transition: border-bottom var(--transition);
+  width: 100%;
 }
 
 .c-search-form-input:focus {
@@ -490,11 +550,12 @@ p {
   color: white;
 }
 
-/* 4.6 ToggleButton */
+/* 4.8 ToggleButton */
 
 .c-toggle-button-group {
-  align-items: center;
-  display: flex;
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .c-toggle-button-group .c-toggle-button:first-child .c-toggle-button-label {
@@ -512,7 +573,7 @@ p {
   border: 2px solid rgb(var(--label-background-color));
   color: rgb(var(--label-border-color--active));
   cursor: pointer;
-  display: inline-block;
+  display: block;
   font-size: 0.75em;
   font-weight: 900;
   padding: var(--button-padding);
@@ -525,10 +586,6 @@ p {
 .c-toggle-button-label:hover {
   color: rgb(var(--label-background-color--active));
   border-color: rgb(var(--label-border-color--active));
-}
-
-.c-toggle-button + .c-toggle-button .c-toggle-button-label {
-  margin-left: 2px;
 }
 
 .c-toggle-button input {
@@ -548,7 +605,7 @@ p {
   outline: none;
 }
 
-/* 4.7 Toggle Watched Button */
+/* 4.9 Toggle Watched Button */
 
 .c-toggle-watched-button {
   border: none;
@@ -577,7 +634,7 @@ p {
   outline: none;
 }
 
-/* 4.8 Watchlist Item */
+/* 4.10 Watchlist Item */
 
 .c-watchlistitem-header {
   background-color: rgb(var(--body-text-color));
