@@ -15,10 +15,9 @@ import Loader from '../Loader/Loader'
 class ListContainer extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       filters: [],
-      displayListItems: [],
+      displayListItems: props.data[props.query] || [],
       loading: props.data.loading,
       receivedListItems: props.data[props.query],
       sortBy: props.sortBy,

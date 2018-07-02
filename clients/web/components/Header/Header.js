@@ -29,6 +29,24 @@ export default class Header extends Component {
     this.state = { query }
   }
   /**
+   * This checks for updated props, such as a change in the history.location
+   * object. When the route changes, we should check if we should also clear
+   * the search query, e.g. when navigating to the search results to the home
+   * page.
+   * @param  {Object} nextProps The to be updated props object.
+   */
+  componentWillReceiveProps(nextProps) {
+    const { location } = nextProps.history
+
+    // If the new path is not the search results page, then clear the query
+    // from the header.
+    if (location.pathname.indexOf('search') === -1 && location.search === '') {
+      this.setState({
+        query: nextProps.query,
+      })
+    }
+  }
+  /**
    * Submit the search form.
    * @param  {Object} event The event that fired the form submission
    */

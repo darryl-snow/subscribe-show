@@ -8,15 +8,19 @@ import query from '../queries/getWatchlistItems'
  * data into a ListContainer component.
  */
 export default (PassedComponent) => {
-  const WatchList = props => (
-    <PassedComponent
-      className="c-watchlist"
-      sortBy="airDate"
-      sortOrder={-1}
-      query="watchListItems"
-      {...props}
-    />
-  )
+  const WatchList = (props) => {
+    const title = 'My Watchlist'
+    return (
+      <PassedComponent
+        className="c-watchlist"
+        sortBy="airDate"
+        sortOrder={-1}
+        query="watchListItems"
+        title={title}
+        {...props}
+      />
+    )
+  }
 
   // Append results of the graphQL query to the component properties.
   return graphql(query)(WatchList)

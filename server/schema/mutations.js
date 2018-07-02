@@ -35,7 +35,7 @@ module.exports = new GraphQLObjectType({
     removeItem: {
       type: WatchListItemType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parentValue, { id }) {
         return WatchListItem.remove({ _id: id });

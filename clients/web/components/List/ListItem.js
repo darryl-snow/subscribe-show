@@ -2,8 +2,11 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+// Mutations
 import AddItemMutation from '../../mutations/addToWatchlist'
+import RemoveItemMutation from '../../mutations/removeFromWatchlist'
 import ToggleWatchedMutation from '../../mutations/toggleItemWatched'
+// Queries
 import query from '../../queries/getWatchlistItems'
 
 // App components
@@ -37,6 +40,26 @@ export class ListItem extends Component {
       variables: {
         tmdbID: this.props.item.tmdbID,
         type: this.props.item.type,
+      },
+      refetchQueries: [{
+        query, // Update the main watchlist items query afterwards.
+      }],
+    }).then(() => {
+      this.props.history.push('/') // After adding, redirect to the home page.
+    })
+  }
+
+  /**
+   * Remove an item from the watchlist by calling the removeItem mutation.
+   * @param {Object} event The click event on the add item button.
+   */
+  removeItem = (event) => {
+    event.preventDefault()
+    this.props.toggleLoading()
+
+    this.props.removeItem({
+      variables: {
+        id: this.props.item.id,
       },
       refetchQueries: [{
         query, // Update the main watchlist items query afterwards.
@@ -98,7 +121,7 @@ export class ListItem extends Component {
 
     if (isInWatchList) {
       return (
-        <button className="o-button o-button--disabled">
+        <button className="o-button o-button--disabled c-add-to-watchlist-button">
           <Icon name="check" className="u-margin-right--small" />
           Already added
         </button>
@@ -106,9 +129,32 @@ export class ListItem extends Component {
     }
 
     return (
-      <button className="o-button" onClick={this.addItem}>
+      <button className="o-button c-add-to-watchlist-button" onClick={this.addItem}>
         <Icon name="plus" className="u-margin-right--small" />
         Add to watchlist
+      </button>
+    )
+  }
+
+  /**
+   * If the item is not in the search results then it's in the watchlist so it
+   * can be removed. This function renders a button for calling the removeItem
+   * function.
+   */
+  renderRemoveFromWatchListButton = () => {
+    const { isInWatchList } = this.props.item
+
+    // Only search results have the isInWatchList property. If the item has
+    // that property then we can assume that it's not in the watchlist and so
+    // we don't need to render the button.
+    if (typeof (isInWatchList) !== 'undefined') {
+      return ''
+    }
+
+    return (
+      <button className="o-button c-remove-from-watchlist-button u-margin-right--small" onClick={this.removeItem}>
+        <Icon name="trash" className="u-margin-right--small" />
+        Remove from Watchlist
       </button>
     )
   }
@@ -179,12 +225,12 @@ export class ListItem extends Component {
     if (type === 'Movie') {
       return (
         <button
-          className="o-button"
+          className="o-button c-toggle-watched-button"
           onClick={this.toggleWatched}
           title={watched ? 'Mark as unwatched' : 'Mark as watched'}
         >
           <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
-          {watched ? 'Watched' : 'Not watched'}
+          {watched ? 'Mark as not watched' : 'Mark was watched'}
         </button>
       )
     }
@@ -193,12 +239,12 @@ export class ListItem extends Component {
     // disabled.
     return (
       <button
-        className="o-button o-button--disabled"
+        className="o-button o-button--disabled c-toggle-watched-button"
         disabled
         title="Tap the title of the TV Show to mark episodes as watched/unwatched"
       >
         <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
-        {watched ? 'Watched' : 'Not watched'}
+        {watched ? 'Mark as not watched' : 'Mark was watched'}
       </button>
     )
   }
@@ -222,6 +268,7 @@ export class ListItem extends Component {
           {this.renderLanguageLabel()}
           <p>{description}</p>
           {this.renderAddToWatchListButton()}
+          {this.renderRemoveFromWatchListButton()}
           {this.renderToggleWatchedButton()}
         </div>
       </div>
@@ -232,11 +279,14 @@ export class ListItem extends Component {
 // Compose both the toggleWatched and the addItem mutations onto the
 // component props.
 export default compose(
-  graphql(ToggleWatchedMutation, {
-    name: 'toggleWatched',
-  }),
   graphql(AddItemMutation, {
     name: 'addItem',
+  }),
+  graphql(RemoveItemMutation, {
+    name: 'removeItem',
+  }),
+  graphql(ToggleWatchedMutation, {
+    name: 'toggleWatched',
   }),
 )(ListItem)
 
@@ -248,6 +298,7 @@ ListItem.propTypes = {
   addItem: PropTypes.func,
   history: PropTypes.object,
   item: PropTypes.object,
+  removeItem: PropTypes.func,
   toggleLoading: PropTypes.func,
   toggleWatched: PropTypes.func,
 }
@@ -260,6 +311,7 @@ ListItem.defaultProps = {
   addItem: () => {},
   history,
   item: {},
+  removeItem: () => {},
   toggleLoading: () => {},
   toggleWatched: () => {},
 }

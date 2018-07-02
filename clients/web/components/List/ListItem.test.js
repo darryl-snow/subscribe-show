@@ -12,7 +12,7 @@ describe('ListItem Component', () => {
 
   it('should only render the Add to Watchlist button for search result items', () => {
     let component = shallow(<ListItem />)
-    expect(component.find('.o-button').exists()).toBe(false)
+    expect(component.find('.c-add-to-watchlist-button').exists()).toBe(false)
 
     const mockProps = {
       tmdbID: 'tmdbID',
@@ -20,10 +20,10 @@ describe('ListItem Component', () => {
       title: 'test',
     }
     component = mount(<ListItem item={mockProps} />)
-    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.c-add-to-watchlist-button').exists()).toBe(true)
   })
 
-  it('should render a disabled button if the item is already in the watchlist', () => {
+  it('should render a disabled Add to Watchlist button if the item is already in the watchlist', () => {
     const addItemMock = jest.fn().mockResolvedValue()
     const mockProps = {
       isInWatchList: true,
@@ -34,7 +34,7 @@ describe('ListItem Component', () => {
       },
     }
     const component = mount(<ListItem item={mockProps} />)
-    expect(component.find('.o-button--disabled').exists()).toBe(true)
+    expect(component.find('.c-add-to-watchlist-button.o-button--disabled').exists()).toBe(true)
     const mockedEvent = { target: {}, preventDefault: () => {} }
     component.find('.o-button').simulate('click', mockedEvent)
     expect(addItemMock.mock.calls).toHaveLength(0)
@@ -61,11 +61,11 @@ describe('ListItem Component', () => {
     }
     const component = shallow(<ListItem {...mockProps} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.o-button').simulate('click', mockedEvent)
+    component.find('.c-add-to-watchlist-button').simulate('click', mockedEvent)
     expect(addItemMock.mock.calls).toHaveLength(1)
   })
 
-  it('should disable the add to watchlist button if the item is a search result and is already in the list', () => {
+  it('should disable the Add to Watchlist button if the item is a search result and is already in the list', () => {
     const historyMock = {
       push: jest.fn(),
       location: {
@@ -86,7 +86,7 @@ describe('ListItem Component', () => {
     }
     const component = shallow(<ListItem {...mockProps} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.o-button').simulate('click', mockedEvent)
+    component.find('.c-add-to-watchlist-button').simulate('click', mockedEvent)
     expect(addItemMock.mock.calls).toHaveLength(0)
   })
 
@@ -113,27 +113,98 @@ describe('ListItem Component', () => {
     }
     const component = shallow(<ListItem {...mockProps} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.o-button').simulate('click', mockedEvent)
+    component.find('.c-add-to-watchlist-button').simulate('click', mockedEvent)
     expect(toggleLoadingMock.mock.calls).toHaveLength(1)
   })
 
-  it('should only render the toggle watched button for watchlist items', () => {
+  it('should only render the Remove from Watchlist button for watchlist items on the watchlist', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
       title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.c-remove-from-watchlist-button').exists()).toBe(true)
+    itemMock = {
+      type: 'Movie',
+      title: 'test',
+      isInWatchList: true,
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-remove-from-watchlist-button').exists()).toBe(false)
+  })
+
+  it('should remove the item from the watchlist when the button is clicked', () => {
+    const historyMock = {
+      push: jest.fn(),
+      location: {
+        state: {
+          query: '',
+        },
+      },
+    }
+    const removeItemMock = jest.fn().mockResolvedValue()
+    const mockProps = {
+      removeItem: removeItemMock,
+      history: historyMock,
+      item: {
+        id: 1,
+        tmdbID: 'tmdbID',
+        title: 'test',
+        type: 'Movie',
+      },
+    }
+    const component = shallow(<ListItem {...mockProps} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.c-remove-from-watchlist-button').simulate('click', mockedEvent)
+    expect(removeItemMock.mock.calls).toHaveLength(1)
+  })
+
+  it('should trigger the loading animation while removing an item from the watchlist', () => {
+    const historyMock = {
+      push: jest.fn(),
+      location: {
+        state: {
+          query: '',
+        },
+      },
+    }
+    const removeItemMock = jest.fn().mockResolvedValue()
+    const toggleLoadingMock = jest.fn()
+    const mockProps = {
+      removeItem: removeItemMock,
+      history: historyMock,
+      item: {
+        id: 1,
+        tmdbID: 'tmdbID',
+        title: 'test',
+        type: 'Movie',
+      },
+      toggleLoading: toggleLoadingMock,
+    }
+    const component = shallow(<ListItem {...mockProps} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.c-remove-from-watchlist-button').simulate('click', mockedEvent)
+    expect(toggleLoadingMock.mock.calls).toHaveLength(1)
+  })
+
+  it('should only render the Toggle Watched button for watchlist items', () => {
+    let itemMock = {
+      id: 1,
+      type: 'Movie',
+      title: 'test',
+    }
+    let component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
     itemMock = {
       type: 'Movie',
       title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.o-button').exists()).toBe(false)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(false)
   })
 
-  it('should render the toggle watched button based on the state', () => {
+  it('should render the Toggle Watched button based on the state', () => {
     const itemMock = {
       id: 1,
       type: 'Movie',
@@ -141,7 +212,7 @@ describe('ListItem Component', () => {
       title: 'test',
     }
     const component = mount(<ListItem item={itemMock} />)
-    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
     expect(component.find('.fa-eye').exists()).toBe(true)
     expect(component.find('.fa-check').exists()).toBe(false)
     component.setState({
@@ -151,26 +222,26 @@ describe('ListItem Component', () => {
       title: 'test',
     })
     component.update()
-    expect(component.find('.o-button').exists()).toBe(true)
+    expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
     expect(component.find('.fa-eye').exists()).toBe(false)
     expect(component.find('.fa-check').exists()).toBe(true)
   })
 
-  it('should always disable the toggle watched button for TV Shows', () => {
+  it('should always disable the Toggle Watched button for TV Shows', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
       title: 'test',
     }
     let component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.o-button--disabled').exists()).toBe(false)
+    expect(component.find('.c-toggle-watched-button.o-button--disabled').exists()).toBe(false)
     itemMock = {
       id: 1,
       type: 'TV',
       title: 'test',
     }
     component = shallow(<ListItem item={itemMock} />)
-    expect(component.find('.o-button--disabled').exists()).toBe(true)
+    expect(component.find('.c-toggle-watched-button.o-button--disabled').exists()).toBe(true)
   })
 
   it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
@@ -182,7 +253,7 @@ describe('ListItem Component', () => {
     }
     const component = shallow(<ListItem item={itemMock} toggleWatched={toggleWatchedMock} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.o-button').simulate('click', mockedEvent)
+    component.find('.c-toggle-watched-button').simulate('click', mockedEvent)
     expect(toggleWatchedMock.mock.calls).toHaveLength(1)
   })
 
