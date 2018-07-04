@@ -48,13 +48,30 @@ describe('ListContainer Component', () => {
     expect(component.find(`.${testClass}-header`).exists()).toBe(true)
     expect(component.find(`.${testClass}-list`).exists()).toBe(true)
   })
+  it('should render the empty list component if there are no list items', () => {
+    const props = {
+      data: {
+        test: [],
+      },
+      query: 'test',
+    }
+    const component = mount(<ListContainer {...props} />)
+    expect(component.find('.c-empty-list').exists()).toBe(true)
+  })
   it('should only render a title if one has been provided', () => {
     let component = shallow(<ListContainer />)
-    component.setState({ loading: false })
+    const listMock = propsMock.data[propsMock.query]
+    component.setState({
+      displayListItems: listMock,
+      loading: false,
+    })
     expect(component.find('h1').exists()).toBe(false)
     const testTitle = 'test'
     component = shallow(<ListContainer title={testTitle} />)
-    component.setState({ loading: false })
+    component.setState({
+      displayListItems: listMock,
+      loading: false,
+    })
     expect(component.find('h1').exists()).toBe(true)
   })
   it('should sort by airDate, ascending by default', () => {

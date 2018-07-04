@@ -50,15 +50,15 @@
     3.7 Selects
     3.8 Subheadings
   4. Components
-    4.1 Error
-    4.2 Header
-    4.3 List Filters
-    4.4 List Header
-    4.5 List Item
-    4.6 List Sorter
-    4.7 Search Form
-    4.8 ToggleButton
-    4.9 Toggle Watched Button
+    4.1 Empty List
+    4.2 Error
+    4.3 Header
+    4.4 List Filters
+    4.5 List Header
+    4.6 List Item
+    4.7 List Sorter
+    4.8 Search Form
+    4.9 ToggleButton
     4.10 Watchlist Item
  */
 
@@ -326,7 +326,21 @@ p {
 
 /* 4. COMPONENTS */
 
-/* 4.1 Error */
+/* 4.1 Empty List */
+
+.c-empty-list {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100vw;
+}
+
+.c-empty-list-icon {
+  font-size: 500%;
+  margin-bottom: 0.5em;
+}
+
+/* 4.2 Error */
 
 .c-error {
   color: rgb(var(--error-color));
@@ -354,7 +368,7 @@ p {
   margin-bottom: 0.5em;
 }
 
-/* 4.2 Header */
+/* 4.3 Header */
 
 .c-header {
   background: rgb(var(--header-background-color));
@@ -387,7 +401,7 @@ p {
   outline: none;
 }
 
-/* 4.3 List Filters */
+/* 4.4 List Filters */
 
 .c-list-filters {
   display: grid;
@@ -403,7 +417,7 @@ p {
   }
 }
 
-/* 4.4 List Header */
+/* 4.5 List Header */
 
 .c-list-header {
   display: grid;
@@ -424,7 +438,7 @@ p {
   grid-gap: calc(var(--spacing) / 2);
 }
 
-/* 4.5 List Item */
+/* 4.6 List Item */
 
 .c-list-item {
   background: white;
@@ -490,7 +504,7 @@ p {
   outline: none;
 }
 
-/* 4.6 List Sorter */
+/* 4.7 List Sorter */
 
 .c-list-sorter {
   display: grid;
@@ -508,7 +522,7 @@ p {
   border-top-right-radius: 0;
 }
 
-/* 4.7 Search form */
+/* 4.8 Search form */
 
 .c-search-form {
   display: grid;
@@ -551,7 +565,7 @@ p {
   color: white;
 }
 
-/* 4.8 ToggleButton */
+/* 4.9 ToggleButton */
 
 .c-toggle-button-group {
   display: grid;
@@ -603,35 +617,6 @@ p {
 .c-toggle-button input:checked ~ .c-toggle-button-label:hover {
   background: rgb(var(--label-border-color--active));
   color: rgb(var(--body-text-color));
-  outline: none;
-}
-
-/* 4.9 Toggle Watched Button */
-
-.c-toggle-watched-button {
-  border: none;
-  color: rgb(var(--button-color));
-  cursor: pointer;
-  font-size: 3rem;
-  opacity: 0.5;
-  position: absolute;
-  right: 0.5rem;
-  top: 0.25rem;
-  transition: var(--transition);
-}
-
-.c-toggle-watched-button--disabled {
-  cursor: not-allowed;
-}
-
-.c-toggle-watched-button--watched {
-  color: rgb(var(--label-border-color--active));
-}
-
-.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):active,
-.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):focus,
-.c-toggle-watched-button:not(.c-toggle-watched-button--disabled):hover {
-  opacity: 1;
   outline: none;
 }
 

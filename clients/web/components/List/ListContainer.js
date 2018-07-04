@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App Components
+import EmptyList from '../EmptyList/EmptyList'
 import List from './List'
 import ListHeader from './ListHeader'
 import Loader from '../Loader/Loader'
@@ -106,12 +107,18 @@ class ListContainer extends Component {
       sortOrder,
     } = this.state
 
-    const { className } = this.props
+    const { className, query } = this.props
     const { length } = displayListItems
     const content = length === 1 ? `Displaying ${length} result` : `Displaying ${length} results`
 
     // If the API request is in progress, render a loading spinner.
     if (loading) { return <Loader /> }
+
+    // If there are no search results, display the EmptyList component
+    if (!length && query === 'search') { return <EmptyList message="Try searching for something else." /> }
+
+    // If there are no watchlist items, display the EmptyList component
+    if (!length) { return <EmptyList message="Try searching for something to watch." /> }
 
     // Otherwise render the list.
     return (
