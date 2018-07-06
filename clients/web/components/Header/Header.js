@@ -65,6 +65,7 @@ export default class Header extends Component {
         <NavLink
           activeClassName="c-header-link--is-active"
           className="c-header-link"
+          exact
           title="My unwatched items"
           to="/"
         >
@@ -73,6 +74,7 @@ export default class Header extends Component {
         <NavLink
           activeClassName="c-header-link--is-active"
           className="c-header-link"
+          exact
           title="My watchlist"
           to="/watch"
         >
