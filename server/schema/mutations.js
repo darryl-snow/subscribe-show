@@ -38,7 +38,8 @@ module.exports = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parentValue, { id }) {
-        return WatchListItem.remove({ _id: id });
+        Episode.remove({ watchListItem: { _id: id } }) // First remove all episodes, if any
+          .then(() => WatchListItem.remove({ _id: id })); // Remove the item itself
       },
     },
     toggleItemWatched: { // Toggle whether a watchlist item has been watched or not

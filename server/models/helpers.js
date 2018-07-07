@@ -52,6 +52,7 @@ const parseMovie = (movie, item) => {
   item.description = movie.overview.replace(/(<([^>]+)>)/ig, '');
   item.airDate = movie.release_date;
   item.language = parseLanguage(movie.original_language);
+  item.watched = false;
 };
 
 /**
@@ -80,7 +81,7 @@ const parseSearchResults = (response) => {
       item.type = 'Movie';
       item.airDate = item.release_date;
 
-      if(item.image)
+      if(item.poster_path)
         item.image = `https://image.tmdb.org/t/p/original${item.poster_path}`;
     }
 
@@ -98,7 +99,7 @@ const parseSearchResults = (response) => {
       language: item.language || parseLanguage(item.original_language),
       image: item.image,
       type: item.type,
-      airDate: item.airDate
+      airDate: item.airDate,
     });
 
     return item;
@@ -118,6 +119,7 @@ const parseTVShow = (show, item) => {
   item.description = show.summary.replace(/(<([^>]+)>)/ig, '');
   item.image = show.image ? show.image.original : '';
   item.language = show.language;
+  item.watched = false;
 };
 
 /**

@@ -20,20 +20,20 @@ const {
 module.exports = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    watchListItems: { // Get entire watchlist
+    watchListItems: { // Get entire watchlist.
       type: new GraphQLList(WatchListItemType),
       resolve() {
         return WatchListItem.find({})
       },
     },
-    watchListItem: { // Get a single item (TV Show or Movie)
+    watchListItem: { // Get a single item (TV Show or Movie).
       type: WatchListItemType,
       args: { id: { type: GraphQLID } },
       resolve(parentValue, { id }) {
         return WatchListItem.findById(id)
       },
     },
-    watchListItemByTitle: { // Get a single item (TV Show or Movie) by its title
+    watchListItemByTitle: { // Get a single item (TV Show or Movie) by its title.
       type: WatchListItemType,
       args: { title: { type: GraphQLString } },
       resolve(parentValue, { title }) {
@@ -47,20 +47,26 @@ module.exports = new GraphQLObjectType({
         return Episode.findById(id)
       },
     },
-    episodes: {
+    episodes: { // Get all episodes for a given TV show.
       type: new GraphQLList(EpisodeType),
       args: { id: { type: GraphQLID } },
       resolve(parentValue, { id }) {
         return WatchListItem.getAllEpisodes(id)
       },
     },
-    unwatchedEpisodes: { // Get all unwatched episodes for all TV Shows
+    unwatchedItems: { // Get all unwatched watchlist items.
+      type: new GraphQLList(WatchListItemType),
+      resolve() {
+        return WatchListItem.find({ watched: false })
+      },
+    },
+    unwatchedEpisodes: { // Get all unwatched episodes for all TV Shows.
       type: new GraphQLList(EpisodeType),
       resolve() {
         return Episode.find({ watched: false })
       },
     },
-    search: { // Search for a TV Show or Movie
+    search: { // Search for a TV Show or Movie.
       type: new GraphQLList(WatchListItemType),
       args: { title: { type: GraphQLString } },
       resolve(parentValue, { title }) {

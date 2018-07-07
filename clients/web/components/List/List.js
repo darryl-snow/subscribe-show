@@ -14,7 +14,11 @@ export default class List extends Component {
    * @return {Object} The rendered collection of list items.
    */
   renderListItems() {
-    const { listItems, toggleLoading } = this.props
+    const {
+      listItems,
+      toggleLoading,
+    } = this.props
+
     return listItems.map(item =>
       (
         <li key={item.tmdbID || item.id}>

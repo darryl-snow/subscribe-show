@@ -289,11 +289,12 @@ describe('ListItem Component', () => {
     expect(component.find('p').text()).toEqual(`${mockValue}-description`)
   })
 
-  it('should render a link for TV show watch list items only', () => {
+  it('should render a link for TV show watchlist items only', () => {
     let mockProps = {
       tmdbID: '17861',
       type: 'TV',
       title: 'test',
+      id: '1',
     }
     let component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-link').exists()).toBe(true)

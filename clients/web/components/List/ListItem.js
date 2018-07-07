@@ -45,7 +45,13 @@ export class ListItem extends Component {
         query, // Update the main watchlist items query afterwards.
       }],
     }).then(() => {
-      this.props.history.push('/') // After adding, redirect to the home page.
+      // After the mutation is complete, then run the query to update the
+      // watchlist items.
+      // TODO: find a better way to handle this race condition
+      setTimeout(() => {
+        this.props.watchlistItems.refetch()
+        this.props.history.push('/') // After adding, redirect to the home page.
+      }, 1000)
     })
   }
 
@@ -53,6 +59,7 @@ export class ListItem extends Component {
    * Remove an item from the watchlist by calling the removeItem mutation.
    * @param {Object} event The click event on the add item button.
    */
+  // TODO: make this a prop on the list
   removeItem = (event) => {
     event.preventDefault()
     this.props.toggleLoading()
@@ -65,7 +72,10 @@ export class ListItem extends Component {
         query, // Update the main watchlist items query afterwards.
       }],
     }).then(() => {
-      this.props.history.push('/') // After adding, redirect to the home page.
+      // After the mutation is complete, then run the query to update the
+      // watchlist items.
+      // TODO: find a better way to handle this race condition
+      setTimeout(() => { this.props.watchlistItems.refetch() }, 1000)
     })
   }
 
@@ -180,12 +190,13 @@ export class ListItem extends Component {
   renderTitle = () => {
     const {
       airDate,
+      id,
       title,
       tmdbID,
       type,
     } = this.props.item
 
-    if (type === 'Movie' || !tmdbID) {
+    if (type === 'Movie' || !tmdbID || !id) {
       return (
         <h2>
           <Icon name={type} className="u-margin-right--small" />
@@ -279,6 +290,9 @@ export class ListItem extends Component {
 // Compose both the toggleWatched and the addItem mutations onto the
 // component props.
 export default compose(
+  graphql(query, {
+    name: 'watchlistItems',
+  }),
   graphql(AddItemMutation, {
     name: 'addItem',
   }),
@@ -301,6 +315,7 @@ ListItem.propTypes = {
   removeItem: PropTypes.func,
   toggleLoading: PropTypes.func,
   toggleWatched: PropTypes.func,
+  watchlistItems: PropTypes.object,
 }
 
 /**
@@ -314,4 +329,5 @@ ListItem.defaultProps = {
   removeItem: () => {},
   toggleLoading: () => {},
   toggleWatched: () => {},
+  watchlistItems: {},
 }
