@@ -7,7 +7,7 @@ import ListItem from './ListItem'
  * The List component, a collection of list items.
  * @type {Class}
  */
-export default class List extends Component {
+class List extends Component {
   /**
    * Map over the items provided as props and render a ListItem component for
    * each.
@@ -15,14 +15,21 @@ export default class List extends Component {
    */
   renderListItems() {
     const {
+      addItem,
       listItems,
-      toggleLoading,
+      removeItem,
+      toggleWatched,
     } = this.props
 
     return listItems.map(item =>
       (
         <li key={item.tmdbID || item.id}>
-          <ListItem item={item} toggleLoading={toggleLoading} />
+          <ListItem
+            addItem={addItem}
+            item={item}
+            removeItem={removeItem}
+            toggleWatched={toggleWatched}
+          />
         </li>
       ))
   }
@@ -41,14 +48,18 @@ export default class List extends Component {
   }
 }
 
+export default List
+
 /**
  * Define the property types.
  * @type {Object}
  */
 List.propTypes = {
+  addItem: PropTypes.func,
   className: PropTypes.string,
   listItems: PropTypes.array,
-  toggleLoading: PropTypes.func,
+  removeItem: PropTypes.func,
+  toggleWatched: PropTypes.func,
 }
 
 /**
@@ -56,7 +67,9 @@ List.propTypes = {
  * @type {Object}
  */
 List.defaultProps = {
+  addItem: () => {},
   className: '',
   listItems: [],
-  toggleLoading: () => {},
+  removeItem: () => {},
+  toggleWatched: () => {},
 }

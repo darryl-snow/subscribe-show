@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { ListItem } from './ListItem'
+import ListItem from './ListItem'
 
 describe('ListItem Component', () => {
   it('should render', () => {
@@ -90,33 +90,6 @@ describe('ListItem Component', () => {
     expect(addItemMock.mock.calls).toHaveLength(0)
   })
 
-  it('should trigger the loading animation while adding an item to the watchlist', () => {
-    const historyMock = {
-      push: jest.fn(),
-      location: {
-        state: {
-          query: '',
-        },
-      },
-    }
-    const addItemMock = jest.fn().mockResolvedValue()
-    const toggleLoadingMock = jest.fn()
-    const mockProps = {
-      addItem: addItemMock,
-      history: historyMock,
-      item: {
-        tmdbID: 'tmdbID',
-        isInWatchList: false,
-        title: 'test',
-      },
-      toggleLoading: toggleLoadingMock,
-    }
-    const component = shallow(<ListItem {...mockProps} />)
-    const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.c-add-to-watchlist-button').simulate('click', mockedEvent)
-    expect(toggleLoadingMock.mock.calls).toHaveLength(1)
-  })
-
   it('should only render the Remove from Watchlist button for watchlist items on the watchlist', () => {
     let itemMock = {
       id: 1,
@@ -158,34 +131,6 @@ describe('ListItem Component', () => {
     const mockedEvent = { target: {}, preventDefault: () => {} }
     component.find('.c-remove-from-watchlist-button').simulate('click', mockedEvent)
     expect(removeItemMock.mock.calls).toHaveLength(1)
-  })
-
-  it('should trigger the loading animation while removing an item from the watchlist', () => {
-    const historyMock = {
-      push: jest.fn(),
-      location: {
-        state: {
-          query: '',
-        },
-      },
-    }
-    const removeItemMock = jest.fn().mockResolvedValue()
-    const toggleLoadingMock = jest.fn()
-    const mockProps = {
-      removeItem: removeItemMock,
-      history: historyMock,
-      item: {
-        id: 1,
-        tmdbID: 'tmdbID',
-        title: 'test',
-        type: 'Movie',
-      },
-      toggleLoading: toggleLoadingMock,
-    }
-    const component = shallow(<ListItem {...mockProps} />)
-    const mockedEvent = { target: {}, preventDefault: () => {} }
-    component.find('.c-remove-from-watchlist-button').simulate('click', mockedEvent)
-    expect(toggleLoadingMock.mock.calls).toHaveLength(1)
   })
 
   it('should only render the Toggle Watched button for watchlist items', () => {

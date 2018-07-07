@@ -1,13 +1,6 @@
 // Dependencies
 import React, { Component } from 'react'
-import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
-// Mutations
-import AddItemMutation from '../../mutations/addToWatchlist'
-import RemoveItemMutation from '../../mutations/removeFromWatchlist'
-import ToggleWatchedMutation from '../../mutations/toggleItemWatched'
-// Queries
-import query from '../../queries/getWatchlistItems'
 
 // App components
 import history from '../../history'
@@ -19,7 +12,7 @@ const slugify = title => title.toLowerCase().replace(/\s/g, '-')
  * The ListItem component, a stateless component that renders all the details
  * provided for a given list item.
  */
-export class ListItem extends Component {
+class ListItem extends Component {
   constructor(props) {
     super(props)
 
@@ -28,78 +21,20 @@ export class ListItem extends Component {
     }
   }
 
+  // ------------CUSTOM METHODS------------
+
   /**
-   * Add an item to the watchlist by calling the addItem mutation.
+   * Add an item to the watchlist by passing to the relevant data to the
+   * function on the props.
    * @param {Object} event The click event on the add item button.
    */
   addItem = (event) => {
     event.preventDefault()
-    this.props.toggleLoading()
-
-    this.props.addItem({
-      variables: {
-        tmdbID: this.props.item.tmdbID,
-        type: this.props.item.type,
-      },
-      refetchQueries: [{
-        query, // Update the main watchlist items query afterwards.
-      }],
-    }).then(() => {
-      // After the mutation is complete, then run the query to update the
-      // watchlist items.
-      // TODO: find a better way to handle this race condition
-      setTimeout(() => {
-        this.props.watchlistItems.refetch()
-        this.props.history.push('/') // After adding, redirect to the home page.
-      }, 1000)
-    })
-  }
-
-  /**
-   * Remove an item from the watchlist by calling the removeItem mutation.
-   * @param {Object} event The click event on the add item button.
-   */
-  // TODO: make this a prop on the list
-  removeItem = (event) => {
-    event.preventDefault()
-    this.props.toggleLoading()
-
-    this.props.removeItem({
-      variables: {
-        id: this.props.item.id,
-      },
-      refetchQueries: [{
-        query, // Update the main watchlist items query afterwards.
-      }],
-    }).then(() => {
-      // After the mutation is complete, then run the query to update the
-      // watchlist items.
-      // TODO: find a better way to handle this race condition
-      setTimeout(() => { this.props.watchlistItems.refetch() }, 1000)
-    })
-  }
-
-  /**
-   * Toggle an item as having been watched or not by calling the toggleWatched
-   * mutation.
-   * @param  {[type]} event [description]
-   * @return {[type]}       [description]
-   */
-  toggleWatched = (event) => {
-    event.preventDefault()
-
-    this.setState({
-      watched: !this.state.watched,
-    })
-
-    this.props.toggleWatched({
-      variables: {
-        id: this.props.item.id,
-      },
-      refetchQueries: [{
-        query, // Update the main watchlist items query afterwards.
-      }],
-    })
+    const {
+      addItem,
+      item,
+    } = this.props
+    addItem(item.tmdbID, item.type)
   }
 
   /**
@@ -111,6 +46,42 @@ export class ListItem extends Component {
     const title = slugify(this.props.item.title)
     this.props.history.push(`/watch/${title}`)
   }
+
+  /**
+   * Remove an item from the watchlist by passing the item ID to
+   * the function on the props.
+   * @param {Object} event The click event on the add item button.
+   */
+  removeItem = (event) => {
+    event.preventDefault()
+    const {
+      removeItem,
+      item,
+    } = this.props
+    removeItem(item.id)
+  }
+
+  /**
+   * Toggle an item as having been watched or not by passing the ID
+   * to the function on the props. As the same time, reverse the
+   * state on the component.
+   * @param  {[type]} event The click event on the toggle watched button.
+   */
+  toggleWatched = (event) => {
+    event.preventDefault()
+    const {
+      toggleWatched,
+      item,
+    } = this.props
+
+    this.setState({
+      watched: !this.state.watched,
+    })
+
+    toggleWatched(item.id)
+  }
+
+  // ------------RENDER METHODS------------
 
   /**
    * The item can only be added to the watchlist if it is not there already.
@@ -147,6 +118,18 @@ export class ListItem extends Component {
   }
 
   /**
+   * Render a label to indicate the item's language.
+   * @return {Object} The rendered label.
+   */
+  renderLanguageLabel = () => {
+    const { language } = this.props.item
+    if (!language) {
+      return ''
+    }
+    return <span className="o-label">{language}</span>
+  }
+
+  /**
    * If the item is not in the search results then it's in the watchlist so it
    * can be removed. This function renders a button for calling the removeItem
    * function.
@@ -167,18 +150,6 @@ export class ListItem extends Component {
         Remove from Watchlist
       </button>
     )
-  }
-
-  /**
-   * Render a label to indicate the item's language.
-   * @return {Object} The rendered label.
-   */
-  renderLanguageLabel = () => {
-    const { language } = this.props.item
-    if (!language) {
-      return ''
-    }
-    return <span className="o-label">{language}</span>
   }
 
   /**
@@ -287,22 +258,7 @@ export class ListItem extends Component {
   }
 }
 
-// Compose both the toggleWatched and the addItem mutations onto the
-// component props.
-export default compose(
-  graphql(query, {
-    name: 'watchlistItems',
-  }),
-  graphql(AddItemMutation, {
-    name: 'addItem',
-  }),
-  graphql(RemoveItemMutation, {
-    name: 'removeItem',
-  }),
-  graphql(ToggleWatchedMutation, {
-    name: 'toggleWatched',
-  }),
-)(ListItem)
+export default ListItem
 
 /**
  * Define the types for each property.
@@ -313,9 +269,7 @@ ListItem.propTypes = {
   history: PropTypes.object,
   item: PropTypes.object,
   removeItem: PropTypes.func,
-  toggleLoading: PropTypes.func,
   toggleWatched: PropTypes.func,
-  watchlistItems: PropTypes.object,
 }
 
 /**
@@ -327,7 +281,5 @@ ListItem.defaultProps = {
   history,
   item: {},
   removeItem: () => {},
-  toggleLoading: () => {},
   toggleWatched: () => {},
-  watchlistItems: {},
 }
