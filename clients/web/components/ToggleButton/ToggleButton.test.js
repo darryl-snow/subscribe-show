@@ -13,8 +13,12 @@ describe('ToggleButton Component', () => {
     expect(shallow(<ToggleButton value={testValue} />).find(`input[value='${testValue}']`).exists()).toBe(true)
   })
   it('should render the correct icon', () => {
-    const testValue = 'test'
-    expect(mount(<ToggleButton value={testValue} />).find(`.fa-${testValue}`).exists()).toBe(true)
+    let testValue = 'TV'
+    expect(mount(<ToggleButton value={testValue} />).find('.fa-tv').exists()).toBe(true)
+    testValue = 'movie'
+    expect(mount(<ToggleButton value={testValue} />).find('.fa-film').exists()).toBe(true)
+    testValue = 'episode'
+    expect(mount(<ToggleButton value={testValue} />).find('.o-icon').exists()).toBe(false)
   })
   it('should render the correct label text', () => {
     const testValue = 'test'

@@ -29,6 +29,15 @@ class ToggleButton extends Component {
     this.props.handleChange(target.value, target.checked)
     return true
   }
+  renderIcon = () => {
+    const { value } = this.props
+    if (value === 'movie' || value === 'TV') {
+      return (
+        <Icon name={value} className="u-margin-right--small" />
+      )
+    }
+    return ''
+  }
   /**
    * Render the component.
    * @return {Object} The rendered component.
@@ -45,7 +54,7 @@ class ToggleButton extends Component {
           checked={this.state.checked}
         />
         <label htmlFor={value} className="c-toggle-button-label u-align--center">
-          <Icon name={value} className="u-margin-right--small" />
+          {this.renderIcon()}
           <span>{value}</span>
         </label>
       </div>

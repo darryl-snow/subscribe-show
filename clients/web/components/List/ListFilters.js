@@ -70,13 +70,21 @@ export default class ListFilters extends Component {
       <ToggleButton key={language} value={language} handleChange={this.changeFilter} />)
   }
   renderTypeFilters() {
-    return this.state.types.map(type =>
-      <ToggleButton key={type} value={type} handleChange={this.changeFilter} />)
+    return this.state.types.map((type) => {
+      if (type === 'movie' || type === 'tv') {
+        return (
+          <ToggleButton key={type} value={type} handleChange={this.changeFilter} />
+        )
+      }
+      return (
+        <ToggleButton key={type} value="TV" handleChange={this.changeFilter} />
+      )
+    })
   }
   render() {
     return (
       <div className="c-list-filters">
-        <div className="c-toggle-button-group">
+        <div className="c-toggle-button-group u-margin-right--small">
           {this.renderTypeFilters()}
         </div>
         <div className="c-toggle-button-group">

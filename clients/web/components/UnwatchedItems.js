@@ -31,6 +31,8 @@ const parseItems = (items) => {
         const episode = items[i].episodes[j]
         if (!episode.watched) {
           const unwatchedEpisode = Object.assign({}, episode)
+          unwatchedEpisode.language = items[i].language
+          unwatchedEpisode.title = unwatchedEpisode.name
           unwatchedEpisode.type = 'Episode'
           unwatchedEpisode.watchlistItem = {
             id: items[i].id,

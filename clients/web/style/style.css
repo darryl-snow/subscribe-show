@@ -534,16 +534,13 @@ p {
 /* 4.5 List Filters */
 
 .c-list-filters {
-  display: grid;
-  grid-gap: 2px;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
 @media(min-width: 600px) {
   .c-list-filters {
-    grid-gap: calc(var(--spacing) / 2);
-    grid-template-rows: auto;
-    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
   }
 }
 
@@ -565,7 +562,12 @@ p {
   display: grid;
   grid-template-rows: auto auto;
   margin-bottom: var(--spacing);
-  grid-gap: calc(var(--spacing) / 2);
+}
+
+@media(min-width: 600px) {
+  .c-list-header-controls {
+    grid-gap: calc(var(--spacing) / 2);
+  }
 }
 
 /* 4.7 List Item */
@@ -698,9 +700,16 @@ p {
 /* 4.10 ToggleButton */
 
 .c-toggle-button-group {
-  display: grid;
-  grid-gap: 2px;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  margin-bottom: calc(var(--spacing) * 0.5);
+  width: 100%;
+}
+
+@media(min-width: 600px) {
+  .c-toggle-button-group {
+    margin-bottom: 0;
+    width: auto;
+  }
 }
 
 .c-toggle-button-group .c-toggle-button:first-child .c-toggle-button-label {
@@ -711,6 +720,20 @@ p {
 .c-toggle-button-group .c-toggle-button:last-child .c-toggle-button-label {
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
+}
+
+.c-toggle-button {
+  flex: 1;
+}
+
+@media(min-width: 600px) {
+  .c-toggle-button {
+    min-width: 8em;
+  }
+}
+
+.c-toggle-button + .c-toggle-button {
+  margin-left: 1px;
 }
 
 .c-toggle-button-label {
