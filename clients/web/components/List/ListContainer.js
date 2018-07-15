@@ -30,10 +30,10 @@ export class ListContainer extends Component {
 
     this.state = {
       filters: [],
-      displayListItems: props.data[props.query] || [],
+      displayListItems: props.listItems || props.data[props.query] || [],
       itemToBeRemoved: 0,
       loading: props.data.loading,
-      receivedListItems: props.data[props.query],
+      receivedListItems: props.listItems || props.data[props.query],
       showModal: false,
       sortBy: props.sortBy,
       sortOrder: props.sortOrder,
@@ -46,9 +46,14 @@ export class ListContainer extends Component {
    */
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps
+    let items = nextProps.listItems
+    if (!items.length) {
+      items = data[nextProps.query]
+    }
+
     this.setState({
-      displayListItems: data[nextProps.query],
-      receivedListItems: data[nextProps.query],
+      displayListItems: items,
+      receivedListItems: items,
       loading: data.loading,
     }, this.sortList)
   }
@@ -145,8 +150,15 @@ export class ListContainer extends Component {
    */
   sortList() {
     const dynamicSort = property => (a, b) => {
-      const c = (a[property] > b[property]) ? 1 : 0
-      const d = (a[property] < b[property]) ? -1 : c
+      let c = 0
+      let d = 0
+      if (property === 'airDate') {
+        c = (new Date(a[property]) > new Date(b[property])) ? 1 : 0
+        d = (new Date(a[property]) < new Date(b[property])) ? -1 : c
+      } else {
+        c = (a[property] > b[property]) ? 1 : 0
+        d = (a[property] < b[property]) ? -1 : c
+      }
       return d * this.state.sortOrder
     }
     const tmp = this.state.displayListItems.slice()
@@ -277,6 +289,7 @@ ListContainer.propTypes = {
   className: PropTypes.string,
   data: PropTypes.object,
   history: PropTypes.object,
+  listItems: PropTypes.array,
   query: PropTypes.string,
   removeItem: PropTypes.func,
   sortBy: PropTypes.string,
@@ -297,6 +310,7 @@ ListContainer.defaultProps = {
     search: [],
   },
   history,
+  listItems: [],
   query: '',
   removeItem: () => {},
   sortBy: 'airDate',

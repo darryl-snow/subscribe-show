@@ -54,8 +54,16 @@ export default class EpisodeList extends Component {
       return ''
     }
     return this.state.seasons.map(season => (
-      <li key={season} className="c-breadcrumbs-item">
-        <a href={`#season${season}`}>{`Season ${season}`}</a>
+      <li
+        key={season}
+        className="c-breadcrumbs-item u-display--inline-block u-margin-bottom"
+      >
+        <a
+          className="o-link c-breadcrumbs-link u-margin-left--small u-margin-right--small"
+          href={`#season${season}`}
+        >
+          {`Season ${season}`}
+        </a>
       </li>
     ))
   }

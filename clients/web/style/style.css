@@ -34,9 +34,9 @@
     1.3 Paragraphs
   2. Utilities
     2.1 Alignment
-    2.2 Flex
-    2.3 Full Height
-    2.4 Inline Block
+    2.2 Dislpay
+    2.3 Flex
+    2.4 Full Height
     2.5 Margins
     2.6 Padding
     2.7 Lists
@@ -51,16 +51,17 @@
     3.8 Selects
     3.9 Subheadings
   4. Components
-    4.1 Empty List
-    4.2 Error
-    4.3 Header
-    4.4 List Filters
-    4.5 List Header
-    4.6 List Item
-    4.7 List Sorter
-    4.8 Search Form
-    4.9 ToggleButton
-    4.10 Watchlist Item
+    4.1 Breadcrumbs
+    4.2 Empty List
+    4.3 Error
+    4.4 Header
+    4.5 List Filters
+    4.6 List Header
+    4.7 List Item
+    4.8 List Sorter
+    4.9 Search Form
+    4.10 ToggleButton
+    4.11 Watchlist Item
  */
 
 /**
@@ -116,22 +117,26 @@ p {
   text-align: right;
 }
 
-/* 2.2 Flex */
+/* 2.2 Display */
+
+.u-display--block {
+  display: block;
+}
+
+.u-display--inline-block {
+  display: inline-block;
+}
+
+/* 2.3 Flex */
 
 .u-flex {
   display: flex;
 }
 
-/* 2.3 Full height */
+/* 2.4 Full height */
 
 .u-full-height {
   height: 100%;
-}
-
-/* 2.4 Inline-Block */
-
-.u-inline-block {
-  display: inline-block;
 }
 
 /* 2.5 Margins */
@@ -141,7 +146,7 @@ p {
 }
 
 .u-margin-left--small {
-  margin-right: calc(0.5 * var(--spacing));
+  margin-left: calc(0.5 * var(--spacing));
 }
 
 .u-margin-right {
@@ -278,6 +283,7 @@ p {
 .o-link {
   color: rgb(var(--button-color));
   text-decoration: none;
+  transition: var(--transition);
 }
 
 .o-link-icon {
@@ -422,7 +428,35 @@ p {
 
 /* 4. COMPONENTS */
 
-/* 4.1 Empty List */
+/* 4.1 Breadcrumbs */
+
+.c-breadcrumbs-item {
+  border-right: 1px dotted rgb(var(--label-border-color--active));
+}
+
+.c-breadcrumbs-item:first-child {
+  margin-left: 0;
+}
+
+.c-breadcrumbs-item:last-child {
+  border: none;
+}
+
+.c-breadcrumbs-link {
+  border-bottom: 1px solid rgb(var(--label-text-color));
+  color: rgb(var(--label-text-color));
+  display: block;
+  padding-bottom: 3px;
+}
+
+.c-breadcrumbs-link:active,
+.c-breadcrumbs-link:focus,
+.c-breadcrumbs-link:hover {
+  border-bottom: 1px solid transparent;
+  color: rgb(var(--body-text-color));
+}
+
+/* 4.2 Empty List */
 
 .c-empty-list {
   display: table-cell;
@@ -436,7 +470,7 @@ p {
   margin-bottom: 0.5em;
 }
 
-/* 4.2 Error */
+/* 4.3 Error */
 
 .c-error {
   color: rgb(var(--error-color));
@@ -464,7 +498,7 @@ p {
   margin-bottom: 0.5em;
 }
 
-/* 4.3 Header */
+/* 4.4 Header */
 
 .c-header {
   background: rgb(var(--header-background-color));
@@ -497,7 +531,7 @@ p {
   outline: none;
 }
 
-/* 4.4 List Filters */
+/* 4.5 List Filters */
 
 .c-list-filters {
   display: grid;
@@ -513,7 +547,7 @@ p {
   }
 }
 
-/* 4.5 List Header */
+/* 4.6 List Header */
 
 .c-list-header {
   display: grid;
@@ -534,7 +568,7 @@ p {
   grid-gap: calc(var(--spacing) / 2);
 }
 
-/* 4.6 List Item */
+/* 4.7 List Item */
 
 .c-list-item {
   background: white;
@@ -600,7 +634,7 @@ p {
   outline: none;
 }
 
-/* 4.7 List Sorter */
+/* 4.8 List Sorter */
 
 .c-list-sorter {
   display: grid;
@@ -618,7 +652,7 @@ p {
   border-top-right-radius: 0;
 }
 
-/* 4.8 Search form */
+/* 4.9 Search form */
 
 .c-search-form {
   display: grid;
@@ -661,7 +695,7 @@ p {
   color: white;
 }
 
-/* 4.9 ToggleButton */
+/* 4.10 ToggleButton */
 
 .c-toggle-button-group {
   display: grid;
@@ -716,7 +750,7 @@ p {
   outline: none;
 }
 
-/* 4.10 Watchlist Item */
+/* 4.11 Watchlist Item */
 
 .c-watchlistitem-header {
   background-color: rgb(var(--body-text-color));

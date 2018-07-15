@@ -13,6 +13,7 @@ import WatchlistItemHeader from './WatchlistItem/WatchlistItemHeader'
  */
 export default (PassedComponent) => {
   const WatchListItem = (props) => {
+    console.log(props)
     if (props.data.loading) {
       return (
         <Loader />

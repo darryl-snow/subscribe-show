@@ -6,19 +6,19 @@ const propsMock = {
   data: {
     test: [{
       tmdbID: 1,
-      airDate: 'a',
+      airDate: '2017-01-01',
       language: '5',
       title: '1',
       type: '3',
     }, {
       tmdbID: 2,
-      airDate: 'y',
+      airDate: '2018-01-01',
       language: '6',
       title: '2',
       type: '1',
     }, {
       tmdbID: 3,
-      airDate: 'x',
+      airDate: '2016-01-01',
       language: '7',
       title: '3',
       type: '2',

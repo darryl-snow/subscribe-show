@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { Episode } from './Episode'
 
 describe('Episode Component', () => {
@@ -32,15 +32,21 @@ describe('Episode Component', () => {
     let mockProps = {
       watched: true,
     }
-    let component = shallow(<Episode {...mockProps} />)
+    let component = mount(<Episode {...mockProps} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
-    expect(component.find('.c-toggle-watched-button--watched')).toHaveLength(1)
+    expect(component.find('.c-toggle-watched-button').contains('Mark as not watched')).toBe(true)
+    expect(component.find('.c-toggle-watched-button').contains('Mark as watched')).toBe(false)
+    expect(component.find('.fa-check').exists()).toBe(true)
+    expect(component.find('.fa-eye').exists()).toBe(false)
     mockProps = {
       watched: false,
     }
-    component = shallow(<Episode {...mockProps} />)
+    component = mount(<Episode {...mockProps} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
-    expect(component.find('.c-toggle-watched-button--watched')).toHaveLength(0)
+    expect(component.find('.c-toggle-watched-button').contains('Mark as not watched')).toBe(false)
+    expect(component.find('.c-toggle-watched-button').contains('Mark as watched')).toBe(true)
+    expect(component.find('.fa-check').exists()).toBe(false)
+    expect(component.find('.fa-eye').exists()).toBe(true)
   })
   it('should toggle an episode as watched/unwatched when the button is clicked', () => {
     const mutateMock = jest.fn().mockResolvedValue()

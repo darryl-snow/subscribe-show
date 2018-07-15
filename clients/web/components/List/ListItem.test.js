@@ -90,7 +90,7 @@ describe('ListItem Component', () => {
     expect(addItemMock.mock.calls).toHaveLength(0)
   })
 
-  it('should only render the Remove from Watchlist button for watchlist items on the watchlist', () => {
+  it('should only render the Remove from Watchlist button for Movies or TV Shows on the watchlist', () => {
     let itemMock = {
       id: 1,
       type: 'Movie',
@@ -98,6 +98,18 @@ describe('ListItem Component', () => {
     }
     let component = shallow(<ListItem item={itemMock} />)
     expect(component.find('.c-remove-from-watchlist-button').exists()).toBe(true)
+    itemMock = {
+      type: 'TV',
+      title: 'test',
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-remove-from-watchlist-button').exists()).toBe(true)
+    itemMock = {
+      type: 'Episode',
+      title: 'test',
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-remove-from-watchlist-button').exists()).toBe(false)
     itemMock = {
       type: 'Movie',
       title: 'test',
@@ -182,6 +194,17 @@ describe('ListItem Component', () => {
     expect(component.find('.c-toggle-watched-button.o-button--disabled').exists()).toBe(false)
     itemMock = {
       id: 1,
+      type: 'Episode',
+      title: 'test',
+      watchlistItem: {
+        id: '1',
+        title: 'test',
+      },
+    }
+    component = shallow(<ListItem item={itemMock} />)
+    expect(component.find('.c-toggle-watched-button.o-button--disabled').exists()).toBe(false)
+    itemMock = {
+      id: 1,
       type: 'TV',
       title: 'test',
     }
@@ -216,25 +239,42 @@ describe('ListItem Component', () => {
 
   it('should render the correct details', () => {
     const mockValue = 'test'
-    const mockProps = {
+    let mockProps = {
       title: `${mockValue}-title`,
       description: `${mockValue}-description`,
       language: `${mockValue}-language`,
       image: `${mockValue}-image`,
       type: `${mockValue}-type`,
-      airDate: `${mockValue}-airDate`,
+      airDate: '2018-01-01',
     }
-    const component = mount(<ListItem item={mockProps} />)
+    let component = mount(<ListItem item={mockProps} />)
     const componentStyle = component.find('.c-list-item-image').prop('style')
     expect(componentStyle.backgroundImage).toEqual(`url(${mockValue}-image)`)
     expect(component.find('h2').contains(`${mockValue}-title`)).toEqual(true)
-    expect(component.find(`.fa-${mockValue}-type`).exists()).toBe(true)
-    expect(component.find('.o-subheading').text()).toEqual(`${mockValue}-airDate`)
+    expect(component.find('.fa-film').exists()).toBe(true)
+    expect(component.find('.o-subheading').text()).toEqual('2018-01-01')
     expect(component.find('.o-label').text()).toEqual(`${mockValue}-language`)
     expect(component.find('p').text()).toEqual(`${mockValue}-description`)
+    mockProps = {
+      id: '1',
+      title: `${mockValue}-title`,
+      description: `${mockValue}-description`,
+      language: `${mockValue}-language`,
+      image: `${mockValue}-image`,
+      type: 'Episode',
+      seasonNumber: 1,
+      episodeNumber: 1,
+      airDate: '2018-01-01',
+      watchlistItem: {
+        id: '1',
+        title: 'test',
+      },
+    }
+    component = mount(<ListItem item={mockProps} />)
+    expect(component.find('h2').contains('S01E01')).toEqual(true)
   })
 
-  it('should render a link for TV show watchlist items only', () => {
+  it('should render a link for TV show and Episode watchlist items only', () => {
     let mockProps = {
       tmdbID: '17861',
       type: 'TV',
@@ -256,5 +296,16 @@ describe('ListItem Component', () => {
     }
     component = shallow(<ListItem item={mockProps} />)
     expect(component.find('.o-link').exists()).toBe(false)
+    mockProps = {
+      type: 'Episode',
+      title: 'test',
+      id: '1',
+      watchlistItem: {
+        id: '1',
+        title: 'test',
+      },
+    }
+    component = shallow(<ListItem item={mockProps} />)
+    expect(component.find('.o-link').exists()).toBe(true)
   })
 })

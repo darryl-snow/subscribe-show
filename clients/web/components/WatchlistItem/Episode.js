@@ -3,22 +3,12 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import ToggleWatchedMutation from '../../mutations/toggleEpisodeWatched'
-import query from '../../queries/getWatchlistItems'
+import watchlistQuery from '../../queries/getWatchlistItems'
+import unwatchedItemsQuery from '../../queries/getUnwatchedItems'
+import { formatDate } from '../../helpers'
 
 // App components
 import Icon from '../Icon/Icon'
-
-/**
- * Format a given date string into YYYY-MM-DD.
- * @param  {String} date The date to be formatted.
- * @return {String}      The formatted date.
- */
-const formatDate = (date) => {
-  const year = date.getFullYear()
-  const month = (`0${date.getMonth() + 1}`).slice(-2)
-  const day = (`0${date.getDate()}`).slice(-2)
-  return (`${year}-${month}-${day}`)
-}
 
 /**
  * The Episode component renders all details for a given TV episode.
@@ -46,7 +36,8 @@ export class Episode extends Component {
         id: this.props.id,
       },
       refetchQueries: [{
-        query, // Update the main watchlist items query afterwards.
+        watchlistQuery, // Update the main watchlist items query afterwards.
+        unwatchedItemsQuery, // Update the list of unwatched items afterwards.
       }],
     })
   }
@@ -59,13 +50,12 @@ export class Episode extends Component {
     const { watched } = this.state
     return (
       <button
-        className={watched ?
-          'c-toggle-watched-button c-toggle-watched-button--watched' :
-          'c-toggle-watched-button'}
+        className="o-button c-toggle-watched-button"
         onClick={this.toggleWatched}
         title={watched ? 'Mark as unwatched' : 'Mark as watched'}
       >
-        <Icon name={watched ? 'eye' : 'eye-slash'} />
+        <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
+        {watched ? 'Mark as not watched' : 'Mark as watched'}
       </button>
     )
   }

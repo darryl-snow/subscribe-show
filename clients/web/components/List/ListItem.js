@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { formatDate, formatSeasonEpisodeNumbers } from '../../helpers'
 
 // App components
 import history from '../../history'
@@ -43,8 +44,8 @@ class ListItem extends Component {
    */
   navigateToWatchListItem = (event) => {
     event.preventDefault()
-    const title = slugify(this.props.item.title)
-    this.props.history.push(`/watch/${title}`)
+    const title = this.props.item.title || this.props.item.watchlistItem.title
+    this.props.history.push(`/watch/${slugify(title)}`)
   }
 
   /**
@@ -135,12 +136,20 @@ class ListItem extends Component {
    * function.
    */
   renderRemoveFromWatchListButton = () => {
-    const { isInWatchList } = this.props.item
+    const {
+      isInWatchList,
+      type,
+    } = this.props.item
 
     // Only search results have the isInWatchList property. If the item has
     // that property then we can assume that it's not in the watchlist and so
     // we don't need to render the button.
     if (typeof (isInWatchList) !== 'undefined') {
+      return ''
+    }
+
+    // Individual TV Show episodes can't be removed from the watch list.
+    if (type === 'Episode') {
       return ''
     }
 
@@ -161,18 +170,35 @@ class ListItem extends Component {
   renderTitle = () => {
     const {
       airDate,
+      episodeNumber,
       id,
+      name,
+      seasonNumber,
       title,
-      tmdbID,
       type,
+      watchlistItem,
     } = this.props.item
 
-    if (type === 'Movie' || !tmdbID || !id) {
+    if (type === 'Movie' || !id) {
       return (
         <h2>
-          <Icon name={type} className="u-margin-right--small" />
-          {title}
-          <span className="o-subheading">{airDate}</span>
+          <Icon name="movie" className="u-margin-right--small" />
+          {title || name}
+          <span className="o-subheading">{formatDate(new Date(airDate))}</span>
+        </h2>
+      )
+    }
+
+    if (type === 'Episode') {
+      return (
+        <h2>
+          <a className="o-link u-display--block" href={`/watch/${slugify(watchlistItem.title)}`} onClick={this.navigateToWatchListItem}>
+            {watchlistItem.title}
+            <Icon name="angle-right" className="o-link-icon" />
+          </a>
+          <Icon name="tv" className="u-margin-right--small" />
+          {formatSeasonEpisodeNumbers(seasonNumber, episodeNumber)} : {title || name}
+          <span className="o-subheading">{formatDate(new Date(airDate))}</span>
         </h2>
       )
     }
@@ -180,10 +206,10 @@ class ListItem extends Component {
     return (
       <a className="o-link" href={`/watch/${slugify(title)}`} onClick={this.navigateToWatchListItem}>
         <h2>
-          <Icon name={type} className="u-margin-right--small" />
-          {title}
+          <Icon name="tv" className="u-margin-right--small" />
+          {title || name}
           <Icon name="angle-right" className="o-link-icon" />
-          <span className="o-subheading">{airDate}</span>
+          <span className="o-subheading">{formatDate(new Date(airDate))}</span>
         </h2>
       </a>
     )
@@ -203,8 +229,9 @@ class ListItem extends Component {
       return ''
     }
 
-    // Can only toggle movies as watched or not. The button is never disabled.
-    if (type === 'Movie') {
+    // Can only toggle movies or individual episodes as watched
+    // or not. The button is never disabled.
+    if (type === 'Movie' || type === 'Episode') {
       return (
         <button
           className="o-button c-toggle-watched-button"
