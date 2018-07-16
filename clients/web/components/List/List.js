@@ -1,7 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ListItem from './ListItem'
+import ListItem from './ListItem/ListItem'
 
 /**
  * The List component, a collection of list items.

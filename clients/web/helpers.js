@@ -15,3 +15,5 @@ export function formatSeasonEpisodeNumbers(season, episode) {
   const e = (`0${episode}`).slice(-2)
   return (`S${s}E${e}`)
 }
+
+export function slugify(title) { return title.toLowerCase().replace(/\s/g, '-') }
