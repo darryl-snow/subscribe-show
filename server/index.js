@@ -1,44 +1,69 @@
-const express = require('express');
-const expressGraphQL = require('express-graphql');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const history = require('connect-history-api-fallback');
-const cors = require('cors');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const express = require('express')
+const expressGraphQL = require('express-graphql')
+const keys = require('../keys.json')
+const mongoose = require('mongoose')
+const morgan = require('morgan')
+const passport = require('passport')
+const session = require('express-session')
 
-const models = require('./models');
-const schema = require('./schema/schema');
-const winston = require('./winston-config');
-const webpackConfig = require('../webpack.config.js');
+const models = require('./models')
+const schema = require('./schema/schema')
+const winston = require('./winston-config')
+
+const MongoStore = require('connect-mongo')(session)
 
 /**
  * Create the web server.
  */
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = express()
+const PORT = process.env.PORT || 3000
 
 /**
  * Connect to the Database.
  */
-const MONGO_URI = 'mongodb://default:default@ds113648.mlab.com:13648/subscribe-show';
+const MONGO_URI = 'mongodb://default:default@ds113648.mlab.com:13648/subscribe-show'
 if (!MONGO_URI) {
-  throw new Error('You must provide a MongoLab URI');
+  throw new Error('You must provide a MongoLab URI')
 }
 
-mongoose.Promise = global.Promise;
-mongoose.connect(MONGO_URI);
+mongoose.Promise = global.Promise
+mongoose.connect(MONGO_URI)
 mongoose.connection
   .once('open', () => console.log('Connected to MongoLab instance.'))
-  .on('error', error => console.log('Error connecting to MongoLab:', error));
+  .on('error', error => console.log('Error connecting to MongoLab:', error))
 
 /**
  * Configure the server
  */
-app.use(cors());
-app.use(bodyParser.json());
-app.use(morgan('combined', { stream: winston.stream }));
+app.use(cors())
+app.use(bodyParser.json())
+app.use(morgan('combined', { stream: winston.stream }))
+
+/**
+ * Configures express to use sessions.  This places an encrypted identifier
+ * on the users cookie.  When a user makes a request, this middleware examines
+ * the cookie and modifies the request object to indicate which user made the request
+ * The cookie itself only contains the id of a session more data about the session
+ * is stored inside of MongoDB.
+ */
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: keys.session,
+  store: new MongoStore({
+    url: MONGO_URI,
+    autoReconnect: true,
+  }),
+}))
+
+// Passport is wired into express as a middleware. When a request comes in,
+// Passport will examine the request's session (as set by the above config) and
+// assign the current user to the 'req.user' object.  See also servces/auth.js
+app.use(passport.initialize())
+app.use(passport.session())
 
 /**
  * Set up the route for GraphQL queries.
@@ -46,22 +71,11 @@ app.use(morgan('combined', { stream: winston.stream }));
 app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
-}));
-
-// /**
-//  * Webpack runs as a middleware.  If any request comes in for the root route
-//  * ('/') Webpack will respond with the output of the webpack process: an HTML
-//  * file and a single bundle.js output of all of our client side Javascript.
-//  */
-// app.use(history());
-// app.use(webpackMiddleware(webpack(webpackConfig), {
-//   historyApiFallback: true,
-//   publicPath: '/',
-// }));
+}))
 
 /**
  * Open the web server.
  */
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+  console.log(`Server listening on port ${PORT}`)
+})

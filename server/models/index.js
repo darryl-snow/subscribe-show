@@ -1,2 +1,3 @@
-require('./watchListItem');
-require('./episode');
+require('./episode')
+require('./user')
+require('./watchListItem')
