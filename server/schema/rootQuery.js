@@ -6,6 +6,7 @@ const UserType = require('./types/user')
 
 const WatchListItem = mongoose.model('watchListItem')
 const Episode = mongoose.model('episode')
+const { errorName } = require('../services/errors')
 
 const {
   GraphQLObjectType,
@@ -76,8 +77,15 @@ module.exports = new GraphQLObjectType({
     },
     watchListItems: { // Get entire watchlist.
       type: new GraphQLList(WatchListItemType),
-      resolve() {
-        return WatchListItem.find({})
+      resolve(parentValue, args, req) {
+        try {
+          if (!req.user) {
+            throw new Error(errorName.UNAUTHORIZED)
+          }
+          return WatchListItem.find({ user: req.user.id })
+        } catch (err) {
+          throw err.message
+        }
       },
     },
   },

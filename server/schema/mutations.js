@@ -30,8 +30,11 @@ module.exports = new GraphQLObjectType({
         tmdbID: { type: new GraphQLNonNull(GraphQLString) },
         type: { type: GraphQLNonNull(GraphQLString) },
       },
-      resolve(parentValue, { tmdbID, type }) {
-        return (new WatchListItem({ tmdbID, type }).save())
+      resolve(parentValue, { tmdbID, type }, req) {
+        if (!req.user) {
+          return null // throw error
+        }
+        return (new WatchListItem({ tmdbID, type, user: req.user._id }).save())
       },
     },
     login: {

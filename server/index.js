@@ -8,11 +8,14 @@ const morgan = require('morgan')
 const passport = require('passport')
 const session = require('express-session')
 
+const { errorType } = require('./services/errors')
 const models = require('./models')
 const schema = require('./schema/schema')
 const winston = require('./winston-config')
 
 const MongoStore = require('connect-mongo')(session)
+
+const getErrorCode = errorName => errorType[errorName]
 
 /**
  * Create the web server.
@@ -71,6 +74,13 @@ app.use(passport.session())
 app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
+  formatError: (err) => {
+    // if (err.message) {
+    //   const error = getErrorCode(err.message)
+    //   return ({ message: error.message, statusCode: error.statusCode })
+    // }
+    return err
+  },
 }))
 
 /**

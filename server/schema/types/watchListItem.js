@@ -1,15 +1,18 @@
-const graphql = require('graphql');
-const mongoose = require('mongoose');
+const graphql = require('graphql')
+const mongoose = require('mongoose')
 
-const WatchListItem = mongoose.model('watchListItem');
-const EpisodeType = require('./episode');
+const User = mongoose.model('user')
+const WatchListItem = mongoose.model('watchListItem')
+
+const EpisodeType = require('./episode')
+const UserType = require('./user')
 
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
   GraphQLBoolean,
-} = graphql;
+} = graphql
 
 /**
  * The GraphQL object to represent the WatchListItem model.
@@ -19,6 +22,12 @@ module.exports = new GraphQLObjectType({
   name: 'WatchListItem',
   fields: () => ({
     id: { type: GraphQLString },
+    user: {
+      type: UserType,
+      resolve(parentValue) {
+        return User.findById(parentValue.id)
+      },
+    },
     tmdbID: { type: GraphQLString },
     title: { type: GraphQLString },
     image: { type: GraphQLString },
@@ -31,8 +40,8 @@ module.exports = new GraphQLObjectType({
     episodes: {
       type: new GraphQLList(EpisodeType),
       resolve(parentValue) {
-        return WatchListItem.getAllEpisodes(parentValue.id);
+        return WatchListItem.getAllEpisodes(parentValue.id)
       },
     },
   }),
-});
+})
