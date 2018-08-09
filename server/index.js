@@ -40,7 +40,11 @@ mongoose.connection
 /**
  * Configure the server
  */
-app.use(cors())
+const corsOptions = {
+  origin: 'http://localhost:4000',
+  credentials: true,
+}
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: winston.stream }))
 
@@ -75,10 +79,10 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
   formatError: (err) => {
-    // if (err.message) {
-    //   const error = getErrorCode(err.message)
-    //   return ({ message: error.message, statusCode: error.statusCode })
-    // }
+    const error = getErrorCode(err.message)
+    if (error) {
+      return ({ message: error.message, statusCode: error.statusCode })
+    }
     return err
   },
 }))

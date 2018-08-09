@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-client'
 import { onError } from 'apollo-link-error'
 import { ApolloProvider } from 'react-apollo'
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Router } from 'react-router-dom'
 
@@ -17,30 +17,36 @@ import './style/style.css'
  * General error handling.
  * @type {Object}
  */
-const generalError = onError(({ networkError }) => {
-  ReactDOM.render(
-    <Error error={networkError.message} />
-    , document.querySelector('#app'),
-  )
+const generalError = onError(({ args }) => {
+  console.log(args)
+  // ReactDOM.render(
+  //   <Error error={networkError.message} />
+  //   , document.querySelector('#app'),
+  // )
 })
 
 /**
  * Set up link to GraphQL server.
  * @type {HttpLink}
  */
-const link = new HttpLink({
+const link = createHttpLink({
   uri: 'http://localhost:3000/graphql',
-  opts: {
-    credentials: 'same-origin',
-  },
+  credentials: 'include',
 })
+
+// const networkInterface = createNetworkInterface({
+//   uri: 'http://localhost:3000/graphql',
+//   opts: {
+//     credentials: 'same-origin',
+//   },
+// })
 
 /**
  * Set up Apollo (GraphQL interface).
  * @type {ApolloClient}
  */
 const client = new ApolloClient({
-  link: generalError.concat(link),
+  link,
   cache: new InMemoryCache(),
   dataIdFromObject: o => o.id,
 })
@@ -50,11 +56,11 @@ const client = new ApolloClient({
  * while ApolloProvider enables graphQL functionality in all sub-components.
  */
 const Root = () => (
-  <Router history={history}>
-    <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
+    <Router history={history}>
       <App />
-    </ApolloProvider>
-  </Router>
+    </Router>
+  </ApolloProvider>
 )
 
 /**

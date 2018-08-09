@@ -2,9 +2,11 @@ const ASYNC = require('asyncawait/async')
 const AWAIT = require('asyncawait/await')
 const axios = require('axios')
 const mongoose = require('mongoose')
-const winston = require('../winston-config')
+
+const { errorName } = require('../services/errors')
 const helpers = require('./helpers')
 const keys = require('../../keys.json')
+const winston = require('../winston-config')
 
 const { Schema } = mongoose
 
@@ -64,12 +66,14 @@ const addEpisodes = function(item, next) {
       episodes.forEach(ASYNC((episode) => {
         AWAIT(addEpisode(item, episode).save().catch((err) => {
           console.log(err)
+          throw err.message
         }))
       }))
 
       next() // All episodes have been saved, proceed with saving the watchlist item
     }).catch((err) => {
       winston.error(err)
+      throw err.message
     })
 }
 
@@ -90,6 +94,7 @@ const addItemDetails = function(item, next) {
         addEpisodes(item, next) // Add all episodes to the watchlist item
       }).catch((err) => {
         winston.error(err)
+        throw err.message
       })
   } else {
     // Get Movie item details
@@ -99,6 +104,7 @@ const addItemDetails = function(item, next) {
         next() // Continue to save the item
       }).catch((err) => {
         winston.error(err)
+        throw err.message
       })
   }
 }
@@ -175,6 +181,7 @@ WatchListItemSchema.statics.search = function (title) {
             })
           }).catch((err) => {
             winston.error(err)
+            throw err.message
           })
       })
   })
@@ -222,6 +229,7 @@ WatchListItemSchema.statics.findByTitle = function (slug) {
     .then(item => item)
     .catch((err) => {
       winston.error(err)
+      throw err.message
     })
 }
 
@@ -236,6 +244,7 @@ WatchListItemSchema.statics.getAllEpisodes = function (id) {
     .then(watchListItem => watchListItem.episodes)
     .catch((err) => {
       winston.error(err)
+      throw err.message
     })
 }
 
@@ -251,6 +260,7 @@ WatchListItemSchema.statics.toggleWatched = function (watchListItemID) {
       return watchListItem.save()
     }).catch((err) => {
       winston.error(err)
+      throw err.message
     })
 }
 

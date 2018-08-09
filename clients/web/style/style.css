@@ -44,12 +44,13 @@
     3.1 Buttons
     3.2 Checkboxes
     3.3 Containers
-    3.4 Labels
-    3.5 Links
-    3.6 Loaders
-    3.7 Modals
-    3.8 Selects
-    3.9 Subheadings
+    3.4 Inputs
+    3.5 Labels
+    3.6 Links
+    3.7 Loaders
+    3.8 Modals
+    3.9 Selects
+    3.10 Subheadings
   4. Components
     4.1 Breadcrumbs
     4.2 Empty List
@@ -249,7 +250,23 @@ p {
   position: relative;
 }
 
-/* 3.4 Labels */
+/* 3.4 Inputs */
+
+.o-input {
+  display: block;
+  font-size: 1.5em;
+  padding: calc(0.5 * var(--spacing));
+}
+
+.o-input-field {
+  margin-bottom: calc(0.5 * var(--spacing))
+}
+
+.o-input-label {
+  display: block;
+}
+
+/* 3.5 Labels */
 
 .o-label {
   align-items: center;
@@ -278,7 +295,7 @@ p {
   outline: none;
 }
 
-/* 3.5 Links */
+/* 3.6 Links */
 
 .o-link {
   color: rgb(var(--button-color));
@@ -297,7 +314,7 @@ p {
   margin-left: var(--spacing);
 }
 
-/* 3.6 Loaders */
+/* 3.7 Loaders */
 
 .o-loader {
   display: inline-block;
@@ -334,7 +351,7 @@ p {
   }
 }
 
-/* 3.7 Modals */
+/* 3.8 Modals */
 
 .o-modal {
   background: rgba(0,0,0,0.8);
@@ -400,7 +417,7 @@ p {
   }
 }
 
-/* 3.8 Selects */
+/* 3.9 Selects */
 
 .o-select {
   -webkit-appearance: none;
@@ -418,7 +435,7 @@ p {
   outline: none;
 }
 
-/* 3.9 Subheadings */
+/* 3.10 Subheadings */
 
 .o-subheading {
   display: block;
