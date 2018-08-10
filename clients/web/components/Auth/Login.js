@@ -52,13 +52,14 @@ export class Login extends Component {
     }
     // Otherwise render the login form.
     return (
-      <div className="o-container">
-        <h2>Login</h2>
-        <AuthForm
-          buttonText="Log in"
-          errors={this.state.errors}
-          onSubmit={this.onSubmit}
-        />
+      <div className="u-align--center u-display--flex u-margin-top">
+        <div className="c-panel u-align--left">
+          <AuthForm
+            buttonText="Log in"
+            errors={this.state.errors}
+            onSubmit={this.onSubmit}
+          />
+        </div>
       </div>
     )
   }

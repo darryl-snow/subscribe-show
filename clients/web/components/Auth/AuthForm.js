@@ -32,6 +32,7 @@ class AuthForm extends Component {
               className="o-input"
               id="email"
               placeholder="you@somewhere.com"
+              required
               value={this.state.email}
               onChange={e => this.setState({ email: e.target.value })}
             />
@@ -44,6 +45,7 @@ class AuthForm extends Component {
               className="o-input"
               id="password"
               placeholder="Password"
+              required
               type="password"
               value={this.state.password}
               onChange={e => this.setState({ password: e.target.value })}
@@ -55,7 +57,7 @@ class AuthForm extends Component {
           {this.props.errors.map(error => <div key={error}>{error}</div>)}
         </div>
 
-        <button className="o-button">{this.props.buttonText}</button>
+        <button className="o-button u-full-width u-margin-top">{this.props.buttonText}</button>
 
       </form>
     )
