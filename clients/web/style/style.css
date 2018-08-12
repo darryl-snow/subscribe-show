@@ -93,7 +93,7 @@ html {
 }
 
 body {
-  color: var(--body-text-color);
+  color: var(--color--basalt);
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0;
@@ -214,12 +214,12 @@ p {
 
 .o-button {
   background: none;
-  border-color: var(--color--meadow);
+  border-color: var(--color--deep-sea);
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
   box-shadow: none;
-  color: var(--color--meadow);
+  color: var(--color--deep-sea);
   cursor: pointer;
   font-size: 1em;
   display: block;
@@ -239,8 +239,8 @@ p {
 .o-button:active,
 .o-button:focus,
 .o-button:hover {
-  border-color: var(--color--savannah);
-  color: var(--color--savannah);
+  border-color: var(--color--shallow-sea);
+  color: var(--color--shallow-sea);
   outline: none;
 }
 
@@ -265,10 +265,12 @@ p {
 .o-input {
   background: none;
   border: none;
+  border-bottom: 1px solid transparent;
   color: var(--color--swan);
   display: block;
   font-size: 1.5em;
   padding: calc(0.5 * var(--spacing));
+  position: relative;
   margin-top: 0.3em;
   transition: var(--transition);
 }
@@ -284,8 +286,8 @@ p {
 }
 
 .o-input:focus {
-  border-color: var(--color--savannah);
-  color: var(--color--savannah);
+  border-bottom: 1px solid var(--color--shallow-sea);
+  color: var(--color--shallow-sea);
   outline: none;
 }
 
@@ -476,6 +478,13 @@ p {
 
 /* 4. COMPONENTS */
 
+.c-app {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: max-content;
+  overflow: hidden;
+}
+
 /* 4.1 Breadcrumbs */
 
 .c-breadcrumbs-item {
@@ -549,11 +558,11 @@ p {
 /* 4.4 Header */
 
 .c-header {
-  background: rgb(var(--header-background-color));
-  color: rgb(var(--header-text-color));
+  background: var(--color--basalt);
+  color: var(--color--swan);
   display: grid;
   grid-gap: calc(var(--spacing)/2);
-  grid-template-columns: min-content min-content auto;
+  grid-template-columns: min-content min-content minmax(75%, 1fr);
   padding: calc(var(--spacing)/2);
   width: 100%;
 }
@@ -566,8 +575,9 @@ p {
 }
 
 .c-header-link {
-  color: rgba(var(--header-text-color), 0.5);
+  color: var(--color--swan);
   font-size: 2em;
+  opacity: 0.5;
   transition: var(--transition);
 }
 
@@ -575,7 +585,7 @@ p {
 .c-header-link:active,
 .c-header-link:focus,
 .c-header-link:hover {
-  color: white;
+  opacity: 1;
   outline: none;
 }
 
@@ -703,7 +713,7 @@ p {
 }
 
 .c-panel {
-  background: var(--color--basalt);
+  background: var(--color--swan);
   box-shadow: 1em 1em 4em rgba(0,0,0,0.5);
   padding: var(--spacing);
 }
@@ -718,25 +728,27 @@ p {
 .c-search-form-input {
   background: none;
   border: none;
-  border-bottom: 1px solid rgba(var(--header-text-color), 0.5);
+  border-bottom: 1px solid var(--color--swan);
   color: white;
   font-size: 2em;
   font-weight: 300;
-  transition: border-bottom var(--transition);
+  opacity: 0.5;
+  transition: var(--transition);
   width: 100%;
 }
 
 .c-search-form-input:focus {
-  border-bottom: 1px solid rgb(var(--header-text-color));
+  opacity: 1;
   outline: none;
 }
 
 .c-search-form-button {
   background: none;
   border: none;
-  color: rgba(var(--header-text-color), 0.5);
+  color: var(--color--swan);
   cursor: pointer;
   font-size: 2em;
+  opacity: 0.5;
   transition: var(--transition);
 }
 
@@ -744,6 +756,7 @@ p {
 .c-search-form-button:focus,
 .c-search-form-button:hover {
   color: white;
+  opacity: 1;
   outline: none;
 }
 

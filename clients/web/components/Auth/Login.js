@@ -52,7 +52,7 @@ export class Login extends Component {
     }
     // Otherwise render the login form.
     return (
-      <div className="u-align--center u-display--flex u-margin-top">
+      <div className="u-align--center u-display--flex">
         <div className="c-panel u-align--left">
           <AuthForm
             buttonText="Log in"
