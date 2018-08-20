@@ -25,7 +25,7 @@ const ToggleWatched = ({ id, toggleWatched, type, watched }) => {
         title={watched ? 'Mark as unwatched' : 'Mark as watched'}
       >
         <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
-        {watched ? 'Mark as not watched' : 'Mark was watched'}
+        {watched ? 'Mark as not watched' : 'Mark as watched'}
       </button>
     )
   }
@@ -39,7 +39,7 @@ const ToggleWatched = ({ id, toggleWatched, type, watched }) => {
       title="Tap the title of the TV Show to mark episodes as watched/unwatched"
     >
       <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
-      {watched ? 'Mark as not watched' : 'Mark was watched'}
+      {watched ? 'Mark as not watched' : 'Mark as watched'}
     </button>
   )
 }

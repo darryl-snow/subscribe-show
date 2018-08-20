@@ -1,11 +1,12 @@
 // Dependencies
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // App Components
 import history from '../../history'
 import Icon from '../Icon/Icon'
+
+import Context from '../../context'
 
 /**
  * The header component.
@@ -62,24 +63,17 @@ export default class Header extends Component {
   render() {
     return (
       <div className="c-header u-align--center">
-        <NavLink
-          activeClassName="c-header-link--is-active"
-          className="c-header-link"
-          exact
-          title="My unwatched items"
-          to="/"
-        >
-          <Icon name="home" />
-        </NavLink>
-        <NavLink
-          activeClassName="c-header-link--is-active"
-          className="c-header-link"
-          exact
-          title="My watchlist"
-          to="/watch"
-        >
-          <Icon name="list-ul" />
-        </NavLink>
+        <Context.Consumer>
+          {context => (
+            <button
+              className="c-header-link"
+              onClick={context.toggleSidebar}
+              title="Menu"
+            >
+              <Icon name="bars" />
+            </button>
+          )}
+        </Context.Consumer>
         <form className="c-search-form" onSubmit={this.onSubmit}>
           <input
             className="c-search-form-input"
