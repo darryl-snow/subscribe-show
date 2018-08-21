@@ -113,8 +113,10 @@ class ListItem extends Component {
 
     return (
       <div className="c-list-item">
-        <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
-          { !image ? <Icon name="film" /> : '' }
+        <div className="c-list-item-image-container">
+          <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
+            { !image ? <Icon name="film" /> : '' }
+          </div>
         </div>
         <div className="c-list-item-details">
 
