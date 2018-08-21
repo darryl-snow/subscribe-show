@@ -5,13 +5,13 @@ import { graphql } from 'react-apollo'
 import { Route } from 'react-router-dom'
 
 // Queries
-import query from '../queries/CurrentUser'
+import query from '../../queries/CurrentUser'
 
 // App components
-import List from './List/ListContainer'
-import Loader from './Loader/Loader'
-import Login from './Auth/Login'
-import UnwatchedItems from './UnwatchedItems'
+import List from '../List/ListContainer'
+import Loader from '../Loader/Loader'
+import LoginComponent from '../Auth/Login'
+import UnwatchedItems from '../UnwatchedItems'
 
 /**
  * This component is the landing page. If not logged in, it renders a login form
@@ -24,7 +24,7 @@ export const Home = (props) => {
   }
   // No logged in user; render the login form.
   if (!props.data.user) {
-    return <Login />
+    return <LoginComponent />
   }
   // User is logged in, render the list of unwatched items.
   return <Route path="/" component={UnwatchedItems(List)} />

@@ -8,23 +8,21 @@ import { NavLink } from 'react-router-dom'
 import query from '../../queries/CurrentUser'
 
 // App Components
-import Context from '../../context'
 import Icon from '../Icon/Icon'
 
+// Styles
+import './Sidebar.css'
+
 /**
- * The Sidebar component is actually the app wrapper. The component renders 2
- * parts, the sidebar and the main content. The main content contains the children.
- * The method to toggle the state of the sidebar is passed down to children in
- * the context. The component is passed the current user from the query.
+ * The Sidebar component is the main menu for the app. It presents different
+ * menu items based on whether or not the user is logged in.
  */
 export class Sidebar extends Component {
   constructor(props) {
     super(props)
 
-    // Initialize the state. The sidebar is closed by default, and the user
-    // is passed in the props.
+    // Initialize the state. The user is passed in the props.
     this.state = {
-      open: false,
       user: props.data.user,
     }
   }
@@ -34,19 +32,6 @@ export class Sidebar extends Component {
       user: nextProps.data.user,
     })
   }
-  // If the sidebar is open, toggle it closed.
-  closeSidebar = () => {
-    if (this.state.open) {
-      this.toggleSidebar()
-    }
-  }
-  // Toggle the component state and re-render the component.
-  toggleSidebar = () => {
-    this.setState({
-      open: !this.state.open,
-    })
-  }
-  // Render different menu items depending on whether the user is logged in.
   renderMenuItems() {
     // If logged in, render the logout button and all other secure menu items.
     if (this.state.user) {
@@ -112,35 +97,18 @@ export class Sidebar extends Component {
     )
   }
   render() {
-    // Set the context to be passed to child components - in this case we pass
-    // the toggle sidebar method so that it can be called from anywhere.
-    const context = {
-      toggleSidebar: this.toggleSidebar,
-    }
     return (
-      <Context.Provider value={context}>
-        <div className={this.state.open ? 'c-app-container c-app-container--sidebar-open' : 'c-app-container'}>
-          <menu className="c-sidebar">
-            <ul className="c-sidebar-menu">
-              {this.renderMenuItems()}
-            </ul>
-            <button
-              className="c-sidebar-menu-link u-align--right"
-              onClick={this.closeSidebar}
-            >
-              <Icon className="u-margin-right--small" name="chevron-left" />
-            </button>
-          </menu>
-          <div
-            className="c-main-content"
-            onClick={this.closeSidebar}
-            onKeyUp={this.closeSidebar}
-            role="presentation"
-          >
-            {...this.props.children}
-          </div>
-        </div>
-      </Context.Provider>
+      <menu className={this.props.sidebarIsOpen ? 'c-sidebar c-sidebar--is-open' : 'c-sidebar'}>
+        <ul className="c-sidebar-menu">
+          {this.renderMenuItems()}
+        </ul>
+        <button
+          className="c-sidebar-menu-link u-align--right"
+          onClick={this.props.closeSidebar}
+        >
+          <Icon className="u-margin-right--small" name="chevron-left" />
+        </button>
+      </menu>
     )
   }
 }
@@ -152,8 +120,9 @@ export default graphql(query)(Sidebar)
  * @type {Object}
  */
 Sidebar.propTypes = {
-  children: PropTypes.any,
+  closeSidebar: PropTypes.func,
   data: PropTypes.object,
+  sidebarIsOpen: PropTypes.bool,
 }
 
 /**
@@ -161,6 +130,7 @@ Sidebar.propTypes = {
  * @type {Object}
  */
 Sidebar.defaultProps = {
-  children: <div />,
+  closeSidebar: () => {},
   data: {},
+  sidebarIsOpen: false,
 }

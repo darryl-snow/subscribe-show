@@ -10,7 +10,7 @@ describe('Home Component', () => {
       },
     }
     const component = mount(<Home {...mockProps} />)
-    expect(component.find('.o-loader').exists()).toBe(true)
+    expect(component.find('.c-loader').exists()).toBe(true)
     expect(component.find('.c-auth-form').exists()).toBe(false)
   })
   it('should render a login form when there is no logged in user', () => {
@@ -21,7 +21,7 @@ describe('Home Component', () => {
       },
     }
     const component = shallow(<Home {...mockProps} />)
-    expect(component.find('.o-loader').exists()).toBe(false)
+    expect(component.find('.c-loader').exists()).toBe(false)
     expect(component.debug().toString().indexOf('Login')).not.toBe(-1)
   })
   it('should render a list when there is a logged in user', () => {

@@ -10,7 +10,7 @@ import { Router } from 'react-router-dom'
 
 import history from './history'
 import App from './components/App'
-import Sidebar from './components/Sidebar/Sidebar'
+import AppContainer from './components/AppContainer/AppContainer'
 import Error from './components/Error/Error'
 import './style/style.css'
 
@@ -59,9 +59,9 @@ const client = new ApolloClient({
 const Root = () => (
   <ApolloProvider client={client}>
     <Router history={history}>
-      <Sidebar>
+      <AppContainer>
         <App />
-      </Sidebar>
+      </AppContainer>
     </Router>
   </ApolloProvider>
 )

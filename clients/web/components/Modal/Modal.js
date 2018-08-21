@@ -7,6 +7,9 @@ import PropTypes from 'prop-types'
 // App Components
 import Icon from '../Icon/Icon'
 
+// Styles
+import './Modal.css'
+
 /**
  * The modal component presents an overlay and a modal content window.
  * @type {Object}
@@ -39,7 +42,7 @@ export default class Modal extends Component {
     if (this.props.type !== 'confirm') {
       return (
         <button
-          className="o-button o-modal-button u-margin-top"
+          className="o-button c-modal-button u-margin-top"
           onClick={this.props.close}
         >
           OK
@@ -50,15 +53,15 @@ export default class Modal extends Component {
     // If it is a confirm type, render 2 buttons, 1 to dismiss the
     // modal and 1 to call the confirm function.
     return (
-      <div className="o-modal-button-group u-margin-top">
+      <div className="c-modal-button-group u-margin-top">
         <button
-          className="o-button o-button--secondary o-modal-button"
+          className="o-button o-button--secondary c-modal-button"
           onClick={this.props.close}
         >
           Cancel
         </button>
         <button
-          className="o-button o-modal-button"
+          className="o-button c-modal-button"
           onClick={this.props.confirm}
         >
           Confirm
@@ -73,9 +76,9 @@ export default class Modal extends Component {
     } = this.props
 
     return (
-      <div className={this.state.isShown ? 'o-modal o-modal--is-shown' : 'o-modal'}>
-        <div className="o-modal-content">
-          <Icon name={icon} className="o-modal-icon u-margin-bottom" />
+      <div className={this.state.isShown ? 'c-modal c-modal--is-shown' : 'c-modal'}>
+        <div className="c-modal-content">
+          <Icon name={icon} className="c-modal-icon u-margin-bottom" />
           {this.props.children}
           {this.renderButtons()}
         </div>

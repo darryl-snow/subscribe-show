@@ -1,0 +1,49 @@
+.c-sidebar {
+  background: var(--color--charcoal);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  left: -33vw;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.2s ease-out;
+  width: 33vw;
+  z-index: 2;
+}
+
+.c-sidebar--is-open {
+  box-shadow: 0 1em 3em black;
+  left: 0;
+}
+
+.c-sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c-sidebar-menu-link {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-bottom: 2px solid var(--color--charcoal);
+  box-shadow: none;
+  color: var(--color--swan);
+  cursor: pointer;
+  display: block;
+  font-size: 1.5em;
+  opacity: 0.5;
+  padding: 0.5em;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.c-sidebar-menu-link--is-active,
+.c-sidebar-menu-link:active,
+.c-sidebar-menu-link:focus,
+.c-sidebar-menu-link:hover {
+  opacity: 1;
+  outline: none;
+}

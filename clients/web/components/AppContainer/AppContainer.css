@@ -1,0 +1,5 @@
+.c-app-container {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
