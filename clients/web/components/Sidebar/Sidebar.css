@@ -4,14 +4,21 @@
   flex-direction: column;
   height: 100vh;
   justify-content: space-between;
-  left: -33vw;
+  left: -80vw;
   margin: 0;
   padding: 0;
   position: absolute;
   top: 0;
   transition: all 0.2s ease-out;
-  width: 33vw;
+  width: 80vw;
   z-index: 2;
+}
+
+@media(min-width: 600px) {
+  .c-sidebar {
+    left: -33vw;
+    width: 33vw;
+  }
 }
 
 .c-sidebar--is-open {
