@@ -1,0 +1,10 @@
+.c-list-filters {
+  display: flex;
+  flex-direction: column;
+}
+
+@media(min-width: 600px) {
+  .c-list-filters {
+    flex-direction: row;
+  }
+}

@@ -7,6 +7,9 @@ import PropTypes from 'prop-types'
 // App Components
 import Icon from '../Icon/Icon'
 
+// Styles
+import './EmptyList.css'
+
 const EmptyList = ({ message }) => (
   <div className="o-container c-empty-list u-flex">
     <Icon name="meh-o" className="c-empty-list-icon" />

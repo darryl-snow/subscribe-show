@@ -11,6 +11,9 @@ import ListItemTitle from './ListItemTitle'
 import RemoveFromWatchlist from './RemoveFromWatchlist'
 import ToggleWatched from './ToggleWatched'
 
+// Styles
+import './ListItem.css'
+
 /**
  * The ListItem component, a stateless component that renders all the details
  * provided for a given list item.

@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App Components
+import Context from '../../context'
 import history from '../../history'
 import Icon from '../Icon/Icon'
 
-import Context from '../../context'
+// Styles
+import './Header.css'
 
 /**
  * The header component.

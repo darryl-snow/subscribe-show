@@ -1,0 +1,34 @@
+.c-header {
+  background: var(--color--basalt);
+  color: var(--color--swan);
+  display: grid;
+  grid-gap: calc(var(--spacing)/2);
+  grid-template-columns: min-content minmax(75%, 1fr);
+  padding: calc(var(--spacing)/2);
+  width: 100%;
+}
+
+@media(min-width: 600px) {
+  .c-header {
+    grid-gap: var(--spacing);
+    padding: var(--spacing);
+  }
+}
+
+.c-header-link {
+  background: none;
+  border: none;
+  color: var(--color--swan);
+  cursor: pointer;
+  font-size: 2em;
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+.c-header-link--is-active,
+.c-header-link:active,
+.c-header-link:focus,
+.c-header-link:hover {
+  opacity: 1;
+  outline: none;
+}

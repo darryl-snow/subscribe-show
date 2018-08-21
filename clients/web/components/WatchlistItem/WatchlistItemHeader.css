@@ -1,0 +1,19 @@
+.c-watchlistitem-header {
+  background-color: rgb(var(--body-text-color));
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  boxShadow: inset 0 0 15px black;
+}
+
+.c-watchlistitem-header-content {
+  color: white;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: var(--spacing);
+}
+
+.c-watchlistitem-header-meta {
+  text-align: right;
+}

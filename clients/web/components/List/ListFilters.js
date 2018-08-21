@@ -5,6 +5,9 @@ import PropTypes from 'prop-types'
 // App components
 import ToggleButton from '../ToggleButton/ToggleButton'
 
+// Styles
+import './ListFilters.css'
+
 /**
  * This component parses props in order to update the state object. The filter
  * options depend on the languages and types presented by the available list

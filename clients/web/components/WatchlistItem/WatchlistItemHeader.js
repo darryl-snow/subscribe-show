@@ -2,6 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// Styles
+import './WatchlistItemHeader.css'
+
 /**
  * The Watchlist Item Detail component.
  */

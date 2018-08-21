@@ -1,0 +1,23 @@
+.c-list-header {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+@media(min-width: 600px) {
+  .c-list-header {
+    grid-template-rows: auto;
+    grid-template-columns: auto max-content;
+  }
+}
+
+.c-list-header-controls {
+  display: grid;
+  grid-template-rows: auto auto;
+  margin-bottom: var(--spacing);
+}
+
+@media(min-width: 600px) {
+  .c-list-header-controls {
+    grid-gap: calc(var(--spacing) / 2);
+  }
+}

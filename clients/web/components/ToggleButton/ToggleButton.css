@@ -1,0 +1,73 @@
+.c-toggle-button-group {
+  display: flex;
+  margin-bottom: calc(var(--spacing) * 0.5);
+  width: 100%;
+}
+
+@media(min-width: 600px) {
+  .c-toggle-button-group {
+    margin-bottom: 0;
+    width: auto;
+  }
+}
+
+.c-toggle-button-group .c-toggle-button:first-child .c-toggle-button-label {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.c-toggle-button-group .c-toggle-button:last-child .c-toggle-button-label {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.c-toggle-button {
+  flex: 1;
+}
+
+@media(min-width: 600px) {
+  .c-toggle-button {
+    min-width: 8em;
+  }
+}
+
+.c-toggle-button + .c-toggle-button {
+  margin-left: 1px;
+}
+
+.c-toggle-button-label {
+  background: white;
+  border: 2px solid rgb(var(--label-background-color));
+  color: rgb(var(--label-border-color--active));
+  cursor: pointer;
+  display: block;
+  font-size: 0.75em;
+  font-weight: 900;
+  padding: var(--button-padding);
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.c-toggle-button-label:active,
+.c-toggle-button-label:focus,
+.c-toggle-button-label:hover {
+  color: rgb(var(--label-background-color--active));
+  border-color: rgb(var(--label-border-color--active));
+}
+
+.c-toggle-button input {
+  display: none;
+}
+
+.c-toggle-button input:checked ~ .c-toggle-button-label{
+  background: rgb(var(--label-background-color));
+  color: rgb(var(--label-text-color));
+}
+
+.c-toggle-button input:checked ~ .c-toggle-button-label:active,
+.c-toggle-button input:checked ~ .c-toggle-button-label:focus,
+.c-toggle-button input:checked ~ .c-toggle-button-label:hover {
+  background: rgb(var(--label-border-color--active));
+  color: rgb(var(--body-text-color));
+  outline: none;
+}

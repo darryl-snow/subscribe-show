@@ -7,6 +7,9 @@ import PropTypes from 'prop-types'
 // App Components
 import Icon from '../Icon/Icon'
 
+// Styles
+import './Error.css'
+
 const reloadFunction = () => {
   window.location.reload(true)
 }

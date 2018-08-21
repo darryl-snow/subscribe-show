@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Icon from '../Icon/Icon'
 
+// Styles
+import './ListSorter.css'
+
 /**
  * The ListSorter component. This provides controls for sorting a list by
  * airDate or by title.

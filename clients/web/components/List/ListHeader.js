@@ -6,6 +6,9 @@ import PropTypes from 'prop-types'
 import ListFilters from './ListFilters'
 import ListSorter from './ListSorter'
 
+// Styles
+import './ListHeader.css'
+
 /**
  * The ListHeader component, which contains a subheader any controls such as
  * sort and filter options. It's a stateless component.
