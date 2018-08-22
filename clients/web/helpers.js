@@ -16,4 +16,8 @@ export function formatSeasonEpisodeNumbers(season, episode) {
   return (`S${s}E${e}`)
 }
 
+export function removeSpaces(string) {
+  return string.replace(/\s/g, '')
+}
+
 export function slugify(title) { return title.toLowerCase().replace(/\s/g, '-') }

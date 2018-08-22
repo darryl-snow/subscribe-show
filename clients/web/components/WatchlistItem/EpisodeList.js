@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // App components
-import Episode from './Episode'
+import EpisodeComponent from './Episode'
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs'
 
 /**
  * The Episode List component presents a list of episodes for a given TV watchlist
@@ -41,30 +42,7 @@ export default class EpisodeList extends Component {
   renderEpisodes(season) {
     const episodes = this.state.episodes.filter(episode => episode.seasonNumber === season)
     return episodes.map(episode => (
-      <Episode key={episode.id} {...episode} />
-    ))
-  }
-  /**
-   * Render the breadcrumb navigation for the available seasons.
-   * @return {Object} The rendered breadcrumb navigation.
-   */
-  renderSeasonNavigation() {
-    // Do not render anything if there is not more than 1 season.
-    if (this.state.seasons.length < 2) {
-      return ''
-    }
-    return this.state.seasons.map(season => (
-      <li
-        key={season}
-        className="c-breadcrumbs-item u-display--inline-block u-margin-bottom"
-      >
-        <a
-          className="o-link c-breadcrumbs-link u-margin-left--small u-margin-right--small"
-          href={`#season${season}`}
-        >
-          {`Season ${season}`}
-        </a>
-      </li>
+      <EpisodeComponent key={episode.id} {...episode} />
     ))
   }
   /**
@@ -74,7 +52,7 @@ export default class EpisodeList extends Component {
   renderSeasons() {
     return this.state.seasons.map(season => (
       <li key={season} className="c-episodelist-season">
-        <h2 id={`season${season}`}>Season {season}</h2>
+        <h2 id={`Season${season}`}>Season {season}</h2>
         <ol className="u-unstyled-list">
           {this.renderEpisodes(season)}
         </ol>
@@ -86,11 +64,10 @@ export default class EpisodeList extends Component {
    * @return {Object} The rendered component.
    */
   render() {
+    const seasonList = this.state.seasons.map(season => `Season ${season}`)
     return (
       <div className="o-container c-episodelist">
-        <ol className="c-breadcrumbs u-unstyled-list">
-          {this.renderSeasonNavigation()}
-        </ol>
+        <Breadcrumbs itemName="Season" list={seasonList} />
         <ol className="u-unstyled-list">
           {this.renderSeasons()}
         </ol>

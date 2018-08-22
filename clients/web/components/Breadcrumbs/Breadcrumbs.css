@@ -1,0 +1,25 @@
+.c-breadcrumbs-item {
+  border-right: 1px dotted rgb(var(--label-border-color--active));
+}
+
+.c-breadcrumbs-item:first-child {
+  margin-left: 0;
+}
+
+.c-breadcrumbs-item:last-child {
+  border: none;
+}
+
+.c-breadcrumbs-link {
+  border-bottom: 1px solid rgb(var(--label-text-color));
+  color: rgb(var(--label-text-color));
+  display: block;
+  padding-bottom: 3px;
+}
+
+.c-breadcrumbs-link:active,
+.c-breadcrumbs-link:focus,
+.c-breadcrumbs-link:hover {
+  border-bottom: 1px solid transparent;
+  color: rgb(var(--body-text-color));
+}
