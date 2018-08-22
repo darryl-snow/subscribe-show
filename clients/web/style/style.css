@@ -54,27 +54,13 @@
     2.7 Lists
   3. Objects
     3.1 Buttons
-    3.2 Checkboxes
-    3.3 Containers
-    3.4 Inputs
-    3.5 Labels
-    3.6 Links
-    3.7 Loaders
-    3.8 Modals
-    3.9 Selects
-    3.10 Subheadings
-  4. Components
-    4.1 Breadcrumbs
-    4.2 Empty List
-    4.3 Error
-    4.4 Header
-    4.5 List Filters
-    4.6 List Header
-    4.7 List Item
-    4.8 List Sorter
-    4.9 Search Form
-    4.10 ToggleButton
-    4.11 Watchlist Item
+    3.2 Containers
+    3.3 Inputs
+    3.4 Labels
+    3.5 Links
+    3.6 Panels
+    3.7 Selects
+    3.8 Subheadings
  */
 
 /**
@@ -253,14 +239,14 @@ p {
   outline: none;
 }
 
-/* 3.3 Containers */
+/* 3.2 Containers */
 
 .o-container {
   padding: var(--spacing);
   position: relative;
 }
 
-/* 3.4 Inputs */
+/* 3.3 Inputs */
 
 .o-input {
   background: none;
@@ -299,7 +285,7 @@ p {
   display: block;
 }
 
-/* 3.5 Labels */
+/* 3.4 Labels */
 
 .o-label {
   align-items: center;
@@ -328,7 +314,7 @@ p {
   outline: none;
 }
 
-/* 3.6 Links */
+/* 3.5 Links */
 
 .o-link {
   color: rgb(var(--button-color));
@@ -347,13 +333,15 @@ p {
   margin-left: var(--spacing);
 }
 
+/* 3.6 Panels */
+
 .o-panel {
   background: var(--color--swan);
   box-shadow: 1em 1em 4em rgba(0,0,0,0.5);
   padding: var(--spacing);
 }
 
-/* 3.9 Selects */
+/* 3.7 Selects */
 
 .o-select {
   -webkit-appearance: none;
@@ -371,57 +359,10 @@ p {
   outline: none;
 }
 
-/* 3.10 Subheadings */
+/* 3.8 Subheadings */
 
 .o-subheading {
   display: block;
   font-size: 0.5em;
   font-style: italic;
-}
-
-/* 4. COMPONENTS */
-
-
-.c-search-form {
-  display: grid;
-  grid-template-columns: auto min-content;
-}
-
-.c-search-form-input {
-  background: none;
-  border: none;
-  border-bottom: 1px solid var(--color--swan);
-  color: white;
-  font-size: 2em;
-  font-weight: 300;
-  opacity: 0.5;
-  transition: var(--transition);
-  width: 100%;
-}
-
-.c-search-form-input:focus {
-  opacity: 1;
-  outline: none;
-}
-
-.c-search-form-button {
-  background: none;
-  border: none;
-  color: var(--color--swan);
-  cursor: pointer;
-  font-size: 2em;
-  opacity: 0.5;
-  transition: var(--transition);
-}
-
-.c-search-form-button:active,
-.c-search-form-button:focus,
-.c-search-form-button:hover {
-  color: white;
-  opacity: 1;
-  outline: none;
-}
-
-.c-search-form-input:focus + .c-search-form-button {
-  color: white;
 }

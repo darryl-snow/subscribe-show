@@ -1,0 +1,43 @@
+.c-search-form {
+  display: grid;
+  grid-template-columns: auto min-content;
+}
+
+.c-search-form-input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color--swan);
+  color: white;
+  font-size: 2em;
+  font-weight: 300;
+  opacity: 0.5;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.c-search-form-input:focus {
+  opacity: 1;
+  outline: none;
+}
+
+.c-search-form-button {
+  background: none;
+  border: none;
+  color: var(--color--swan);
+  cursor: pointer;
+  font-size: 2em;
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+.c-search-form-button:active,
+.c-search-form-button:focus,
+.c-search-form-button:hover {
+  color: white;
+  opacity: 1;
+  outline: none;
+}
+
+.c-search-form-input:focus + .c-search-form-button {
+  color: white;
+}
