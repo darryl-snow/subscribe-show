@@ -43,8 +43,10 @@
   font-size: 1.5em;
   opacity: 0.5;
   padding: 0.5em;
+  text-align: left;
   text-decoration: none;
   transition: var(--transition);
+  width: 100%;
 }
 
 .c-sidebar-menu-link--is-active,

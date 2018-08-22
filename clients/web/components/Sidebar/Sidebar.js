@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 // Queries & mutations
 import query from '../../queries/CurrentUser'
+import mutation from '../../mutations/logout'
 
 // App Components
 import Icon from '../Icon/Icon'
@@ -32,30 +33,35 @@ export class Sidebar extends Component {
       user: nextProps.data.user,
     })
   }
+  onLogoutClick = () => {
+    this.props.mutate({
+      refetchQueries: [{ query }],
+    }).then(() => {
+      this.props.closeSidebar()
+    })
+  }
   renderMenuItems() {
     // If logged in, render the logout button and all other secure menu items.
     if (this.state.user) {
       return (
         <React.Fragment>
           <li>
-            <NavLink
-              activeClassName="c-sidebar-menu-link--is-active"
+            <button
               className="c-sidebar-menu-link"
-              exact
-              onClick={this.toggleSidebar}
-              title="Logout"
-              to="/logout"
+              onClick={this.onLogoutClick}
+              onKeyUp={this.onLogoutClick}
             >
               <Icon className="u-margin-right--small" name="lock" />
               Logout
-            </NavLink>
+            </button>
           </li>
           <li>
             <NavLink
               activeClassName="c-sidebar-menu-link--is-active"
               className="c-sidebar-menu-link"
               exact
-              onClick={this.toggleSidebar}
+              onClick={this.props.closeSidebar}
+              onKeyUp={this.props.closeSidebar}
               title="Unwatched"
               to="/"
             >
@@ -68,7 +74,8 @@ export class Sidebar extends Component {
               activeClassName="c-sidebar-menu-link--is-active"
               className="c-sidebar-menu-link"
               exact
-              onClick={this.toggleSidebar}
+              onClick={this.props.closeSidebar}
+              onKeyUp={this.props.closeSidebar}
               title="My watchlist"
               to="/watch"
             >
@@ -86,7 +93,8 @@ export class Sidebar extends Component {
           activeClassName="c-sidebar-menu-link--is-active"
           className="c-sidebar-menu-link"
           exact
-          onClick={this.toggleSidebar}
+          onClick={this.props.closeSidebar}
+          onKeyUp={this.props.closeSidebar}
           title="Login"
           to="/login"
         >
@@ -105,6 +113,7 @@ export class Sidebar extends Component {
         <button
           className="c-sidebar-menu-link u-align--right"
           onClick={this.props.closeSidebar}
+          onKeyUp={this.props.closeSidebar}
         >
           <Icon className="u-margin-right--small" name="chevron-left" />
         </button>
@@ -113,7 +122,7 @@ export class Sidebar extends Component {
   }
 }
 
-export default graphql(query)(Sidebar)
+export default graphql(mutation)(graphql(query)(Sidebar))
 
 /**
  * Define the property types.
@@ -122,6 +131,7 @@ export default graphql(query)(Sidebar)
 Sidebar.propTypes = {
   closeSidebar: PropTypes.func,
   data: PropTypes.object,
+  mutate: PropTypes.func,
   sidebarIsOpen: PropTypes.bool,
 }
 
@@ -132,5 +142,6 @@ Sidebar.propTypes = {
 Sidebar.defaultProps = {
   closeSidebar: () => {},
   data: {},
+  mutate: () => {},
   sidebarIsOpen: false,
 }
