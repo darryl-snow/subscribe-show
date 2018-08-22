@@ -1,7 +1,9 @@
+// Dependencies
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
+// App components
 import history from '../../history'
 import query from '../../queries/CurrentUser'
 
@@ -12,13 +14,13 @@ import query from '../../queries/CurrentUser'
  */
 export default (WrappedComponent) => {
   class RequireAuth extends Component {
-    componentWillReceiveProps(nextProps) {
+    componentWillUpdate(nextProps) {
       if (!nextProps.data.loading && !nextProps.data.user) {
-        history.push('/login')
+        history.push('/login', { previous: this.props.location.pathname })
       }
     }
     render() {
-      return <WrappedComponent {...this.props} />
+      return this.props.data.loading ? <div /> : <WrappedComponent {...this.props} />
     }
   }
 

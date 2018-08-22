@@ -9,6 +9,7 @@ import query from '../../queries/CurrentUser'
 
 // App components
 import AuthForm from './AuthForm'
+import history from '../../history'
 import Loader from '../Loader/Loader'
 
 /**
@@ -35,6 +36,13 @@ export class Login extends Component {
     this.props.mutate({
       variables: { email, password },
       refetchQueries: [{ query }],
+    }).then(() => {
+      const previousLocation = this.props.location.state.previous
+      if (previousLocation) {
+        history.push(previousLocation)
+      } else {
+        history.push('/')
+      }
     }).catch((res) => {
       const errors = res.graphQLErrors.map(error => error.message)
       this.setState({
@@ -73,6 +81,7 @@ export default graphql(mutation)(graphql(query)(Login))
  */
 Login.propTypes = {
   data: PropTypes.object,
+  location: PropTypes.object,
   mutate: PropTypes.func,
 }
 
@@ -82,5 +91,10 @@ Login.propTypes = {
  */
 Login.defaultProps = {
   data: {},
+  location: {
+    state: {
+      previous: null,
+    },
+  },
   mutate: () => {},
 }
