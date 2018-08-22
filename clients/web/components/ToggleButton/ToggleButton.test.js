@@ -6,23 +6,22 @@ describe('ToggleButton Component', () => {
   it('should render', () => {
     const component = shallow(<ToggleButton />)
     expect(component.find('.c-toggle-button').exists()).toBe(true)
-    expect(component.find('.c-toggle-button-label').exists()).toBe(true)
+    expect(component.find('.c-toggle-button-input').exists()).toBe(true)
+    expect(component.find('.c-toggle-button-icon').exists()).toBe(true)
   })
   it('should have a checkbox with the correct value', () => {
     const testValue = 'test'
     expect(shallow(<ToggleButton value={testValue} />).find(`input[value='${testValue}']`).exists()).toBe(true)
   })
   it('should render the correct icon', () => {
-    let testValue = 'TV'
-    expect(mount(<ToggleButton value={testValue} />).find('.fa-tv').exists()).toBe(true)
-    testValue = 'movie'
-    expect(mount(<ToggleButton value={testValue} />).find('.fa-film').exists()).toBe(true)
-    testValue = 'episode'
-    expect(mount(<ToggleButton value={testValue} />).find('.o-icon').exists()).toBe(false)
+    expect(mount(<ToggleButton checked={true} />).find('.fa-check-circle').exists()).toBe(true)
+    expect(mount(<ToggleButton checked={false} />).find('.fa-check-circle').exists()).toBe(false)
+    expect(mount(<ToggleButton checked={true} />).find('.fa-times-circle').exists()).toBe(false)
+    expect(mount(<ToggleButton checked={false} />).find('.fa-times-circle').exists()).toBe(true)
   })
   it('should render the correct label text', () => {
     const testValue = 'test'
-    expect(shallow(<ToggleButton value={testValue} />).find('label span').text()).toEqual(testValue)
+    expect(shallow(<ToggleButton value={testValue} />).text()).toContain(testValue)
   })
   it('should update when the button is clicked', () => {
     const mockedEvent = { target: {}, preventDefault: () => {} }

@@ -3,8 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // App components
-import ListFilters from './ListFilters'
-import ListSorter from './ListSorter'
+import ListControls from './ListControls'
 
 // Styles
 import './ListHeader.css'
@@ -16,23 +15,12 @@ import './ListHeader.css'
 const ListHeader = (props) => {
   const {
     content,
-    defaultSort,
-    results,
-    sortOrder,
-    updateList,
   } = props
 
   return (
     <header className={`${props.className} c-list-header`}>
       <h2>{content}</h2>
-      <div className="c-list-header-controls">
-        <ListFilters results={results} updateList={updateList} />
-        <ListSorter
-          defaultSort={defaultSort}
-          sortOrder={sortOrder}
-          updateList={updateList}
-        />
-      </div>
+      <ListControls />
     </header>
   )
 }
@@ -46,10 +34,6 @@ export default ListHeader
 ListHeader.propTypes = {
   className: PropTypes.string,
   content: PropTypes.string,
-  defaultSort: PropTypes.string,
-  results: PropTypes.array,
-  sortOrder: PropTypes.number,
-  updateList: PropTypes.func,
 }
 
 /**
@@ -59,8 +43,4 @@ ListHeader.propTypes = {
 ListHeader.defaultProps = {
   className: '',
   content: '',
-  defaultSort: '',
-  results: [],
-  sortOrder: 1,
-  updateList: () => {},
 }

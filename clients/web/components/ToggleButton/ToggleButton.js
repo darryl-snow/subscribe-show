@@ -13,8 +13,9 @@ import './ToggleButton.css'
 class ToggleButton extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
-      checked: true, // ON by default
+      checked: props.checked,
     }
   }
   /**
@@ -32,15 +33,6 @@ class ToggleButton extends Component {
     this.props.handleChange(target.value, target.checked)
     return true
   }
-  renderIcon = () => {
-    const { value } = this.props
-    if (value === 'movie' || value === 'TV') {
-      return (
-        <Icon name={value} className="u-margin-right--small" />
-      )
-    }
-    return ''
-  }
   /**
    * Render the component.
    * @return {Object} The rendered component.
@@ -48,19 +40,24 @@ class ToggleButton extends Component {
   render() {
     const { value } = this.props
     return (
-      <div className="c-toggle-button">
+      <label
+        className={this.state.checked ? 'c-toggle-button c-toggle-button--is-checked' : 'c-toggle-button'}
+        htmlFor={value}
+      >
         <input
-          id={value}
-          value={value}
-          type="checkbox"
-          onChange={this.handleChange}
           checked={this.state.checked}
+          className="c-toggle-button-input"
+          id={value}
+          onChange={this.handleChange}
+          type="checkbox"
+          value={value}
         />
-        <label htmlFor={value} className="c-toggle-button-label u-align--center">
-          {this.renderIcon()}
-          <span>{value}</span>
-        </label>
-      </div>
+        <Icon
+          className="c-toggle-button-icon"
+          name={this.state.checked ? 'check-circle' : 'times-circle'}
+        />
+        {value}
+      </label>
     )
   }
 }
@@ -73,6 +70,7 @@ export default ToggleButton
  */
 ToggleButton.propTypes = {
   handleChange: PropTypes.func,
+  checked: PropTypes.bool,
   value: PropTypes.string,
 }
 
@@ -82,5 +80,6 @@ ToggleButton.propTypes = {
  */
 ToggleButton.defaultProps = {
   handleChange: () => {},
+  checked: true,
   value: '',
 }

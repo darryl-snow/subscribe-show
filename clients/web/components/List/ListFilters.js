@@ -26,6 +26,7 @@ const getState = (props) => {
     return null
   }))).filter(result => result !== null && result !== 'unknown')
 
+  // Get all types from the results set
   const types = Array.from(new Set(results.map((result) => {
     if (result.type) {
       return result.type.toLowerCase()
@@ -69,10 +70,19 @@ export default class ListFilters extends Component {
     return true
   }
   renderLanguageFilters() {
+    // If there are not at least 2 languages, don't render anything.
+    if (this.state.languages.length < 2) {
+      return ''
+    }
     return this.state.languages.map(language =>
       <ToggleButton key={language} value={language} handleChange={this.changeFilter} />)
   }
   renderTypeFilters() {
+    // If there are not at least 2 types, don't render anything.
+    if (this.state.types.length < 2) {
+      return ''
+    }
+
     return this.state.types.map((type) => {
       if (type === 'movie' || type === 'tv') {
         return (
@@ -103,7 +113,6 @@ export default class ListFilters extends Component {
  * @type {Object}
  */
 ListFilters.propTypes = {
-  results: PropTypes.array,
   updateList: PropTypes.func,
 }
 
@@ -112,6 +121,5 @@ ListFilters.propTypes = {
  * @type {Object}
  */
 ListFilters.defaultProps = {
-  results: [{}],
   updateList: () => {},
 }

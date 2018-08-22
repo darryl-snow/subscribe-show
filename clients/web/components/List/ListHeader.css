@@ -2,6 +2,7 @@
   color: var(--color--savannah);
   display: grid;
   grid-template-rows: auto auto;
+  position: relative;
 }
 
 @media(min-width: 600px) {

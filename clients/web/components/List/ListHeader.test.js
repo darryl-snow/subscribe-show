@@ -1,14 +1,11 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import ListHeader from './ListHeader'
 
 describe('ListHeader Component', () => {
   it('should render', () => {
-    const component = mount(<ListHeader />)
+    const component = shallow(<ListHeader />)
     expect(component.find('.c-list-header').exists()).toBe(true)
-    expect(component.find('.c-list-header-controls').exists()).toBe(true)
-    expect(component.find('.c-list-filters').exists()).toBe(true)
-    expect(component.find('.c-list-sorter').exists()).toBe(true)
   })
   it('should have the correct heading', () => {
     const mockContent = 'test'

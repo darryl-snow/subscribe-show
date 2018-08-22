@@ -4,6 +4,7 @@ import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
 // App Components
+import Context from './ListContext'
 import EmptyList from '../EmptyList/EmptyList'
 import history from '../../history'
 import List from './List'
@@ -229,6 +230,13 @@ export class ListContainer extends Component {
       ({ length } = displayListItems)
     }
 
+    const context = {
+      defaultSort: sortBy,
+      results: receivedListItems,
+      sortOrder,
+      updateList: this.updateList,
+    }
+
     const content = length === 1 ? `Displaying ${length} result` : `Displaying ${length} results`
 
     // If the API request is in progress, render a loading spinner.
@@ -242,33 +250,31 @@ export class ListContainer extends Component {
 
     // Otherwise render the list.
     return (
-      <div className={`${className} o-container`}>
-        {this.renderTitle()}
-        <ListHeader
-          className={`${className}-header`}
-          content={content}
-          defaultSort={sortBy}
-          results={receivedListItems}
-          sortOrder={sortOrder}
-          updateList={this.updateList}
-        />
-        <List
-          addItem={this.addItem}
-          className={`${className}-list`}
-          listItems={displayListItems}
-          removeItem={this.removeItem}
-          toggleWatched={this.toggleWatched}
-        />
-        <Modal
-          close={this.closeModal}
-          confirm={this.confirmModal}
-          isShown={this.state.showModal}
-          type="confirm"
-          icon="question-circle"
-        >
-          Are you sure you want to remove this item?
-        </Modal>
-      </div>
+      <Context.Provider value={context}>
+        <div className={`${className} o-container`}>
+          {this.renderTitle()}
+          <ListHeader
+            className={`${className}-header`}
+            content={content}
+          />
+          <List
+            addItem={this.addItem}
+            className={`${className}-list`}
+            listItems={displayListItems}
+            removeItem={this.removeItem}
+            toggleWatched={this.toggleWatched}
+          />
+          <Modal
+            close={this.closeModal}
+            confirm={this.confirmModal}
+            isShown={this.state.showModal}
+            type="confirm"
+            icon="question-circle"
+          >
+            Are you sure you want to remove this item?
+          </Modal>
+        </div>
+      </Context.Provider>
     )
   }
 }

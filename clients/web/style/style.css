@@ -20,6 +20,7 @@
   --color--swan: #f2f2f2;
   --spacing: 1.5rem;
   --transition: 0.2s all ease-in-out;
+  --z-index--controls: 1;
   --z-index--header: 2;
   --z-index--sidebar: 3;
 }
@@ -209,8 +210,8 @@ p {
 }
 
 .o-button--disabled {
-  border-color: rgb(var(--label-border-color--active));
-  color: rgb(var(--label-border-color--active));
+  border-color: var(--color--concrete);
+  color: var(--color--concrete);
   cursor: not-allowed;
 }
 
@@ -226,9 +227,29 @@ p {
 .o-button--disabled:focus,
 .o-button--disabled:hover {
   background: none;
-  border-color: rgb(var(--label-border-color--active));
-  color: rgb(var(--label-border-color--active));
+  border-color: var(--color--concrete);
+  color: var(--color--concrete);
   outline: none;
+}
+
+.o-button--white {
+  border-color: var(--color--swan);
+  color: var(--color--swan);
+  opacity: 0.5;
+}
+
+.o-button--white:active,
+.o-button--white:focus,
+.o-button--white:hover {
+  border-color: white;
+  color: white;
+  opacity: 1;
+}
+
+.o-button--plain {
+  border: none;
+  font-size: 2em;
+  padding: 0em;
 }
 
 /* 3.2 Containers */

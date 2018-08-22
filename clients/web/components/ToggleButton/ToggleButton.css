@@ -1,4 +1,32 @@
-.c-toggle-button-group {
+.c-toggle-button {
+  align-items: center;
+  color: var(--color--concrete);
+  cursor: pointer;
+  display: flex;
+  opacity: 0.75;
+  transition: var(--transition)
+}
+
+.c-toggle-button--is-checked {
+  color: var(--color--savannah);
+}
+
+.c-toggle-button:active,
+.c-toggle-button:focus,
+.c-toggle-button:hover {
+  opacity: 1;
+}
+
+.c-toggle-button-input {
+  display: none;
+}
+
+.fa.c-toggle-button-icon {
+  font-size: 1.5em;
+  margin-right: 0.25em;
+}
+
+/* .c-toggle-button-group {
   display: flex;
   margin-bottom: calc(var(--spacing) * 0.5);
   width: 100%;
@@ -70,4 +98,4 @@
   background: var(--color--concrete);
   color: var(--color--swan);
   outline: none;
-}
+} */

@@ -53,11 +53,21 @@ describe('ListFilters Component', () => {
       expect(component.find(`.c-toggle-button input[value="${result.type}"]`).exists()).toBe(true)
     })
   })
+  it('should not render type filters if there are less than 2 types', () => {
+    const resultsMockSubset = [resultsMock[0]]
+    const component = mount(<ListFilters results={resultsMockSubset} />)
+    expect(component.find(`.c-toggle-button input[value="${resultsMockSubset[0].type}"]`).exists()).toBe(false)
+  })
   it('should render language filters', () => {
     const component = mount(<ListFilters results={resultsMock} />)
     resultsMock.forEach((result) => {
       expect(component.find(`.c-toggle-button input[value="${result.language}"]`).exists()).toBe(true)
     })
+  })
+  it('should not render language filters if there are less than 2 languages', () => {
+    const resultsMockSubset = [resultsMock[0]]
+    const component = mount(<ListFilters results={resultsMockSubset} />)
+    expect(component.find(`.c-toggle-button input[value="${resultsMockSubset[0].language}"]`).exists()).toBe(false)
   })
   it('should update the list when a filter is toggled', () => {
     const component = mount(<ListFilters results={resultsMock} updateList={updateListMock} />)
