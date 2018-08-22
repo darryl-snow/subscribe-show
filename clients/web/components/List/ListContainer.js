@@ -222,17 +222,23 @@ export class ListContainer extends Component {
     } = this.state
 
     const { className } = this.props
-    const { length } = displayListItems
+
+    let length = 0
+
+    if (displayListItems) {
+      ({ length } = displayListItems)
+    }
+
     const content = length === 1 ? `Displaying ${length} result` : `Displaying ${length} results`
 
     // If the API request is in progress, render a loading spinner.
     if (loading) { return <Loader /> }
 
     // If there are no search results, display the EmptyList component
-    if (!length && this.props.query === 'search') { return <EmptyList message="Try searching for something else." /> }
+    if (!length && this.props.query === 'search' && !loading) { return <EmptyList message="Try searching for something else." /> }
 
     // If there are no watchlist items, display the EmptyList component
-    if (!length) { return <EmptyList message="Try searching for something to watch." /> }
+    if (!length && !loading) { return <EmptyList message="Try searching for something to watch." /> }
 
     // Otherwise render the list.
     return (
