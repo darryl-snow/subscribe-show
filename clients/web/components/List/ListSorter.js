@@ -1,7 +1,6 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Icon from '../Icon/Icon'
 
 // Styles
 import './ListSorter.css'
@@ -21,29 +20,54 @@ export default class ListSorter extends Component {
   /**
    * Change the sort field: airDate or title.
    * @param  {Object} event  The event triggered by the selection change.
-   * @return {Boolean}       Dummy return value.
    */
   changeSortBy = (event) => {
     const sortBy = event.target.value
+
+    this.setState({
+      sortBy,
+    })
+
     this.props.updateList({ sortBy })
-    return true
   }
   /**
    * Change the sort order. By default the sort order is ascending (1). This
    * function simply toggles the sort order by multiplying the sort order by -1.
    * @param  {Object}   event The event triggered by the button click.
-   * @return {Boolean}        Dummy return value.
    */
   changeSortOrder = (event) => {
     event.preventDefault()
     this.props.updateList({ sortOrder: this.props.sortOrder * -1 })
-    return true
+  }
+  renderSortOrder() {
+    if (this.state.sortBy === 'airDate') {
+      return (
+        <select
+          className="o-button o-button--white o-button--no-border"
+          defaultValue="ascending"
+          onChange={this.changeSortOrder}
+        >
+          <option value="ascending">Newest to oldest</option>
+          <option value="descending">Oldest to Newest</option>
+        </select>
+      )
+    }
+    return (
+      <select
+        className="o-button o-button--white o-button--no-border"
+        defaultValue="ascending"
+        onChange={this.changeSortOrder}
+      >
+        <option value="ascending">A - Z</option>
+        <option value="descending">Z - A</option>
+      </select>
+    )
   }
   render() {
     return (
       <div className="c-list-sorter">
         <select
-          className="o-select o-label c-list-sort-order-select"
+          className="o-button o-button--white o-button--no-border"
           defaultValue={this.state.sortBy}
           onChange={this.changeSortBy}
         >
@@ -51,12 +75,7 @@ export default class ListSorter extends Component {
           <option value="airDate">Release Date</option>
           <option value="title">Title</option>
         </select>
-        <button
-          className="o-label c-list-sort-order-button"
-          onClick={this.changeSortOrder}
-        >
-          <Icon name="sort" />
-        </button>
+        {this.renderSortOrder()}
       </div>
     )
   }

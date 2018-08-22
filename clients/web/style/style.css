@@ -246,6 +246,10 @@ p {
   opacity: 1;
 }
 
+.o-button--no-border {
+  border: none;
+}
+
 .o-button--plain {
   border: none;
   font-size: 2em;

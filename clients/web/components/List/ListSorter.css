@@ -3,22 +3,3 @@
   grid-gap: 2px;
   grid-template-columns: auto min-content;
 }
-
-.c-list-sort-order-button {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  cursor: pointer;
-}
-
-.c-list-sort-order-button:active,
-.c-list-sort-order-button:focus,
-.c-list-sort-order-button:hover {
-  background: rgb(var(--label-border-color--active));
-  color: var(--color--swan);
-  outline: none;
-}
-
-.c-list-sort-order-select {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
