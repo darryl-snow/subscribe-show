@@ -1,4 +1,5 @@
 .c-list-header {
+  color: var(--color--savannah);
   display: grid;
   grid-template-rows: auto auto;
 }

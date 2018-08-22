@@ -14,7 +14,7 @@
 .c-list-sort-order-button:focus,
 .c-list-sort-order-button:hover {
   background: rgb(var(--label-border-color--active));
-  color: rgb(var(--body-text-color));
+  color: var(--color--swan);
   outline: none;
 }
 

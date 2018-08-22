@@ -1,5 +1,9 @@
 /* Define variables */
 :root {
+  --border-radius: 0.3em;
+  --border-width: 2px;
+  --breakpoint: 600px;
+  --button-padding: 0.25em 0.75em;
   --color--tempranillo: #365D7E;
   --color--blueberry: #6B5C7B;
   --color--lychee: #BF6D84;
@@ -11,25 +15,13 @@
   --color--shallow-sea: #3AAEAB;
   --color--meadow: #A5D3AC;
   --color--savannah: #E6EFC2;
+  --color--concrete: #999999;
+  --color--fog: #DDDDDD;
   --color--swan: #f2f2f2;
-  --body-background-color: 250,250,250;
-  --body-text-color: var(--color--swan);
-  --border-radius: 0.3em;
-  --border-width: 2px;
-  --breakpoint: 600px;
-  --button-color: 0,206,201;
-  --button-padding: 0.25em 0.75em;
-  --error-color: 235,77,75;
-  --header-background-color: 34,34,34;
-  --header-text-color: 233,233,233;
-  --label-background-color: 221,221,221;
-  --label-background-color--active: 153,153,153;
-  --label-border-color--active: 187,187,187;
-  --label-text-color: 102,102,102;
-  --list-item-image-background: 238,238,238;
-  --list-item-image-color: 204,204,204;
   --spacing: 1.5rem;
   --transition: 0.2s all ease-in-out;
+  --z-index--header: 2;
+  --z-index--sidebar: 3;
 }
 
 /* Import fonts */
@@ -301,19 +293,6 @@ p {
   transition: var(--transition);
 }
 
-.o-label--button {
-  cursor: pointer;
-}
-
-.o-label--button:active,
-.o-label--button:focus,
-.o-label--button:hover {
-  background: rgb(var(--label-background-color--active));
-  border-color: rgb(var(--label-border-color--active));
-  color: rgb(var(--body-text-color));
-  outline: none;
-}
-
 /* 3.5 Links */
 
 .o-link {
@@ -338,7 +317,7 @@ p {
 .o-panel {
   background: var(--color--swan);
   box-shadow: 1em 1em 4em rgba(0,0,0,0.5);
-  padding: var(--spacing);
+  color: var(--color--charcoal);
 }
 
 /* 3.7 Selects */

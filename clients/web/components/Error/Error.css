@@ -1,5 +1,5 @@
 .c-error {
-  color: rgb(var(--error-color));
+  color: var(--color--guava);
   display: table-cell;
   height: 100vh;
   text-align: center;
@@ -8,15 +8,15 @@
 }
 
 .c-error-button {
-  border: var(--border-width) solid rgb(var(--error-color));
-  color: rgb(var(--error-color));
+  border: var(--border-width) solid var(--color--guava);
+  color: var(--color--guava);
 }
 
 .c-error-button:active,
 .c-error-button:focus,
 .c-error-button:hover {
-  background: rgb(var(--error-color));
-  border: 2px solid rgb(var(--error-color));
+  background: var(--color--guava);
+  border: 2px solid var(--color--guava);
 }
 
 .c-error-icon {

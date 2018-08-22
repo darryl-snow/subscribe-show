@@ -5,7 +5,9 @@
   grid-gap: calc(var(--spacing)/2);
   grid-template-columns: min-content minmax(75%, 1fr);
   padding: calc(var(--spacing)/2);
+  position: fixed;
   width: 100%;
+  z-index: var(--z-index--header);
 }
 
 @media(min-width: 600px) {

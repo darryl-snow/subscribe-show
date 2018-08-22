@@ -30,7 +30,7 @@
 }
 
 .c-modal-icon {
-  color: rgb(var(--list-item-image-background));
+  color: var(--color--fog);
   display: block;
   font-size: 4em;
 }

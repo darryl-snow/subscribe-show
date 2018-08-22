@@ -1,7 +1,9 @@
 .c-main-content {
+  color: var(--color--swan);
   display: grid;
   grid-template-rows: max-content;
   min-height: 100vh;
+  padding-top: 5.5625em;
   position: absolute;
   top: 0;
   transition: all 0.2s ease-out;

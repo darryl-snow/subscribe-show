@@ -37,8 +37,8 @@
 
 .c-toggle-button-label {
   background: white;
-  border: 2px solid rgb(var(--label-background-color));
-  color: rgb(var(--label-border-color--active));
+  border: 2px solid var(--color--fog);
+  color: var(--color--concrete);
   cursor: pointer;
   display: block;
   font-size: 0.75em;
@@ -51,8 +51,8 @@
 .c-toggle-button-label:active,
 .c-toggle-button-label:focus,
 .c-toggle-button-label:hover {
-  color: rgb(var(--label-background-color--active));
-  border-color: rgb(var(--label-border-color--active));
+  color: var(--color--concrete);
+  border-color: var(--color--concrete);
 }
 
 .c-toggle-button input {
@@ -60,14 +60,14 @@
 }
 
 .c-toggle-button input:checked ~ .c-toggle-button-label{
-  background: rgb(var(--label-background-color));
-  color: rgb(var(--label-text-color));
+  background: var(--color--fog);
+  color: var(--color--basalt);
 }
 
 .c-toggle-button input:checked ~ .c-toggle-button-label:active,
 .c-toggle-button input:checked ~ .c-toggle-button-label:focus,
 .c-toggle-button input:checked ~ .c-toggle-button-label:hover {
-  background: rgb(var(--label-border-color--active));
-  color: rgb(var(--body-text-color));
+  background: var(--color--concrete);
+  color: var(--color--swan);
   outline: none;
 }

@@ -1,6 +1,4 @@
 .c-list-item {
-  background: var(--color--swan);
-  box-shadow: 1em 1em 4em rgba(0,0,0,0.5);
   display: flex;
   margin-bottom: var(--spacing);
   flex-direction: column;
@@ -15,9 +13,9 @@
 
 .c-list-item-episode-number {
   align-items: center;
-  background-color: rgb(var(--list-item-image-background));
-  border-bottom: 1px solid rgb(var(--label-background-color));
-  color: rgb(var(--label-text-color));
+  background-color: var(--color--fog);
+  border-bottom: 1px solid var(--color--fog);
+  color: var(--color--basalt);
   display: flex;
   flex: 1;
   font-size: 4em;
@@ -40,11 +38,11 @@
 
 .c-list-item-image {
   align-items: center;
-  background-color: rgb(var(--list-item-image-background));
+  background-color: var(--color--fog);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  color: rgb(var(--list-item-image-color));
+  color: var(--color--basalt);
   display: flex;
   flex: 1;
   font-size: 400%;

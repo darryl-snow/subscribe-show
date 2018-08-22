@@ -1,5 +1,5 @@
 .c-breadcrumbs-item {
-  border-right: 1px dotted rgb(var(--label-border-color--active));
+  border-right: 1px dotted var(--color--concrete);
 }
 
 .c-breadcrumbs-item:first-child {
@@ -11,8 +11,8 @@
 }
 
 .c-breadcrumbs-link {
-  border-bottom: 1px solid rgb(var(--label-text-color));
-  color: rgb(var(--label-text-color));
+  border-bottom: 1px solid var(--color--concrete);
+  color: var(--color--concrete);
   display: block;
   padding-bottom: 3px;
 }
@@ -21,5 +21,5 @@
 .c-breadcrumbs-link:focus,
 .c-breadcrumbs-link:hover {
   border-bottom: 1px solid transparent;
-  color: rgb(var(--body-text-color));
+  color: var(--color--swan);
 }

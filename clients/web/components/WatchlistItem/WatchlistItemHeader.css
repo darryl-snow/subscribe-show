@@ -1,5 +1,5 @@
 .c-watchlistitem-header {
-  background-color: rgb(var(--body-text-color));
+  background-color: var(--color--swan);
   background-position: 0% 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -8,7 +8,7 @@
 }
 
 .c-watchlistitem-header-content {
-  color: white;
+  color: var(--color--swan);
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding: var(--spacing);

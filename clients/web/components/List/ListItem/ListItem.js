@@ -115,7 +115,7 @@ class ListItem extends Component {
     } = this.props.item
 
     return (
-      <div className="c-list-item">
+      <div className="o-panel c-list-item">
         <div className="c-list-item-image-container">
           <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
             { !image ? <Icon name="film" /> : '' }
