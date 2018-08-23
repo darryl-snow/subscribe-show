@@ -74,8 +74,14 @@ export default class ListFilters extends Component {
     if (this.state.languages.length < 2) {
       return ''
     }
-    return this.state.languages.map(language =>
-      <ToggleButton key={language} value={language} handleChange={this.changeFilter} />)
+    return this.state.languages.map(language => (
+      <ToggleButton
+        className="u-margin-right--small"
+        handleChange={this.changeFilter}
+        key={language}
+        value={language}
+      />
+    ))
   }
   renderTypeFilters() {
     // If there are not at least 2 types, don't render anything.
@@ -86,18 +92,26 @@ export default class ListFilters extends Component {
     return this.state.types.map((type) => {
       if (type === 'movie' || type === 'tv') {
         return (
-          <ToggleButton key={type} value={type} handleChange={this.changeFilter} />
+          <ToggleButton
+            handleChange={this.changeFilter}
+            key={type}
+            value={type}
+          />
         )
       }
       return (
-        <ToggleButton key={type} value="TV" handleChange={this.changeFilter} />
+        <ToggleButton
+          handleChange={this.changeFilter}
+          key={type}
+          value="TV"
+        />
       )
     })
   }
   render() {
     return (
       <div className="c-list-filters">
-        <div className="c-toggle-button-group u-margin-right--small">
+        <div className="c-toggle-button-group u-display--flex u-margin-right--small">
           {this.renderTypeFilters()}
         </div>
         <div className="c-toggle-button-group">

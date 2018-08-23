@@ -34,7 +34,7 @@ class ListControls extends Component {
       <div className={this.state.open ? 'c-list-controls c-list-controls--is-open' : 'c-list-controls'}>
         <Context.Consumer>
           {context => (
-            <div className={this.state.open ? 'c-list-controls-container c-list-controls-container--is-displayed' : 'c-list-controls-container'}>
+            <div className={this.state.open ? 'c-list-controls-container c-list-controls-container--is-displayed u-display--grid' : 'c-list-controls-container u-display--grid'}>
               <ListFilters results={context.results} updateList={context.updateList} />
               <ListSorter
                 defaultSort={context.defaultSort}

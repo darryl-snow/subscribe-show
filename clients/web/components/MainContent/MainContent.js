@@ -13,7 +13,7 @@ const MainContent = (props) => {
   }
   return (
     <div
-      className={props.sidebarIsOpen ? 'c-main-content c-main-content--is-minimized' : 'c-main-content'}
+      className={props.sidebarIsOpen ? 'c-main-content c-main-content--is-minimized u-magic-padding' : 'c-main-content u-magic-padding'}
       onClick={closeSidebar}
       onKeyUp={closeSidebar}
       role="presentation"

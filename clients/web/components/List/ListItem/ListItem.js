@@ -114,6 +114,8 @@ class ListItem extends Component {
       type,
     } = this.props.item
 
+    console.log(`${this.props.item.title} ${isInWatchList}`)
+
     return (
       <div className="o-panel c-list-item">
         <div className="c-list-item-image-container">
@@ -132,23 +134,27 @@ class ListItem extends Component {
 
           <p>{description}</p>
 
-          <AddToWatchlist
-            addItem={this.addItem}
-            isInWatchList={isInWatchList}
-          />
+          <div className="o-button-group">
 
-          <RemoveFromWatchlist
-            isInWatchList={isInWatchList}
-            removeItem={this.removeItem}
-            type={type}
-          />
+            <AddToWatchlist
+              addItem={this.addItem}
+              isInWatchList={isInWatchList}
+            />
 
-          <ToggleWatched
-            id={id}
-            toggleWatched={this.toggleWatched}
-            type={type}
-            watched={this.state.watched}
-          />
+            <RemoveFromWatchlist
+              isInWatchList={isInWatchList}
+              removeItem={this.removeItem}
+              type={type}
+            />
+
+            <ToggleWatched
+              id={id}
+              toggleWatched={this.toggleWatched}
+              type={type}
+              watched={this.state.watched}
+            />
+
+          </div>
 
         </div>
       </div>

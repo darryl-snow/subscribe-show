@@ -53,6 +53,7 @@ const parseMovie = (movie, item) => {
   item.airDate = movie.release_date;
   item.language = parseLanguage(movie.original_language);
   item.watched = false;
+  item.isInWatchList = true;
 };
 
 /**
@@ -120,6 +121,7 @@ const parseTVShow = (show, item) => {
   item.image = show.image ? show.image.original : '';
   item.language = show.language;
   item.watched = false;
+  item.isInWatchList = true;
 };
 
 /**

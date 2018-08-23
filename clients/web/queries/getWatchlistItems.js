@@ -11,6 +11,7 @@ export default gql`
       language
       airDate
       watched
+      isInWatchList
       tmdbID
     }
   }

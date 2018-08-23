@@ -24,7 +24,7 @@ const RemoveFromWatchlist = ({ isInWatchList, removeItem, type }) => {
   }
 
   return (
-    <button className="o-button c-remove-from-watchlist-button u-margin-right--small" onClick={removeItem}>
+    <button className="o-button c-remove-from-watchlist-button" onClick={removeItem}>
       <Icon name="trash" className="u-margin-right--small" />
       Remove from Watchlist
     </button>

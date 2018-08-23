@@ -18,6 +18,7 @@
   --color--concrete: #999999;
   --color--fog: #DDDDDD;
   --color--swan: #f2f2f2;
+  --shadow: 1em 1em 4em rgba(0,0,0,0.5);
   --spacing: 1.5rem;
   --transition: 0.2s all ease-in-out;
   --z-index--controls: 1;
@@ -52,8 +53,7 @@
     3.4 Labels
     3.5 Links
     3.6 Panels
-    3.7 Selects
-    3.8 Subheadings
+    3.7 Subheadings
  */
 
 /**
@@ -129,6 +129,10 @@ p {
   display: flex;
 }
 
+.u-display--grid {
+  display: grid;
+}
+
 .u-display--inline-block {
   display: inline-block;
 }
@@ -177,6 +181,10 @@ p {
 
 .u-padding--small {
   padding: calc(0.5 * var(--spacing));
+}
+
+.u-magic-padding {
+  padding-top: 5.5625em;
 }
 
 /* 2.7 Lists */
@@ -256,6 +264,14 @@ p {
   padding: 0em;
 }
 
+.o-button-group {
+  display: flex;
+}
+
+.o-button-group > * {
+  margin: 0 calc(0.25 * var(--spacing));
+}
+
 /* 3.2 Containers */
 
 .o-container {
@@ -306,7 +322,7 @@ p {
 
 .o-label {
   align-items: center;
-  background: rgb(var(--label-background-color));
+  background: var(--color--fog);
   border: none;
   border-radius: var(--border-radius);
   color: rgb(var(--label-text-color));
@@ -321,9 +337,15 @@ p {
 /* 3.5 Links */
 
 .o-link {
-  color: rgb(var(--button-color));
+  color: var(--color--deep-sea);
   text-decoration: none;
   transition: var(--transition);
+}
+
+.o-link:active,
+.o-link:focus,
+.o-link:hover {
+  color: var(--color--shallow-sea);
 }
 
 .o-link-icon {
@@ -334,6 +356,7 @@ p {
 .o-link:active .o-link-icon,
 .o-link:focus .o-link-icon,
 .o-link:hover .o-link-icon {
+  color: var(--color--shallow-sea);
   margin-left: var(--spacing);
 }
 
@@ -341,29 +364,11 @@ p {
 
 .o-panel {
   background: var(--color--swan);
-  box-shadow: 1em 1em 4em rgba(0,0,0,0.5);
+  box-shadow: var(--shadow);
   color: var(--color--charcoal);
 }
 
-/* 3.7 Selects */
-
-.o-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
-.o-select:active,
-.o-select:focus,
-.o-select:hover {
-  background: rgb(var(--label-background-color--active));
-  border-color: rgb(var(--label-border-color--active));
-  color: rgb(var(--body-text-color));
-  outline: none;
-}
-
-/* 3.8 Subheadings */
+/* 3.7 Subheadings */
 
 .o-subheading {
   display: block;

@@ -53,7 +53,7 @@ export default class Modal extends Component {
     // If it is a confirm type, render 2 buttons, 1 to dismiss the
     // modal and 1 to call the confirm function.
     return (
-      <div className="c-modal-button-group u-margin-top">
+      <div className="o-button-group c-modal-button-group u-margin-top">
         <button
           className="o-button o-button--secondary c-modal-button"
           onClick={this.props.close}
