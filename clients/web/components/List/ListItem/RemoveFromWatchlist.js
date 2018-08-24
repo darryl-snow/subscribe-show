@@ -10,7 +10,12 @@ import Icon from '../../Icon/Icon'
  * can be removed. This component renders a button for calling the removeItem
  * function.
  */
-const RemoveFromWatchlist = ({ isInWatchList, removeItem, type }) => {
+const RemoveFromWatchlist = ({
+  id,
+  isInWatchList,
+  remove,
+  type,
+}) => {
   // Only search results have the isInWatchList property. If the item has
   // that property then we can assume that it's not in the watchlist and so
   // we don't need to render the button.
@@ -21,6 +26,11 @@ const RemoveFromWatchlist = ({ isInWatchList, removeItem, type }) => {
   // Individual TV Show episodes can't be removed from the watch list.
   if (type === 'Episode') {
     return ''
+  }
+
+  const removeItem = (event) => {
+    event.preventDefault()
+    remove(id)
   }
 
   return (
@@ -38,8 +48,9 @@ export default RemoveFromWatchlist
  * @type {Object}
  */
 RemoveFromWatchlist.propTypes = {
+  id: PropTypes.string,
   isInWatchList: PropTypes.bool,
-  removeItem: PropTypes.func,
+  remove: PropTypes.func,
   type: PropTypes.string,
 }
 
@@ -48,7 +59,8 @@ RemoveFromWatchlist.propTypes = {
  * @type {Object}
  */
 RemoveFromWatchlist.defaultProps = {
+  id: '',
   isInWatchList: false,
-  removeItem: () => {},
+  remove: () => {},
   type: '',
 }

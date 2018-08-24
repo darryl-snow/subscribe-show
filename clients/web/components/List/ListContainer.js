@@ -15,7 +15,8 @@ import Modal from '../Modal/Modal'
 // Mutations
 import AddItemMutation from '../../mutations/addToWatchlist'
 import RemoveItemMutation from '../../mutations/removeFromWatchlist'
-import ToggleWatchedMutation from '../../mutations/toggleItemWatched'
+import ToggleItemWatchedMutation from '../../mutations/toggleItemWatched'
+import ToggleEpisodeWatchedMutation from '../../mutations/toggleEpisodeWatched'
 
 // Queries
 import query from '../../queries/getWatchlistItems'
@@ -170,8 +171,21 @@ export class ListContainer extends Component {
    * Toggle an item as watched or unwatched by calling the mutation.
    * @param  {String} id The ID of the item to be toggled.
    */
-  toggleWatched = (id) => {
-    this.props.toggleWatched({
+  toggleItemWatched = (id) => {
+    this.props.toggleItemWatched({
+      variables: { id },
+      refetchQueries: [{
+        query, // Update the main watchlist items query afterwards.
+      }],
+    })
+  }
+
+  /**
+   * Toggle an episode as watched or unwatched by calling the mutation.
+   * @param  {String} id The ID of the item to be toggled.
+   */
+  toggleEpisodeWatched = (id) => {
+    this.props.toggleEpisodeWatched({
       variables: { id },
       refetchQueries: [{
         query, // Update the main watchlist items query afterwards.
@@ -231,9 +245,13 @@ export class ListContainer extends Component {
     }
 
     const context = {
+      addItem: this.addItem,
       defaultSort: sortBy,
+      removeItem: this.removeItem,
       results: receivedListItems,
       sortOrder,
+      toggleItemWatched: this.toggleItemWatched,
+      toggleEpisodeWatched: this.toggleEpisodeWatched,
       updateList: this.updateList,
     }
 
@@ -258,11 +276,8 @@ export class ListContainer extends Component {
             content={content}
           />
           <List
-            addItem={this.addItem}
             className={`${className}-list`}
             listItems={displayListItems}
-            removeItem={this.removeItem}
-            toggleWatched={this.toggleWatched}
           />
           <Modal
             close={this.closeModal}
@@ -287,8 +302,11 @@ export default compose(
   graphql(RemoveItemMutation, {
     name: 'removeItem',
   }),
-  graphql(ToggleWatchedMutation, {
-    name: 'toggleWatched',
+  graphql(ToggleItemWatchedMutation, {
+    name: 'toggleItemWatched',
+  }),
+  graphql(ToggleEpisodeWatchedMutation, {
+    name: 'toggleEpisodeWatched',
   }),
 )(ListContainer)
 
@@ -307,7 +325,8 @@ ListContainer.propTypes = {
   sortBy: PropTypes.string,
   sortOrder: PropTypes.number,
   title: PropTypes.string,
-  toggleWatched: PropTypes.func,
+  toggleItemWatched: PropTypes.func,
+  toggleEpisodeWatched: PropTypes.func,
 }
 
 /**
@@ -328,5 +347,6 @@ ListContainer.defaultProps = {
   sortBy: 'airDate',
   sortOrder: 1,
   title: '',
-  toggleWatched: () => {},
+  toggleItemWatched: () => {},
+  toggleEpisodeWatched: () => {},
 }

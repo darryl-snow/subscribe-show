@@ -34,7 +34,7 @@ describe('RemoveFromWatchlist Component', () => {
     const removeItemMock = jest.fn().mockResolvedValue()
     const propsMock = {
       isInWatchList: true,
-      removeItem: removeItemMock,
+      remove: removeItemMock,
       type: 'Movie',
     }
     const component = shallow(<RemoveFromWatchlist {...propsMock} />)

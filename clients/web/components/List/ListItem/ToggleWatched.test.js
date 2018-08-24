@@ -65,16 +65,30 @@ describe('ToggleWatched Component', () => {
   })
 
   it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
-    const toggleWatchedMock = jest.fn()
+    const toggleItemWatchedMock = jest.fn()
     const propsMock = {
       id: '1',
-      toggleWatched: toggleWatchedMock,
-      type: 'Episode',
-      watched: true,
+      toggleItemWatched: toggleItemWatchedMock,
+      type: 'Movie',
+      watched: false,
     }
     const component = shallow(<ToggleWatched {...propsMock} />)
     const mockedEvent = { target: {}, preventDefault: () => {} }
     component.find('.c-toggle-watched-button').simulate('click', mockedEvent)
-    expect(toggleWatchedMock.mock.calls).toHaveLength(1)
+    expect(toggleItemWatchedMock.mock.calls).toHaveLength(1)
+  })
+
+  it('should toggle an episode as watched or unwatched when the toggle watched button is clicked', () => {
+    const toggleEpisodeWatchedMock = jest.fn()
+    const propsMock = {
+      id: '1',
+      toggleEpisodeWatched: toggleEpisodeWatchedMock,
+      type: 'Episode',
+      watched: false,
+    }
+    const component = shallow(<ToggleWatched {...propsMock} />)
+    const mockedEvent = { target: {}, preventDefault: () => {} }
+    component.find('.c-toggle-watched-button').simulate('click', mockedEvent)
+    expect(toggleEpisodeWatchedMock.mock.calls).toHaveLength(1)
   })
 })

@@ -15,20 +15,14 @@ class List extends Component {
    */
   renderListItems() {
     const {
-      addItem,
       listItems,
-      removeItem,
-      toggleWatched,
     } = this.props
 
     return listItems.map(item =>
       (
         <li key={item.tmdbID || item.id}>
           <ListItem
-            addItem={addItem}
             item={item}
-            removeItem={removeItem}
-            toggleWatched={toggleWatched}
           />
         </li>
       ))
@@ -55,11 +49,8 @@ export default List
  * @type {Object}
  */
 List.propTypes = {
-  addItem: PropTypes.func,
   className: PropTypes.string,
   listItems: PropTypes.array,
-  removeItem: PropTypes.func,
-  toggleWatched: PropTypes.func,
 }
 
 /**
@@ -67,9 +58,6 @@ List.propTypes = {
  * @type {Object}
  */
 List.defaultProps = {
-  addItem: () => {},
   className: '',
   listItems: [],
-  removeItem: () => {},
-  toggleWatched: () => {},
 }

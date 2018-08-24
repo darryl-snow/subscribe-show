@@ -114,7 +114,7 @@ export default class ListFilters extends Component {
         <div className="c-toggle-button-group u-display--flex u-margin-right--small">
           {this.renderTypeFilters()}
         </div>
-        <div className="c-toggle-button-group">
+        <div className="c-toggle-button-group u-display--flex u-margin-right--small">
           {this.renderLanguageFilters()}
         </div>
       </div>

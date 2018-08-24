@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // App components
+import History from '../../../history'
 import Icon from '../../Icon/Icon'
 
 /**
@@ -11,11 +12,15 @@ import Icon from '../../Icon/Icon'
  * the state of the item. This button should only appear in the search
  * results list.
  */
-const AddToWatchlist = ({ addItem, isInWatchList }) => {
-  // Only search results have the isInWatchList property. If the item does
-  // not have that property then we can assume that it's already in the
-  // watchlist and so we don't need to render the button.
-  if (isInWatchList === undefined) {
+const AddToWatchlist = ({
+  add,
+  history,
+  isInWatchList,
+  tmdbID,
+  type,
+}) => {
+  // Only display this button for searchlist results
+  if (!history.location.pathname.includes('search')) {
     return ''
   }
 
@@ -26,6 +31,11 @@ const AddToWatchlist = ({ addItem, isInWatchList }) => {
         Already added
       </button>
     )
+  }
+
+  const addItem = (event) => {
+    event.preventDefault()
+    add(tmdbID, type)
   }
 
   return (
@@ -43,8 +53,11 @@ export default AddToWatchlist
  * @type {Object}
  */
 AddToWatchlist.propTypes = {
-  addItem: PropTypes.func,
+  add: PropTypes.func,
+  history: PropTypes.object,
   isInWatchList: PropTypes.bool,
+  tmdbID: PropTypes.string,
+  type: PropTypes.string,
 }
 
 /**
@@ -52,6 +65,9 @@ AddToWatchlist.propTypes = {
  * @type {Object}
  */
 AddToWatchlist.defaultProps = {
-  addItem: () => {},
+  add: () => {},
+  history: History,
   isInWatchList: undefined,
+  tmdbID: '',
+  type: '',
 }

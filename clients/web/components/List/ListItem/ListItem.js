@@ -5,6 +5,7 @@ import { slugify } from '../../../helpers'
 
 // App components
 import AddToWatchlist from './AddToWatchlist'
+import Context from '../ListContext'
 import history from '../../../history'
 import Icon from '../../Icon/Icon'
 import ListItemTitle from './ListItemTitle'
@@ -19,30 +20,6 @@ import './ListItem.css'
  * provided for a given list item.
  */
 class ListItem extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      watched: props.item.watched,
-    }
-  }
-
-  // ------------CUSTOM METHODS------------
-
-  /**
-   * Add an item to the watchlist by passing to the relevant data to the
-   * function on the props.
-   * @param {Object} event The click event on the add item button.
-   */
-  addItem = (event) => {
-    event.preventDefault()
-    const {
-      addItem,
-      item,
-    } = this.props
-    addItem(item.tmdbID, item.type)
-  }
-
   /**
    * Use the history object to navigate to the watchlist item.
    * @param  {Event} event The click event that triggered the function call.
@@ -52,42 +29,6 @@ class ListItem extends Component {
     const title = this.props.item.title || this.props.item.watchlistItem.title
     this.props.history.push(`/watch/${slugify(title)}`)
   }
-
-  /**
-   * Remove an item from the watchlist by passing the item ID to
-   * the function on the props.
-   * @param {Object} event The click event on the add item button.
-   */
-  removeItem = (event) => {
-    event.preventDefault()
-    const {
-      removeItem,
-      item,
-    } = this.props
-    removeItem(item.id)
-  }
-
-  /**
-   * Toggle an item as having been watched or not by passing the ID
-   * to the function on the props. As the same time, reverse the
-   * state on the component.
-   * @param  {[type]} event The click event on the toggle watched button.
-   */
-  toggleWatched = (event) => {
-    event.preventDefault()
-    const {
-      toggleWatched,
-      item,
-    } = this.props
-
-    this.setState({
-      watched: !this.state.watched,
-    })
-
-    toggleWatched(item.id)
-  }
-
-  // ------------RENDER METHODS------------
 
   /**
    * Render a label to indicate the item's language.
@@ -111,10 +52,10 @@ class ListItem extends Component {
       id,
       image,
       isInWatchList,
+      tmdbID,
       type,
+      watched,
     } = this.props.item
-
-    console.log(`${this.props.item.title} ${isInWatchList}`)
 
     return (
       <div className="o-panel c-list-item">
@@ -134,27 +75,35 @@ class ListItem extends Component {
 
           <p>{description}</p>
 
-          <div className="o-button-group">
+          <Context.Consumer>
+            {context => (
+              <div className="o-button-group">
 
-            <AddToWatchlist
-              addItem={this.addItem}
-              isInWatchList={isInWatchList}
-            />
+                <AddToWatchlist
+                  add={context.addItem}
+                  isInWatchList={isInWatchList}
+                  tmdbID={tmdbID}
+                  type={type}
+                />
 
-            <RemoveFromWatchlist
-              isInWatchList={isInWatchList}
-              removeItem={this.removeItem}
-              type={type}
-            />
+                <RemoveFromWatchlist
+                  id={id}
+                  isInWatchList={isInWatchList}
+                  remove={context.removeItem}
+                  type={type}
+                />
 
-            <ToggleWatched
-              id={id}
-              toggleWatched={this.toggleWatched}
-              type={type}
-              watched={this.state.watched}
-            />
+                <ToggleWatched
+                  id={id}
+                  toggleEpisodeWatched={context.toggleEpisodeWatched}
+                  toggleItemWatched={context.toggleItemWatched}
+                  type={type}
+                  watched={watched}
+                />
 
-          </div>
+              </div>
+            )}
+          </Context.Consumer>
 
         </div>
       </div>
@@ -169,11 +118,8 @@ export default ListItem
  * @type {Object}
  */
 ListItem.propTypes = {
-  addItem: PropTypes.func,
   history: PropTypes.object,
   item: PropTypes.object,
-  removeItem: PropTypes.func,
-  toggleWatched: PropTypes.func,
 }
 
 /**
@@ -181,9 +127,6 @@ ListItem.propTypes = {
  * @type {Object}
  */
 ListItem.defaultProps = {
-  addItem: () => {},
   history,
   item: {},
-  removeItem: () => {},
-  toggleWatched: () => {},
 }

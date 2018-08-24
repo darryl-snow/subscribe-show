@@ -8,6 +8,11 @@ describe('AddToWatchlist Component', () => {
     expect(component.find('.c-add-to-watchlist-button').exists()).toBe(false)
 
     const mockProps = {
+      history: {
+        location: {
+          pathname: '/search',
+        },
+      },
       isInWatchList: true,
     }
     component = shallow(<AddToWatchlist {...mockProps} />)
@@ -16,6 +21,11 @@ describe('AddToWatchlist Component', () => {
 
   it('should render a disabled Add to Watchlist button if the item is already in the watchlist', () => {
     const mockProps = {
+      history: {
+        location: {
+          pathname: '/search',
+        },
+      },
       isInWatchList: true,
     }
     const component = shallow(<AddToWatchlist {...mockProps} />)
@@ -25,7 +35,12 @@ describe('AddToWatchlist Component', () => {
   it('should disable the Add to Watchlist button if the item is a search result and is already in the list', () => {
     const addItemMock = jest.fn().mockResolvedValue()
     const mockProps = {
-      addItem: addItemMock,
+      add: addItemMock,
+      history: {
+        location: {
+          pathname: '/search',
+        },
+      },
       isInWatchList: true,
     }
     const component = shallow(<AddToWatchlist {...mockProps} />)
@@ -37,7 +52,12 @@ describe('AddToWatchlist Component', () => {
   it('should add the item to the watchlist when the button is clicked', () => {
     const addItemMock = jest.fn()
     const mockProps = {
-      addItem: addItemMock,
+      add: addItemMock,
+      history: {
+        location: {
+          pathname: '/search',
+        },
+      },
       isInWatchList: false,
     }
     const component = shallow(<AddToWatchlist {...mockProps} />)
