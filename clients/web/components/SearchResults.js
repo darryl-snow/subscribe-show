@@ -47,7 +47,10 @@ export default (PassedComponent) => {
   return graphql(query, {
     options: (props) => {
       const searchQuery = props.location.state.query
-      return { variables: { title: searchQuery } }
+      return {
+        fetchPolicy: 'network-only',
+        variables: { title: searchQuery },
+      }
     },
   })(SearchResults)
 }
