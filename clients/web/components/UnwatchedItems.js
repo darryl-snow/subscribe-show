@@ -84,5 +84,9 @@ export default (PassedComponent) => {
   }
 
   // Append results of the graphQL query to the component properties.
-  return graphql(query)(UnwatchedItems)
+  return graphql(query, {
+    options: {
+      fetchPolicy: 'network-only',
+    },
+  })(UnwatchedItems)
 }

@@ -23,5 +23,9 @@ export default (PassedComponent) => {
   }
 
   // Append results of the graphQL query to the component properties.
-  return graphql(query)(WatchList)
+  return graphql(query, {
+    options: {
+      fetchPolicy: 'network-only',
+    },
+  })(WatchList)
 }

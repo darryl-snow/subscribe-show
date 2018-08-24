@@ -339,6 +339,7 @@ ListContainer.defaultProps = {
   data: {
     loading: true,
     search: [],
+    watchListItems: [],
   },
   history,
   listItems: [],

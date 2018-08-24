@@ -51,7 +51,10 @@ export default (PassedComponent) => {
   return graphql(query, {
     options: (props) => {
       const { title } = props.match.params
-      return { variables: { title } }
+      return {
+        fetchPolicy: 'network-only',
+        variables: { title },
+      }
     },
   })(WatchListItem)
 }
