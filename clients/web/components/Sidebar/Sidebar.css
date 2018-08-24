@@ -7,7 +7,7 @@
   left: -80vw;
   margin: 0;
   padding: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   transition: all 0.2s ease-out;
   width: 80vw;
