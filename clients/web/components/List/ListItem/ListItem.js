@@ -6,7 +6,6 @@ import { slugify } from '../../../helpers'
 // App components
 import AddToWatchlist from './AddToWatchlist'
 import Context from '../ListContext'
-import history from '../../../history'
 import Icon from '../../Icon/Icon'
 import ListItemTitle from './ListItemTitle'
 import RemoveFromWatchlist from './RemoveFromWatchlist'
@@ -20,16 +19,6 @@ import './ListItem.css'
  * provided for a given list item.
  */
 class ListItem extends Component {
-  /**
-   * Use the history object to navigate to the watchlist item.
-   * @param  {Event} event The click event that triggered the function call.
-   */
-  navigateToWatchListItem = (event) => {
-    event.preventDefault()
-    const title = this.props.item.title || this.props.item.watchlistItem.title
-    this.props.history.push(`/watch/${slugify(title)}`)
-  }
-
   /**
    * Render a label to indicate the item's language.
    * @return {Object} The rendered label.
@@ -118,7 +107,6 @@ export default ListItem
  * @type {Object}
  */
 ListItem.propTypes = {
-  history: PropTypes.object,
   item: PropTypes.object,
 }
 
@@ -127,6 +115,5 @@ ListItem.propTypes = {
  * @type {Object}
  */
 ListItem.defaultProps = {
-  history,
   item: {},
 }

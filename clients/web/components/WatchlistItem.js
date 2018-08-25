@@ -4,6 +4,8 @@ import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import query from '../queries/getWatchlistItemByTitle'
 
+// App Components
+import EmptyList from './EmptyList/EmptyList'
 import Loader from './Loader/Loader'
 import WatchlistItemHeader from './WatchlistItem/WatchlistItemHeader'
 
@@ -13,10 +15,17 @@ import WatchlistItemHeader from './WatchlistItem/WatchlistItemHeader'
  */
 export default (PassedComponent) => {
   const WatchListItem = (props) => {
-    console.log(props)
     if (props.data.loading) {
       return (
         <Loader />
+      )
+    }
+    if (!props.data.watchListItemByTitle.episodes) {
+      return (
+        <React.Fragment>
+          <WatchlistItemHeader {...props.data.watchListItemByTitle} />
+          <EmptyList message="No episodes to list." />
+        </React.Fragment>
       )
     }
     return (

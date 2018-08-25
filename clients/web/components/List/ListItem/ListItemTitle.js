@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { formatDate, formatSeasonEpisodeNumbers, slugify } from '../../../helpers'
 
 // App components
+import history from '../../../history'
 import Icon from '../../Icon/Icon'
 
 /**
@@ -23,6 +24,24 @@ const ListItemTitle = (props) => {
     watchlistItem,
   } = props
 
+  /**
+   * Navigate to the page for the TV Show.
+   * @param  {Event} event The event that triggers the navigation.
+   */
+  const navigateToWatchListItem = (event) => {
+    event.preventDefault()
+
+    let destination = ''
+
+    if (type === 'Episode') {
+      destination = slugify(watchlistItem.title)
+    } else {
+      destination = slugify(title)
+    }
+
+    history.push(`/watch/${destination}`)
+  }
+
   if (type === 'Movie' || !id) {
     return (
       <h2>
@@ -36,7 +55,7 @@ const ListItemTitle = (props) => {
   if (type === 'Episode') {
     return (
       <h2>
-        <a className="o-link u-display--block" href={`/watch/${slugify(watchlistItem.title)}`} onClick={props.navigateToWatchListItem}>
+        <a className="o-link u-display--block" href={`/watch/${slugify(watchlistItem.title)}`} onClick={navigateToWatchListItem}>
           {watchlistItem.title}
           <Icon name="angle-right" className="o-link-icon" />
         </a>
@@ -48,7 +67,7 @@ const ListItemTitle = (props) => {
   }
 
   return (
-    <a className="o-link" href={`/watch/${slugify(title)}`} onClick={props.navigateToWatchListItem}>
+    <a className="o-link" href={`/watch/${slugify(title)}`} onClick={navigateToWatchListItem}>
       <h2>
         <Icon name="tv" className="u-margin-right--small" />
         {title || name}
@@ -68,6 +87,7 @@ export default ListItemTitle
 ListItemTitle.propTypes = {
   airDate: PropTypes.string,
   episodeNumber: PropTypes.number,
+  history: PropTypes.object,
   id: PropTypes.string,
   name: PropTypes.string,
   navigateToWatchListItem: PropTypes.func,
@@ -84,6 +104,7 @@ ListItemTitle.propTypes = {
 ListItemTitle.defaultProps = {
   airDate: '',
   episodeNumber: 1,
+  history,
   id: '',
   name: '',
   navigateToWatchListItem: () => {},
