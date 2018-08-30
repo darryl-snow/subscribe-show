@@ -54,7 +54,7 @@ export class Episode extends Component {
         onClick={this.toggleWatched}
         title={watched ? 'Mark as unwatched' : 'Mark as watched'}
       >
-        <Icon name={watched ? 'check' : 'eye'} className="u-margin-right--small" />
+        <Icon name={watched ? 'times' : 'check'} className="u-margin-right--small" />
         {watched ? 'Mark as not watched' : 'Mark as watched'}
       </button>
     )

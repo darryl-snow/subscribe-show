@@ -1,5 +1,5 @@
 .c-list-header {
-  color: var(--color--tempranillo);
+  color: var(--color--swan);
   display: grid;
   grid-template-rows: auto auto;
   position: relative;
@@ -7,6 +7,7 @@
 
 @media(min-width: 600px) {
   .c-list-header {
+    color: var(--color--tempranillo);
     grid-template-rows: auto;
     grid-template-columns: auto max-content;
   }

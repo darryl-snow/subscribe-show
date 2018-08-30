@@ -42,13 +42,23 @@
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  color: var(--color--basalt);
+  color: var(--color--concrete);
   display: flex;
   flex: 1;
   font-size: 400%;
   justify-content: center;
   transform: scale(1);
   transition: var(--transition);
+}
+
+.c-list-item-image .o-icon {
+  display: none;
+}
+
+@media(min-width: 600px) {
+  .c-list-item-image .o-icon {
+    display: inline-block;
+  }
 }
 
 .c-list-item:hover {

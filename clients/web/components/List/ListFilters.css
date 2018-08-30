@@ -3,8 +3,16 @@
   flex-direction: column;
 }
 
+.c-list-filters .c-toggle-button-group {
+  flex-direction: column;
+}
+
 @media(min-width: 600px) {
   .c-list-filters {
+    flex-direction: row;
+  }
+
+  .c-list-filters .c-toggle-button-group {
     flex-direction: row;
   }
 }
