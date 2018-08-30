@@ -1,5 +1,5 @@
 .c-breadcrumbs-item {
-  border-right: 1px dotted var(--color--concrete);
+  border-right: 1px dotted var(--color--fog);
 }
 
 .c-breadcrumbs-item:first-child {
@@ -10,16 +10,16 @@
   border: none;
 }
 
-.c-breadcrumbs-link {
-  border-bottom: 1px solid var(--color--concrete);
-  color: var(--color--concrete);
+.o-link.c-breadcrumbs-link {
+  border-bottom: 1px solid var(--color--meadow);
+  color: var(--color--meadow);
   display: block;
   padding-bottom: 3px;
 }
 
-.c-breadcrumbs-link:active,
-.c-breadcrumbs-link:focus,
-.c-breadcrumbs-link:hover {
+.o-link.c-breadcrumbs-link:active,
+.o-link.c-breadcrumbs-link:focus,
+.o-link.c-breadcrumbs-link:hover {
   border-bottom: 1px solid transparent;
-  color: var(--color--swan);
+  color: var(--color--savannah);
 }

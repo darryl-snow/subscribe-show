@@ -73,10 +73,12 @@ export class Episode extends Component {
     } = this.props
 
     return (
-      <li className="c-list-item" key={episodeNumber}>
+      <li className="o-panel c-list-item" key={episodeNumber}>
         <div className="c-list-item-episode-number">{episodeNumber}</div>
-        <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
-          { !image ? <Icon name="film" /> : '' }
+        <div className="c-list-item-image-container">
+          <div className="c-list-item-image" style={{ backgroundImage: `url(${image})` }}>
+            { !image ? <Icon name="film" /> : '' }
+          </div>
         </div>
         <div className="c-list-item-details">
           <h3>{name}</h3>

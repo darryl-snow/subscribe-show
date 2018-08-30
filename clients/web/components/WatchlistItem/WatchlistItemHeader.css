@@ -1,17 +1,28 @@
 .c-watchlistitem-header {
   background-color: var(--color--swan);
-  background-position: 0% 50%;
+  background-position: 50% 30%;
   background-repeat: no-repeat;
   background-size: cover;
-  background-blend-mode: multiply;
-  boxShadow: inset 0 0 15px black;
+  box-shadow: inset 0 0 6em black;
+  position: relative;
+}
+
+.c-watchlistitem-header::before {
+  background: rgba(0,0,0,0.5);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .c-watchlistitem-header-content {
-  color: var(--color--swan);
+  color: white;
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding: var(--spacing);
+  position: relative;
 }
 
 .c-watchlistitem-header-meta {
