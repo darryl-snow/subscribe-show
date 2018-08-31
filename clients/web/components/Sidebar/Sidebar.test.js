@@ -10,7 +10,8 @@ describe('Sidebar Component', () => {
   })
   it('should render a login button first when not logged in', () => {
     const component = shallow(<Sidebar />)
-    expect(component.find('.c-sidebar-menu-link').first().debug()).toContain('Login')
+    expect(component.find('.c-sidebar-menu-link').at(0).debug()).toContain('Login')
+    expect(component.find('.c-sidebar-menu-link').at(1).debug()).toContain('Sign up')
   })
   it('should render navigation buttons when logged in', () => {
     const mockData = {

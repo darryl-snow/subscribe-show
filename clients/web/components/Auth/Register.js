@@ -13,12 +13,12 @@ import history from '../../history'
 import Loader from '../Loader/Loader'
 
 /**
- * This component presents a login form, which is actually just a wrapper
- * around a more generic Auth form - this just passes the login method to the
+ * This component presents a registration form, which is actually just a wrapper
+ * around a more generic Auth form - this just passes the register method to the
  * form.
  * @extends Component
  */
-export class Login extends Component {
+export class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,12 +37,7 @@ export class Login extends Component {
       variables: { email, password },
       refetchQueries: [{ query }],
     }).then(() => {
-      const previousLocation = this.props.location.state.previous
-      if (previousLocation) {
-        history.push(previousLocation)
-      } else {
-        history.push('/')
-      }
+      history.push('/')
     }).catch((res) => {
       const errors = res.graphQLErrors.map(error => error.message)
       this.setState({
@@ -63,7 +58,7 @@ export class Login extends Component {
       <div className="u-align--center u-display--flex u-magic-padding">
         <div className="o-panel u-align--left u-padding">
           <AuthForm
-            buttonText="Log in"
+            buttonText="Sign up"
             errors={this.state.errors}
             onSubmit={this.onSubmit}
           />
@@ -73,13 +68,13 @@ export class Login extends Component {
   }
 }
 
-export default graphql(mutation)(graphql(query)(Login))
+export default graphql(mutation)(graphql(query)(Register))
 
 /**
  * Define the property types.
  * @type {Object}
  */
-Login.propTypes = {
+Register.propTypes = {
   data: PropTypes.object,
   location: PropTypes.object,
   mutate: PropTypes.func,
@@ -89,7 +84,7 @@ Login.propTypes = {
  * Define the default values for the property types.
  * @type {Object}
  */
-Login.defaultProps = {
+Register.defaultProps = {
   data: {},
   location: {
     state: {

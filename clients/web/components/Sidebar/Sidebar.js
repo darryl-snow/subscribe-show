@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 // Queries & mutations
-import query from '../../queries/CurrentUser'
+import query from '../../queries/currentUser'
 import mutation from '../../mutations/logout'
 
 // App Components
@@ -88,20 +88,36 @@ export class Sidebar extends Component {
     }
     // If not logged in, just render a login button.
     return (
-      <li>
-        <NavLink
-          activeClassName="c-sidebar-menu-link--is-active"
-          className="c-sidebar-menu-link"
-          exact
-          onClick={this.props.closeSidebar}
-          onKeyUp={this.props.closeSidebar}
-          title="Login"
-          to="/login"
-        >
-          <Icon className="u-margin-right--small" name="unlock" />
-          Login
-        </NavLink>
-      </li>
+      <React.Fragment>
+        <li>
+          <NavLink
+            activeClassName="c-sidebar-menu-link--is-active"
+            className="c-sidebar-menu-link"
+            exact
+            onClick={this.props.closeSidebar}
+            onKeyUp={this.props.closeSidebar}
+            title="Login"
+            to="/login"
+          >
+            <Icon className="u-margin-right--small" name="unlock" />
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            activeClassName="c-sidebar-menu-link--is-active"
+            className="c-sidebar-menu-link"
+            exact
+            onClick={this.props.closeSidebar}
+            onKeyUp={this.props.closeSidebar}
+            title="Sign up"
+            to="/signup"
+          >
+            <Icon className="u-margin-right--small" name="user-plus" />
+            Sign up
+          </NavLink>
+        </li>
+      </React.Fragment>
     )
   }
   render() {

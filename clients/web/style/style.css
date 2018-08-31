@@ -286,7 +286,7 @@ p {
   background: none;
   border: none;
   border-bottom: 1px solid transparent;
-  color: var(--color--swan);
+  color: var(--color--deep-sea);
   display: block;
   font-size: 1.5em;
   padding: calc(0.5 * var(--spacing));

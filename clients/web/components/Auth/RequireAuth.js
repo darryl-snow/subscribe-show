@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 // App components
 import history from '../../history'
-import query from '../../queries/CurrentUser'
+import query from '../../queries/currentUser'
 
 /**
  * This is a wrapper on the router to redirect any visits to a protected route

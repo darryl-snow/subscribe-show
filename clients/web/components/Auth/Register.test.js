@@ -1,15 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Login } from './Login'
+import { Register } from './Register'
 
-describe('Login Component', () => {
+describe('Register Component', () => {
   it('should render a loader when the query or mutation is in progress', () => {
     let mockProps = {
       data: {
         loading: true,
       },
     }
-    let component = shallow(<Login {...mockProps} />)
+    let component = shallow(<Register {...mockProps} />)
     component.setState({
       loading: false,
     })
@@ -20,7 +20,7 @@ describe('Login Component', () => {
         loading: false,
       },
     }
-    component = shallow(<Login {...mockProps} />)
+    component = shallow(<Register {...mockProps} />)
     component.setState({
       loading: true,
     })
@@ -31,7 +31,7 @@ describe('Login Component', () => {
         loading: true,
       },
     }
-    component = shallow(<Login {...mockProps} />)
+    component = shallow(<Register {...mockProps} />)
     component.setState({
       loading: true,
     })
@@ -42,7 +42,7 @@ describe('Login Component', () => {
         loading: false,
       },
     }
-    component = shallow(<Login {...mockProps} />)
+    component = shallow(<Register {...mockProps} />)
     component.setState({
       loading: false,
     })
@@ -54,7 +54,7 @@ describe('Login Component', () => {
         loading: false,
       },
     }
-    const component = shallow(<Login {...mockProps} />)
+    const component = shallow(<Register {...mockProps} />)
     component.setState({
       loading: false,
     })

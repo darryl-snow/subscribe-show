@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo'
 import { Route } from 'react-router-dom'
 
 // Queries
-import query from '../../queries/CurrentUser'
+import query from '../../queries/currentUser'
 
 // App components
 import List from '../List/ListContainer'

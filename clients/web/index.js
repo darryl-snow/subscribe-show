@@ -14,7 +14,7 @@ import { Router } from 'react-router-dom'
 import history from './history'
 import App from './components/App'
 import AppContainerComponent from './components/AppContainer/AppContainer'
-import Error from './components/Error/Error'
+// import Error from './components/Error/Error'
 
 // Styles
 import './style/style.css'

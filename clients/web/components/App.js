@@ -8,6 +8,7 @@ import Header from './Header/Header'
 import HomePage from './Home/Home'
 import List from './List/ListContainer'
 import LoginForm from './Auth/Login'
+import RegisterForm from './Auth/Register'
 import RequireAuth from './Auth/RequireAuth'
 import SearchResults from './SearchResults'
 import Watchlist from './Watchlist'
@@ -25,6 +26,7 @@ export default () => (
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login/" component={LoginForm} />
+      <Route exact path="/signup/" component={RegisterForm} />
       <Route exact path="/watch/" component={RequireAuth(Watchlist(List))} />
       <Route exact path="/watch/:title" component={RequireAuth(WatchlistItem(EpisodeList))} />
       <Route path="/search/:query" component={SearchResults(List)} />
