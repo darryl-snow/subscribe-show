@@ -9,6 +9,7 @@ import { ApolloProvider } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Router } from 'react-router-dom'
+import { StripeProvider } from 'react-stripe-elements'
 
 // App components
 import history from './history'
@@ -24,13 +25,12 @@ import './style/style.css'
  * @type {Object}
  */
 // TODO: fix this
-const generalError = onError(({ args }) => {
-  console.error(args)
-  // ReactDOM.render(
-  //   <Error error={networkError.message} />
-  //   , document.querySelector('#app'),
-  // )
-})
+// const generalError = onError(({ args }) => {
+//   ReactDOM.render(
+//     <Error error={networkError.message} />
+//     , document.querySelector('#app'),
+//   )
+// })
 
 /**
  * Set up link to GraphQL server.
@@ -57,11 +57,13 @@ const client = new ApolloClient({
  */
 const Root = () => (
   <ApolloProvider client={client}>
-    <Router history={history}>
-      <AppContainerComponent>
-        <App />
-      </AppContainerComponent>
-    </Router>
+    <StripeProvider apiKey="pk_test_K4i3N250qcdeJ9sIy0a09jqY">
+      <Router history={history}>
+        <AppContainerComponent>
+          <App />
+        </AppContainerComponent>
+      </Router>
+    </StripeProvider>
   </ApolloProvider>
 )
 

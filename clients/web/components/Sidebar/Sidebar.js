@@ -10,6 +10,7 @@ import mutation from '../../mutations/logout'
 
 // App Components
 import Icon from '../Icon/Icon'
+import PayMe from '../PayMe/PayMeContainer'
 
 // Styles
 import './Sidebar.css'
@@ -126,6 +127,9 @@ export class Sidebar extends Component {
         <ul className="c-sidebar-menu">
           {this.renderMenuItems()}
         </ul>
+        <div className="c-sidebar-menu-link">
+          <PayMe />
+        </div>
         <button
           className="c-sidebar-menu-link u-align--right"
           onClick={this.props.closeSidebar}
