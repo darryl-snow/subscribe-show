@@ -12,6 +12,7 @@ const { errorType } = require('./services/errors')
 const models = require('./models')
 const schema = require('./schema/schema')
 const winston = require('./winston-config')
+const updateShows = require('./services/update')
 
 const MongoStore = require('connect-mongo')(session)
 
