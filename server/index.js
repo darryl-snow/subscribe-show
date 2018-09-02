@@ -3,6 +3,7 @@ const cors = require('cors')
 const express = require('express')
 const expressGraphQL = require('express-graphql')
 const keys = require('../keys.json')
+const schedule = require('node-schedule')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const passport = require('passport')
@@ -87,6 +88,12 @@ app.use('/graphql', expressGraphQL({
     return err
   },
 }))
+
+schedule.scheduleJob('0 0 0 */1 * ? *', () => {
+  console.log('Updating...')
+  console.log(new Date())
+  updateShows()
+})
 
 /**
  * Open the web server.
