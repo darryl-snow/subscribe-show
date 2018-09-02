@@ -15,8 +15,8 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, './dist/web'),
     historyApiFallback: true,
-    host: process.env.DEV_SERVER_HOST || 'localhost',
-    port: process.env.DEV_SERVER_PORT || 4000,
+    host: process.env.SERVER_HOST || 'localhost',
+    port: process.env.SERVER_PORT || 4000,
     hot: true
   },
   module: {

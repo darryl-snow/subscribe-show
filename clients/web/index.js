@@ -4,14 +4,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-client'
-import { onError } from 'apollo-link-error'
+// import { onError } from 'apollo-link-error'
 import { ApolloProvider } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Router } from 'react-router-dom'
-import { StripeProvider } from 'react-stripe-elements'
+// import { StripeProvider } from 'react-stripe-elements'
 
 // App components
+import config from './config'
 import history from './history'
 import App from './components/App'
 import AppContainerComponent from './components/AppContainer/AppContainer'
@@ -19,6 +20,14 @@ import AppContainerComponent from './components/AppContainer/AppContainer'
 
 // Styles
 import './style/style.css'
+
+// Config
+const {
+  PROTOCOL,
+  HOST,
+  SERVER_PORT,
+  GRAPHQL_PATH,
+} = config
 
 /**
  * General error handling.
@@ -37,7 +46,7 @@ import './style/style.css'
  * @type {HttpLink}
  */
 const link = createHttpLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: `${PROTOCOL}://${HOST}:${SERVER_PORT}/${GRAPHQL_PATH}`,
   credentials: 'include',
 })
 
@@ -57,15 +66,17 @@ const client = new ApolloClient({
  */
 const Root = () => (
   <ApolloProvider client={client}>
-    <StripeProvider apiKey="pk_test_K4i3N250qcdeJ9sIy0a09jqY">
-      <Router history={history}>
-        <AppContainerComponent>
-          <App />
-        </AppContainerComponent>
-      </Router>
-    </StripeProvider>
+    <Router history={history}>
+      <AppContainerComponent>
+        <App />
+      </AppContainerComponent>
+    </Router>
   </ApolloProvider>
 )
+
+// TODO: pay me button
+// <StripeProvider apiKey="pk_test_K4i3N250qcdeJ9sIy0a09jqY">
+// </StripeProvider>
 
 /**
  * Render the element to the page.

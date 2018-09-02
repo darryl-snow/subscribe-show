@@ -3,4 +3,6 @@ keys.json
 yarn.lock
 logs
 app.log
+.env
 TODO
+config.js

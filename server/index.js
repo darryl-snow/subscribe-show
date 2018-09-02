@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser')
 const cors = require('cors')
+require('dotenv').config()
 const express = require('express')
 const expressGraphQL = require('express-graphql')
 const keys = require('../keys.json')
@@ -23,12 +24,12 @@ const getErrorCode = errorName => errorType[errorName]
  * Create the web server.
  */
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.SERVER_PORT
 
 /**
  * Connect to the Database.
  */
-const MONGO_URI = 'mongodb://default:default@ds113648.mlab.com:13648/subscribe-show'
+const { MONGO_URI } = process.env
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI')
 }
@@ -43,7 +44,7 @@ mongoose.connection
  * Configure the server
  */
 const corsOptions = {
-  origin: 'http://localhost:4000',
+  origin: `http://${process.env.SERVER_HOST}:${process.env.CLIENT_PORT}`,
   credentials: true,
 }
 app.use(cors(corsOptions))
