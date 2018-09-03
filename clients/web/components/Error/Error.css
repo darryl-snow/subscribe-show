@@ -1,4 +1,5 @@
 .c-error {
+  background: var(--color--charcoal);
   color: var(--color--guava);
   display: table-cell;
   height: 100vh;
@@ -7,19 +8,7 @@
   width: 100vw;
 }
 
-.c-error-button {
-  border: var(--border-width) solid var(--color--guava);
-  color: var(--color--guava);
-}
-
-.c-error-button:active,
-.c-error-button:focus,
-.c-error-button:hover {
-  background: var(--color--guava);
-  border: 2px solid var(--color--guava);
-}
-
-.c-error-icon {
+.fa.c-error-icon {
   font-size: 500%;
   margin-bottom: 0.5em;
 }

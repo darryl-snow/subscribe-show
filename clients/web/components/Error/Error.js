@@ -20,7 +20,7 @@ const Error = ({ error, reload }) => (
     <h1>Whoops! Something went wrong!
       <p className="o-subheading">{error}</p>
     </h1>
-    <button className="o-button c-error-button" onClick={reload}>
+    <button className="o-button o-button--red" onClick={reload}>
       Please try again
     </button>
   </div>

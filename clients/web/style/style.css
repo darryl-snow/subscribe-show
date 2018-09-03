@@ -210,7 +210,7 @@ p {
   color: var(--color--deep-sea);
   cursor: pointer;
   font-size: 1em;
-  display: block;
+  display: inline-block;
   font-weight: 900;
   padding: 1em;
   text-shadow: none;
@@ -250,6 +250,20 @@ p {
 .o-button--white:active,
 .o-button--white:focus,
 .o-button--white:hover {
+  border-color: white;
+  color: white;
+  opacity: 1;
+}
+
+.o-button--red {
+  border-color: var(--color--guava);
+  color: var(--color--guava);
+  opacity: 0.5;
+}
+
+.o-button--red:active,
+.o-button--red:focus,
+.o-button--red:hover {
   border-color: white;
   color: white;
   opacity: 1;
