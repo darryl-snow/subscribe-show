@@ -2,6 +2,9 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// Queries
 import query from '../queries/getWatchlistItemByTitle'
 
 // App Components
@@ -20,6 +23,9 @@ export default (PassedComponent) => {
         <Loader />
       )
     }
+
+    ReactGA.pageview('Watchlist Item')
+
     if (!props.data.watchListItemByTitle.episodes) {
       return (
         <React.Fragment>

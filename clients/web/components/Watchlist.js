@@ -1,6 +1,10 @@
 // Dependencies
 import React from 'react'
 import { graphql } from 'react-apollo'
+import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// Queries
 import query from '../queries/getWatchlistItems'
 
 /**
@@ -10,6 +14,11 @@ import query from '../queries/getWatchlistItems'
 export default (PassedComponent) => {
   const WatchList = (props) => {
     const title = 'My Watchlist'
+
+    if (!props.data.loading) {
+      ReactGA.pageview('Watchlist')
+    }
+
     return (
       <PassedComponent
         className="c-watchlist"
@@ -20,6 +29,24 @@ export default (PassedComponent) => {
         {...props}
       />
     )
+  }
+
+  /**
+   * Define the property types.
+   * @type {Object}
+   */
+  WatchList.propTypes = {
+    data: PropTypes.object,
+  }
+
+  /**
+   * Define default values for each property.
+   * @type {Object}
+   */
+  WatchList.defaultProps = {
+    data: {
+      loading: true,
+    },
   }
 
   // Append results of the graphQL query to the component properties.

@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // Queries & mutations
 import mutation from '../../mutations/register'
@@ -25,6 +26,8 @@ export class Login extends Component {
       errors: [],
       loading: false,
     }
+
+    ReactGA.pageview('Login')
   }
   onSubmit = ({ email, password }) => {
     // Set the loading state when the login button is clicked.

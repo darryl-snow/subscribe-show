@@ -2,6 +2,9 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// Queries
 import query from '../queries/getUnwatchedItems'
 
 const sortList = (list) => {
@@ -55,6 +58,11 @@ const parseItems = (items) => {
 export default (PassedComponent) => {
   const UnwatchedItems = (props) => {
     const listItems = parseItems(props.data.unwatchedItems)
+
+    if (!props.data.loading) {
+      ReactGA.pageview('Unwatched Items')
+    }
+
     return (
       <PassedComponent
         className="c-unwatched-items"
@@ -80,7 +88,9 @@ export default (PassedComponent) => {
    * @type {Object}
    */
   UnwatchedItems.defaultProps = {
-    data: {},
+    data: {
+      loading: true,
+    },
   }
 
   // Append results of the graphQL query to the component properties.

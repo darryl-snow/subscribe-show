@@ -4,6 +4,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-client'
+import ReactGA from 'react-ga'
 import { onError } from 'apollo-link-error'
 import { ApolloProvider } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
@@ -33,7 +34,6 @@ const {
  * General error handling.
  * @type {Object}
  */
-// TODO: fix this
 const generalError = onError(({ networkError }) => {
   ReactDOM.render(
     <Error error={networkError.message} />
@@ -58,6 +58,14 @@ const client = new ApolloClient({
   link: generalError.concat(link),
   cache: new InMemoryCache(),
   dataIdFromObject: o => o.id,
+})
+
+/**
+ * Initialize Google Analytics
+ */
+ReactGA.initialize('UA-125174979-1', {
+  debug: config.GA_DEBUG,
+  titleCase: false,
 })
 
 /**

@@ -2,6 +2,9 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// Queries
 import query from '../queries/search'
 
 /**
@@ -11,6 +14,7 @@ import query from '../queries/search'
 export default (PassedComponent) => {
   const SearchResults = (props) => {
     const title = `Search results for '${props.data.variables.title}'`
+    ReactGA.pageview('Search Results')
     return (
       <PassedComponent
         className="c-search-results"
