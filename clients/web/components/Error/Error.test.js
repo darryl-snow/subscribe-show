@@ -10,7 +10,7 @@ describe('Error Component', () => {
     expect(component.find('.c-error').exists()).toBe(true)
     expect(component.find('.c-error-icon').exists()).toBe(true)
     expect(component.find('h1').exists()).toBe(true)
-    expect(component.find('.c-error-button').exists()).toBe(true)
+    expect(component.find('.o-button').exists()).toBe(true)
   })
   it('should render the correct error message', () => {
     const testError = 'test'
@@ -18,7 +18,7 @@ describe('Error Component', () => {
   })
   it('should reload when the button is clicked', () => {
     const component = shallow(<Error reload={reloadMock} />)
-    component.find('.c-error-button').simulate('click')
+    component.find('.o-button').simulate('click')
     expect(reloadMock.mock.calls.length).toBe(1)
   })
 })
