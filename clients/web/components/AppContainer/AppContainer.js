@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App Components
 import Context from '../../context'
@@ -33,6 +34,13 @@ export class AppContainer extends Component {
   }
   // Toggle the component state and re-render the component.
   toggleSidebar = () => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Sidebar',
+      action: 'Toggle Sidebar',
+      label: this.state.open ? 'Closing' : 'Opening',
+    })
+
     this.setState({
       open: !this.state.open,
     })

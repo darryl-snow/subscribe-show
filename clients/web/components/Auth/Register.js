@@ -35,14 +35,36 @@ export class Register extends Component {
       loading: true,
     })
 
+    // Log the event.
+    ReactGA.event({
+      category: 'Auth Form',
+      action: 'Tap Register Button',
+    })
+
     // Call the login mutation.
     this.props.mutate({
       variables: { email, password },
       refetchQueries: [{ query }],
     }).then(() => {
+      // Log the event.
+      ReactGA.event({
+        category: 'Auth Form',
+        action: 'Registered',
+        nonInteraction: true,
+      })
+
       history.push('/')
     }).catch((res) => {
-      const errors = res.graphQLErrors.map(error => error.message)
+      const errors = Object.values(res.graphQLErrors).map(error => error.message)
+
+      // Log the event.
+      ReactGA.event({
+        category: 'Auth Form',
+        action: 'Not Registered',
+        label: errors[0],
+        nonInteraction: true,
+      })
+
       this.setState({
         errors,
         loading: false,
@@ -79,7 +101,6 @@ export default graphql(mutation)(graphql(query)(Register))
  */
 Register.propTypes = {
   data: PropTypes.object,
-  location: PropTypes.object,
   mutate: PropTypes.func,
 }
 
@@ -89,10 +110,5 @@ Register.propTypes = {
  */
 Register.defaultProps = {
   data: {},
-  location: {
-    state: {
-      previous: null,
-    },
-  },
   mutate: () => {},
 }

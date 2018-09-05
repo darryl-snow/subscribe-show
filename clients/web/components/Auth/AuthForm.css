@@ -1,0 +1,12 @@
+.c-form--is-error .o-input {
+  outline: 2px solid var(--color--guava);
+}
+
+.c-form-errors {
+  color: var(--color--guava);
+}
+
+.c-form-errors p {
+  font-size: 1.25em;
+  margin: 0;
+}

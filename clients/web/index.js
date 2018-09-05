@@ -35,10 +35,12 @@ const {
  * @type {Object}
  */
 const generalError = onError(({ networkError }) => {
-  ReactDOM.render(
-    <Error error={networkError.message} />
-    , document.querySelector('#app'),
-  )
+  if (networkError) {
+    ReactDOM.render(
+      <Error error={networkError ? networkError.message : ''} />
+      , document.querySelector('#app'),
+    )
+  }
 })
 
 /**

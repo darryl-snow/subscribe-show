@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ReactGA from 'react-ga'
 
 // Queries & mutations
-import mutation from '../../mutations/register'
+import mutation from '../../mutations/login'
 import query from '../../queries/currentUser'
 
 // App components
@@ -35,19 +35,45 @@ export class Login extends Component {
       loading: true,
     })
 
+    // Log the event.
+    ReactGA.event({
+      category: 'Auth Form',
+      action: 'Tap Login Button',
+    })
+
     // Call the login mutation.
     this.props.mutate({
       variables: { email, password },
       refetchQueries: [{ query }],
     }).then(() => {
-      const previousLocation = this.props.location.state.previous
+      const { state } = this.props.location
+
+      const previousLocation = state ? state.previous : null
+
+      // Log the event.
+      ReactGA.event({
+        category: 'Auth Form',
+        action: 'Logged In',
+        label: previousLocation,
+        nonInteraction: true,
+      })
+
       if (previousLocation) {
         history.push(previousLocation)
       } else {
         history.push('/')
       }
     }).catch((res) => {
-      const errors = res.graphQLErrors.map(error => error.message)
+      const errors = Object.values(res.graphQLErrors).map(error => error.message)
+
+      // Log the event.
+      ReactGA.event({
+        category: 'Auth Form',
+        action: 'Not Logged In',
+        label: errors[0],
+        nonInteraction: true,
+      })
+
       this.setState({
         errors,
         loading: false,

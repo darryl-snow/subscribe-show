@@ -6,3 +6,4 @@ app.log
 .env
 TODO
 config.js
+dist

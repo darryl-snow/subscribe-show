@@ -1,5 +1,9 @@
+// Dependencies
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+
+// Styles
+import './AuthForm.css'
 
 /**
  * This is a generic form for submitting an email and password to the mutation
@@ -22,7 +26,7 @@ class AuthForm extends Component {
   render() {
     return (
       <form
-        className="c-form"
+        className={this.props.errors.length ? 'c-form c-form--is-error' : 'c-form'}
         onSubmit={this.onSubmit}
       >
 
@@ -54,7 +58,7 @@ class AuthForm extends Component {
         </div>
 
         <div className="c-form-errors">
-          {this.props.errors.map(error => <div key={error}>{error}</div>)}
+          {this.props.errors.map(error => <p key={error}>{error}</p>)}
         </div>
 
         <button className="o-button u-full-width u-margin-top">{this.props.buttonText}</button>

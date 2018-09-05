@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import ReactGA from 'react-ga'
 
 // Queries & mutations
 import query from '../../queries/currentUser'
@@ -28,19 +29,77 @@ export class Sidebar extends Component {
       user: props.data.user,
     }
   }
+
   // Update the state when the query updates the props.
   componentWillReceiveProps(nextProps) {
     this.setState({
       user: nextProps.data.user,
     })
   }
+
+  /**
+   * Call the logout mutation and update the currentUser query.
+   */
   onLogoutClick = () => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Sidebar',
+      action: 'Tap Logout',
+    })
+
     this.props.mutate({
       refetchQueries: [{ query }],
     }).then(() => {
       this.props.closeSidebar()
     })
   }
+
+  /**
+   * Close the sidebar by calling the method handed down in props, and also
+   * log the event.
+   */
+  closeSidebar = (event) => {
+    const { pathname } = event.target
+
+    if (event.type === 'keyup' && event.key !== 'Enter') {
+      event.preventDefault()
+      return false
+    }
+
+    let action = 'Close Sidebar'
+
+    switch (pathname) {
+      case '/login':
+        action = 'Tap Login'
+        break
+      case '/signup':
+        action = 'Tap Sign up'
+        break
+      case '/':
+        action = 'Tap Unwatched'
+        break
+      case '/watch':
+        action = 'Tap My Watchlist'
+        break
+      default:
+        action = 'Close Sidebar'
+    }
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Sidebar',
+      action,
+      label: pathname,
+    })
+
+    this.props.closeSidebar()
+
+    return true
+  }
+
+  /**
+   * Render the menu items based on whether or not the user is logged in.
+   */
   renderMenuItems() {
     // If logged in, render the logout button and all other secure menu items.
     if (this.state.user) {
@@ -61,8 +120,8 @@ export class Sidebar extends Component {
               activeClassName="c-sidebar-menu-link--is-active"
               className="c-sidebar-menu-link"
               exact
-              onClick={this.props.closeSidebar}
-              onKeyUp={this.props.closeSidebar}
+              onClick={this.closeSidebar}
+              onKeyUp={this.closeSidebar}
               title="Unwatched"
               to="/"
             >
@@ -75,8 +134,8 @@ export class Sidebar extends Component {
               activeClassName="c-sidebar-menu-link--is-active"
               className="c-sidebar-menu-link"
               exact
-              onClick={this.props.closeSidebar}
-              onKeyUp={this.props.closeSidebar}
+              onClick={this.closeSidebar}
+              onKeyUp={this.closeSidebar}
               title="My watchlist"
               to="/watch"
             >
@@ -87,6 +146,7 @@ export class Sidebar extends Component {
         </React.Fragment>
       )
     }
+
     // If not logged in, just render a login button.
     return (
       <React.Fragment>
@@ -95,8 +155,8 @@ export class Sidebar extends Component {
             activeClassName="c-sidebar-menu-link--is-active"
             className="c-sidebar-menu-link"
             exact
-            onClick={this.props.closeSidebar}
-            onKeyUp={this.props.closeSidebar}
+            onClick={this.closeSidebar}
+            onKeyUp={this.closeSidebar}
             title="Login"
             to="/login"
           >
@@ -109,8 +169,8 @@ export class Sidebar extends Component {
             activeClassName="c-sidebar-menu-link--is-active"
             className="c-sidebar-menu-link"
             exact
-            onClick={this.props.closeSidebar}
-            onKeyUp={this.props.closeSidebar}
+            onClick={this.closeSidebar}
+            onKeyUp={this.closeSidebar}
             title="Sign up"
             to="/signup"
           >
@@ -121,6 +181,7 @@ export class Sidebar extends Component {
       </React.Fragment>
     )
   }
+
   render() {
     return (
       <menu className={this.props.sidebarIsOpen ? 'c-sidebar c-sidebar--is-open' : 'c-sidebar'}>
@@ -129,8 +190,8 @@ export class Sidebar extends Component {
         </ul>
         <button
           className="c-sidebar-menu-link u-align--right"
-          onClick={this.props.closeSidebar}
-          onKeyUp={this.props.closeSidebar}
+          onClick={this.closeSidebar}
+          onKeyUp={this.closeSidebar}
         >
           <Icon className="u-margin-right--small" name="chevron-left" />
         </button>

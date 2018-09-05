@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import history from '../../history'
@@ -47,8 +48,17 @@ class SearchForm extends Component {
    */
   onSubmit = (event) => {
     event.preventDefault()
-    // history.push(`/search/${this.state.query}`, { query: this.state.query })
-    this.props.history.push(`/search/${this.state.query}`, { query: this.state.query })
+
+    const { query } = this.state
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Search Form',
+      action: 'Search',
+      label: query,
+    })
+
+    this.props.history.push(`/search/${query}`, { query })
   }
   render() {
     return (

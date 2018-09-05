@@ -35,7 +35,8 @@ describe('Sidebar Component', () => {
       sidebarIsOpen: true,
     }
     const component = shallow(<Sidebar {...mockProps} />)
-    component.find('.c-sidebar-menu-link').last().simulate('click')
+    const mockedEvent = { target: {} }
+    component.find('.c-sidebar-menu-link').last().simulate('click', mockedEvent)
     expect(closeSidebarMock.mock.calls).toHaveLength(1)
   })
 })
