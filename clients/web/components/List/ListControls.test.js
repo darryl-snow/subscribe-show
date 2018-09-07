@@ -8,7 +8,10 @@ describe('ListControls Component', () => {
     expect(component.find('.c-list-controls').exists()).toBe(true)
   })
   it('should be able to toggle the controls open and closed', () => {
-    const component = shallow(<ListControls />)
+    const analyticsMock = {
+      event: () => {},
+    }
+    const component = shallow(<ListControls analytics={analyticsMock} />)
     const button = component.find('.o-button')
     expect(component.find('.c-list-controls--is-open').exists()).toBe(false)
     button.simulate('click')

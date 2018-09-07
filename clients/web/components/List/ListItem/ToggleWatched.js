@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import Icon from '../../Icon/Icon'
@@ -29,6 +30,13 @@ class ToggleWatched extends Component {
       toggleItemWatched,
       type,
     } = this.props
+
+    // Log the event.
+    this.props.analytics.event({
+      category: 'List Item',
+      action: 'Toggle Watched',
+      label: !this.state.watched,
+    })
 
     this.setState({
       watched: !this.state.watched,
@@ -92,6 +100,7 @@ export default ToggleWatched
  * @type {Object}
  */
 ToggleWatched.propTypes = {
+  analytics: PropTypes.object,
   id: PropTypes.string,
   toggleEpisodeWatched: PropTypes.func,
   toggleItemWatched: PropTypes.func,
@@ -104,6 +113,7 @@ ToggleWatched.propTypes = {
  * @type {Object}
  */
 ToggleWatched.defaultProps = {
+  analytics: ReactGA,
   id: '',
   toggleEpisodeWatched: () => {},
   toggleItemWatched: () => {},

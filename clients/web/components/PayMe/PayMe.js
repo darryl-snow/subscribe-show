@@ -2,6 +2,7 @@
 import React from 'react'
 import { injectStripe, PaymentRequestButtonElement } from 'react-stripe-elements'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 /**
  * This comonent was copied directly from the Stripe docs. Its purpose is to
@@ -37,11 +38,23 @@ class PaymentRequestForm extends React.Component {
     }
   }
 
+  /**
+   * Click handler for the pay me button. Used only for logging the event.
+   */
+  onClick = () => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Pay Me',
+      action: 'Click Button',
+    })
+  }
+
   render() {
     return this.state.canMakePayment ? (
       <PaymentRequestButtonElement
         className="PaymentRequestButton"
         paymentRequest={this.state.paymentRequest}
+        onClick={this.onClick}
         style={{
           paymentRequestButton: {
             theme: 'dark',

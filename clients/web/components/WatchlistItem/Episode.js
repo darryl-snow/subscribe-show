@@ -2,9 +2,13 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// Mutation & queries
 import ToggleWatchedMutation from '../../mutations/toggleEpisodeWatched'
 import watchlistQuery from '../../queries/getWatchlistItems'
 import unwatchedItemsQuery from '../../queries/getUnwatchedItems'
+
 import { formatDate } from '../../helpers'
 
 // App components
@@ -28,9 +32,18 @@ export class Episode extends Component {
    */
   toggleWatched = (event) => {
     event.preventDefault()
+
+    // Log the event.
+    this.props.analytics.event({
+      category: 'List Item',
+      action: 'Toggle Watched',
+      label: !this.state.watched,
+    })
+
     this.setState({
       watched: !this.state.watched,
     })
+
     this.props.mutate({
       variables: {
         id: this.props.id,
@@ -100,6 +113,7 @@ export default graphql(ToggleWatchedMutation)(Episode)
  */
 Episode.propTypes = {
   airDate: PropTypes.string,
+  analytics: PropTypes.object,
   description: PropTypes.string,
   episodeNumber: PropTypes.number,
   id: PropTypes.string,
@@ -115,6 +129,7 @@ Episode.propTypes = {
  */
 Episode.defaultProps = {
   airDate: '',
+  analytics: ReactGA,
   description: '',
   episodeNumber: 0,
   id: '',

@@ -1,6 +1,9 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
+// App components
 import Icon from '../Icon/Icon'
 
 // Styles
@@ -25,6 +28,14 @@ class ToggleButton extends Component {
    */
   handleChange = (event) => {
     const { target } = event
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Toggle Button',
+      action: `Toggle ${target.value}`,
+      label: target.checked,
+    })
+
     this.setState({
       checked: target.checked,
     })

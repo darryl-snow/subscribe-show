@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import History from '../../../history'
@@ -35,6 +36,15 @@ const AddToWatchlist = ({
 
   const addItem = (event) => {
     event.preventDefault()
+
+    // Log the event.
+    ReactGA.event({
+      category: 'List Item',
+      action: 'Add To WatchList',
+      label: type,
+      value: tmdbID,
+    })
+
     add(tmdbID, type)
   }
 

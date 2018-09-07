@@ -1,5 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import Context from './ListContext'
@@ -19,6 +21,13 @@ class ListControls extends Component {
     }
   }
   toggleControls = () => {
+    // Log the event.
+    this.props.analytics.event({
+      category: 'List Controls',
+      action: 'Toggle Controls',
+      label: !this.state.open,
+    })
+
     this.setState({
       open: !this.state.open,
     })
@@ -56,3 +65,19 @@ class ListControls extends Component {
 }
 
 export default ListControls
+
+/**
+ * Define the property types.
+ * @type {Object}
+ */
+ListControls.propTypes = {
+  analytics: PropTypes.object,
+}
+
+/**
+ * Define default values for each property.
+ * @type {Object}
+ */
+ListControls.defaultProps = {
+  analytics: ReactGA,
+}

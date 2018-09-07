@@ -1,6 +1,8 @@
 // Dependencies
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
 import { formatDate, formatSeasonEpisodeNumbers, slugify } from '../../../helpers'
 
 // App components
@@ -38,6 +40,13 @@ const ListItemTitle = (props) => {
     } else {
       destination = slugify(title)
     }
+
+    // Log the event.
+    ReactGA.event({
+      category: 'List Item',
+      action: 'Navigate to Item',
+      label: destination,
+    })
 
     history.push(`/watch/${destination}`)
   }
@@ -87,10 +96,8 @@ export default ListItemTitle
 ListItemTitle.propTypes = {
   airDate: PropTypes.string,
   episodeNumber: PropTypes.number,
-  history: PropTypes.object,
   id: PropTypes.string,
   name: PropTypes.string,
-  navigateToWatchListItem: PropTypes.func,
   seasonNumber: PropTypes.number,
   title: PropTypes.string,
   type: PropTypes.string,
@@ -104,10 +111,8 @@ ListItemTitle.propTypes = {
 ListItemTitle.defaultProps = {
   airDate: '',
   episodeNumber: 1,
-  history,
   id: '',
   name: '',
-  navigateToWatchListItem: () => {},
   seasonNumber: 1,
   title: '',
   type: '',

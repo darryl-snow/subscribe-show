@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // Styles
 import './ListSorter.css'
@@ -15,6 +16,7 @@ export default class ListSorter extends Component {
     super(props)
     this.state = {
       sortBy: props.sortBy,
+      sortOrder: props.sortOrder,
     }
   }
   /**
@@ -23,6 +25,12 @@ export default class ListSorter extends Component {
    */
   changeSortBy = (event) => {
     const sortBy = event.target.value
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Sort',
+      action: `Sort by ${sortBy}`,
+    })
 
     this.setState({
       sortBy,
@@ -37,7 +45,20 @@ export default class ListSorter extends Component {
    */
   changeSortOrder = (event) => {
     event.preventDefault()
-    this.props.updateList({ sortOrder: this.props.sortOrder * -1 })
+
+    const sortOrder = this.state.sortOrder * -1
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Sort',
+      action: `Sort order: ${sortOrder}`,
+    })
+
+    this.setState({
+      sortOrder,
+    })
+
+    this.props.updateList({ sortOrder })
   }
   renderSortOrder() {
     if (this.state.sortBy === 'airDate') {

@@ -1,8 +1,7 @@
-/* eslint-env browser */
-
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App Components
 import Icon from '../Icon/Icon'
@@ -33,6 +32,36 @@ export default class Modal extends Component {
   }
 
   /**
+   * Close button closes the modal and calls the close method passed
+   * down in the props.
+   */
+  close = () => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Modal',
+      action: 'Click Close Button',
+    })
+
+    // Close the modal
+    this.props.close()
+  }
+
+  /**
+   * Confirm button closes the modal and calls the confirm method passed
+   * down in the props.
+   */
+  confirm = () => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Modal',
+      action: 'Click Confirm Button',
+    })
+
+    // Close the modal with the confirm action
+    this.props.confirm()
+  }
+
+  /**
    * Buttons are the only way to dismiss the modal. If the component receives
    * a type property of confirm, the component will render 2 options,
    * otherwise just 1.
@@ -43,7 +72,7 @@ export default class Modal extends Component {
       return (
         <button
           className="o-button c-modal-button u-margin-top"
-          onClick={this.props.close}
+          onClick={this.close}
         >
           OK
         </button>
@@ -56,13 +85,13 @@ export default class Modal extends Component {
       <div className="o-button-group c-modal-button-group u-margin-top">
         <button
           className="o-button o-button--secondary c-modal-button"
-          onClick={this.props.close}
+          onClick={this.close}
         >
           Cancel
         </button>
         <button
           className="o-button c-modal-button"
-          onClick={this.props.confirm}
+          onClick={this.confirm}
         >
           Confirm
         </button>

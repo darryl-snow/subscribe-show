@@ -27,8 +27,8 @@ describe('ToggleWatched Component', () => {
     }
     let component = mount(<ToggleWatched {...propsMock} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
-    expect(component.find('.fa-eye').exists()).toBe(true)
-    expect(component.find('.fa-check').exists()).toBe(false)
+    expect(component.find('.fa-check').exists()).toBe(true)
+    expect(component.find('.fa-times').exists()).toBe(false)
     propsMock = {
       id: '1',
       type: 'Movie',
@@ -36,8 +36,8 @@ describe('ToggleWatched Component', () => {
     }
     component = mount(<ToggleWatched {...propsMock} />)
     expect(component.find('.c-toggle-watched-button').exists()).toBe(true)
-    expect(component.find('.fa-eye').exists()).toBe(false)
-    expect(component.find('.fa-check').exists()).toBe(true)
+    expect(component.find('.fa-check').exists()).toBe(false)
+    expect(component.find('.fa-times').exists()).toBe(true)
   })
 
   it('should always disable the Toggle Watched button for TV Shows', () => {
@@ -67,6 +67,9 @@ describe('ToggleWatched Component', () => {
   it('should toggle an item as watched or unwatched when the toggle watched button is clicked', () => {
     const toggleItemWatchedMock = jest.fn()
     const propsMock = {
+      analytics: {
+        event: () => {},
+      },
       id: '1',
       toggleItemWatched: toggleItemWatchedMock,
       type: 'Movie',
@@ -81,6 +84,9 @@ describe('ToggleWatched Component', () => {
   it('should toggle an episode as watched or unwatched when the toggle watched button is clicked', () => {
     const toggleEpisodeWatchedMock = jest.fn()
     const propsMock = {
+      analytics: {
+        event: () => {},
+      },
       id: '1',
       toggleEpisodeWatched: toggleEpisodeWatchedMock,
       type: 'Episode',

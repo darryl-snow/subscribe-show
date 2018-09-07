@@ -1,6 +1,8 @@
 // Dependencies
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
+
 import { removeSpaces } from '../../helpers'
 
 // Styles
@@ -14,6 +16,14 @@ import './Breadcrumbs.css'
  */
 const Breadcrumbs = (props) => {
   const { list } = props
+  const onClick = (event) => {
+    // Log the event.
+    ReactGA.event({
+      category: 'Breadcrumbs',
+      action: 'Click',
+      label: event.target.getAttribute('title'),
+    })
+  }
   const renderListItems = () => {
     // Do not render anything if there is not more than 1 item.
     if (list.length < 2) {
@@ -27,6 +37,8 @@ const Breadcrumbs = (props) => {
         <a
           className="o-link c-breadcrumbs-link u-margin-left--small u-margin-right--small"
           href={removeSpaces(`${item}`)}
+          onClick={onClick}
+          title={item}
         >
           {`${item}`}
         </a>

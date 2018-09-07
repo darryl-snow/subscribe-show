@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import Icon from '../../Icon/Icon'
@@ -30,6 +31,14 @@ const RemoveFromWatchlist = ({
 
   const removeItem = (event) => {
     event.preventDefault()
+
+    // Log the event.
+    ReactGA.event({
+      category: 'List Item',
+      action: 'Remove From Watchlist',
+      label: id,
+    })
+
     remove(id)
   }
 

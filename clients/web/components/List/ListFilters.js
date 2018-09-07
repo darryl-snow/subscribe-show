@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 
 // App components
 import ToggleButton from '../ToggleButton/ToggleButton'
@@ -64,6 +65,14 @@ export default class ListFilters extends Component {
     if (checked && filters.indexOf(value) === -1) {
       filters.push(value)
     }
+
+    // Log the event.
+    ReactGA.event({
+      category: 'Filter',
+      action: 'Change filters',
+      label: `From ${this.state.filters.join(', ')} to ${filters.join(', ')}`,
+    })
+
     this.setState({ filters }, this.props.updateList({
       filters,
     }))
