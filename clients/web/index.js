@@ -24,10 +24,11 @@ import './style/style.css'
 
 // Config
 const {
-  PROTOCOL,
-  HOST,
-  SERVER_PORT,
+  GA_TRACKING_CODE,
   GRAPHQL_PATH,
+  HOST,
+  PROTOCOL,
+  SERVER_PORT,
 } = config
 
 /**
@@ -65,7 +66,7 @@ const client = new ApolloClient({
 /**
  * Initialize Google Analytics
  */
-ReactGA.initialize('UA-125174979-1', {
+ReactGA.initialize(GA_TRACKING_CODE, {
   debug: config.GA_DEBUG,
   titleCase: false,
 })
