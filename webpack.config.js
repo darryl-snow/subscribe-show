@@ -1,23 +1,25 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WriteFilePlugin = require('write-file-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   context: path.resolve(__dirname, './clients/web'),
   entry: {
-    app: './index.js'
+    app: './index.js',
   },
   output: {
     path: path.resolve(__dirname, './dist/web'),
     filename: '[name].bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     contentBase: path.resolve(__dirname, './dist/web'),
     historyApiFallback: true,
     host: process.env.SERVER_HOST || 'localhost',
     port: process.env.SERVER_PORT || 4000,
-    hot: true
+    hot: true,
   },
   module: {
     rules: [
@@ -27,14 +29,27 @@ module.exports = {
         exclude: /node_modules/,
         query:
           {
-            presets: ['react']
-          }
+            presets: ['react'],
+          },
       },
       {
         use: ['style-loader', 'css-loader'],
-        test: /\.css$/
-      }
-    ]
+        test: /\.css$/,
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -43,9 +58,13 @@ module.exports = {
       filename: './index.html',
       inject: 'body',
       minify: {
-        collapseWhitespace: true
-      }
+        collapseWhitespace: true,
+      },
     }),
-    new webpack.HotModuleReplacementPlugin()
-  ]
-};
+    new WriteFilePlugin(),
+    new CopyWebpackPlugin([
+      { from: 'images/', to: 'images/', force: true },
+    ]),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+}
